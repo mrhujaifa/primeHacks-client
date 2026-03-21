@@ -14,7 +14,7 @@ import {
 
 const navItems = [
   { label: "Hackathons", href: "/hackathons" },
-  { label: "Explore", href: "/explore" },
+  { label: "Builder", href: "/builder" },
   { label: "Organizers", href: "/organizers" },
   { label: "Leaderboard", href: "/leaderboard" },
 ];

@@ -25,8 +25,8 @@ const PremiumPlan = () => {
       href: "/register",
     },
     {
-      name: "Growth",
-      price: "$79",
+      name: "Plus",
+      price: "$19",
       period: "/month",
       description: "For active organizations running recurring programs.",
       icon: Crown,
@@ -37,12 +37,12 @@ const PremiumPlan = () => {
         "Judging workflows and score visibility",
         "Priority support for event operations",
       ],
-      cta: "Choose Growth",
+      cta: "Choose Plus",
       href: "/register",
     },
     {
-      name: "Enterprise",
-      price: "Custom",
+      name: "Business",
+      price: "50$",
       description: "For universities, accelerators, and large ecosystems.",
       icon: Building2,
       features: [
@@ -51,7 +51,7 @@ const PremiumPlan = () => {
         "Advanced onboarding and admin controls",
         "Dedicated success and launch planning",
       ],
-      cta: "Talk to Sales",
+      cta: "Add Business workspace",
       href: "/contact",
     },
   ];
