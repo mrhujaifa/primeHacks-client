@@ -1,7 +1,23 @@
-import React from "react";
+import PrimeHacksFooter from "@/components/layouts/Footer";
+import FeaturedHackathons from "@/components/ui/FeaturedHackathons";
+import HackathonBlog from "@/components/ui/HackathonBlog";
+import PrimeHacksNavbar from "@/components/layouts/Navbar";
+import PartnershipMarquee from "@/components/ui/PartnershipMarquee";
+import HackathonHero from "@/components/ui/hackathon-hero";
+import PrimeHacksLandingSections from "@/components/ui/landing-sections";
 
-const Home = () => {
-  return <div>Home page</div>;
+const HomePage = () => {
+  return (
+    <main className="">
+      <PrimeHacksNavbar />
+      <HackathonHero />
+      <PrimeHacksLandingSections />
+      <FeaturedHackathons />
+      <HackathonBlog />
+      <PartnershipMarquee />
+      <PrimeHacksFooter />
+    </main>
+  );
 };
 
-export default Home;
+export default HomePage;

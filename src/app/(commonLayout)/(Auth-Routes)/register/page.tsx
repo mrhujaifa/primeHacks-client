@@ -1,10 +1,9 @@
-import SignupForm from "@/components/modules/Authentication/RegistationForm";
-import React from "react";
+import RegisterForm from "@/components/modules/Authentication/Register/RegistationForm";
 
 const RegisterPage = () => {
   return (
     <>
-      <SignupForm />
+      <RegisterForm />
     </>
   );
 };
