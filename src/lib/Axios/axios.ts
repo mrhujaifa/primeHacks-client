@@ -11,6 +11,7 @@ const axiosInstance = () => {
   const instance = axios.create({
     baseURL: API_BASE_URL,
     timeout: 30000,
+    withCredentials: true,
     headers: {
       "Content-Type": "application/json",
     },
@@ -22,6 +23,7 @@ const axiosInstance = () => {
 export interface ApiRequestOptions {
   params?: Record<string, unknown>;
   headers?: Record<string, string>;
+  withCredentials?: boolean;
 }
 
 const httpGet = async <TData>(
@@ -33,6 +35,7 @@ const httpGet = async <TData>(
     const response = await instance.get<ApiResponse<TData>>(endpoint, {
       params: options?.params,
       headers: options?.headers,
+      withCredentials: options?.withCredentials,
     });
     return response.data;
   } catch (error) {

@@ -11,6 +11,9 @@ import {
   Sparkles,
   X,
 } from "lucide-react";
+import { authClient } from "@/lib/auth-client";
+import { useCurrentUser } from "@/hooks/useSession";
+import ProfileDropdown from "./components/ProfileDropdown";
 
 const navItems = [
   { label: "Hackathons", href: "/hackathons" },
@@ -20,6 +23,7 @@ const navItems = [
 ];
 
 export default function PrimeHacksNavbar() {
+  const { data: user, isPending } = useCurrentUser();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -159,20 +163,25 @@ export default function PrimeHacksNavbar() {
                 <span className="relative">Premium</span>
               </Link>
 
-              <Link
-                href="/login"
-                className="rounded-full px-4 py-2.5 text-sm font-medium text-slate-300 transition hover:text-white"
-              >
-                Sign in
-              </Link>
-
-              <Link
-                href="/register"
-                className="inline-flex items-center gap-2 rounded-full bg-[linear-gradient(135deg,#67e8f9,#f59e0b)] px-4 py-2.5 text-sm font-semibold text-slate-950 transition duration-200 hover:scale-[1.02]"
-              >
-                Launch Workspace
-                <ArrowRight className="h-4 w-4" />
-              </Link>
+              {user ? (
+                <ProfileDropdown />
+              ) : (
+                <>
+                  <Link
+                    href="/login"
+                    className="rounded-full px-4 py-2.5 text-sm font-medium text-slate-300 transition hover:text-white"
+                  >
+                    Sign in
+                  </Link>
+                  <Link
+                    href="/register"
+                    className="inline-flex items-center gap-2 rounded-full bg-[linear-gradient(135deg,#67e8f9,#f59e0b)] px-4 py-2.5 text-sm font-semibold text-slate-950 transition duration-200 hover:scale-[1.02]"
+                  >
+                    Launch Workspace
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </>
+              )}
             </div>
 
             {/* Mobile Toggle */}
