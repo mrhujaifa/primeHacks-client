@@ -1,4 +1,4 @@
-import React from "react";
+export const dynamic = "force-dynamic";
 
 const manageRewardsPage = () => {
   return <div>manageRewards</div>;
