@@ -71,8 +71,13 @@ export const organizerNavItems = (): NavSection[] => [
       },
       {
         title: "Create Hackathon",
-        href: "/dashboard/organizer/create-hackathon",
+        href: "/dashboard/organizer/hackathons/create",
         icon: "PlusSquare",
+      },
+      {
+        title: "Draft Hackathons",
+        href: "/dashboard/organizer/hackathons/drafts",
+        icon: "FilePenLine",
       },
       {
         title: "Manage Rewards",
@@ -83,6 +88,16 @@ export const organizerNavItems = (): NavSection[] => [
         title: "Hackathon Submissions",
         href: "/dashboard/organizer/hackathon-submissions",
         icon: "FileSpreadsheet",
+      },
+      {
+        title: "Winners",
+        href: "/dashboard/organizer/winners",
+        icon: "Medal",
+      },
+      {
+        title: "Analytics",
+        href: "/dashboard/organizer/analytics",
+        icon: "BarChart3",
       },
     ],
   },
