@@ -66,13 +66,18 @@ export const organizerNavItems = (): NavSection[] => [
     items: [
       {
         title: "My Hackathons",
-        href: "/dashboard/organizer/my-hackathons",
+        href: "/dashboard/organizer/hackathons/my-hackathons",
         icon: "Trophy",
       },
       {
         title: "Create Hackathon",
         href: "/dashboard/organizer/hackathons/create",
         icon: "PlusSquare",
+      },
+      {
+        title: "Hackathon Settings",
+        href: "/dashboard/organizer/hackathons/settings",
+        icon: "Settings",
       },
       {
         title: "Draft Hackathons",
