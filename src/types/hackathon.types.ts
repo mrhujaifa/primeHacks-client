@@ -1,4 +1,10 @@
-export type HackathonStatus = "DRAFT" | "UPCOMING" | "ACTIVE" | "CLOSED";
+export type HackathonStatus =
+  | "ONGOING"
+  | "DRAFT"
+  | "UPCOMING"
+  | "COMPLETED"
+  | "ACTIVE"
+  | "ENDED";
 
 export interface ICreateHackathonPayload {
   title: string;
@@ -69,3 +75,36 @@ export interface IUpdateHackathonPayload {
   categoryId?: string;
   organizerId?: string;
 }
+
+export type BackendHackathon = {
+  id: string;
+  title: string;
+  shortDescription: string;
+  fullDescription: string;
+  bannerImageUrl: string | null;
+  logoUrl: string | null;
+  websiteUrl: string | null;
+  discordUrl: string | null;
+  contactEmail: string | null;
+  rules: string | null;
+  eligibility: string | null;
+  prizePoolText: string | null;
+  registrationFee: string;
+  currency: string;
+  maxTeamSize: number | null;
+  registrationStartDate: string | null;
+  registrationEndDate: string | null;
+  startDate: string | null;
+  endDate: string | null;
+  submissionDeadline: string | null;
+  status: HackathonStatus;
+  isFeatured: boolean;
+  isPremiumOnly: boolean;
+  createdAt: string;
+  updatedAt: string;
+  category: {
+    id: string;
+    name: string;
+    slug: string;
+  };
+};

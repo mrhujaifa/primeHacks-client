@@ -1,4 +1,7 @@
-import React from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
+
+import React, { useMemo, useState } from "react";
 import {
   CalendarDays,
   Pencil,
@@ -10,45 +13,13 @@ import {
   Users,
 } from "lucide-react";
 import Link from "next/link";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
-type HackathonStatus = "ONGOING" | "DRAFT" | "UPCOMING" | "COMPLETED";
-
-type BackendHackathon = {
-  id: string;
-  title: string;
-  shortDescription: string;
-  fullDescription: string;
-  bannerImageUrl: string | null;
-  logoUrl: string | null;
-  websiteUrl: string | null;
-  discordUrl: string | null;
-  contactEmail: string | null;
-  rules: string | null;
-  eligibility: string | null;
-  prizePoolText: string | null;
-  registrationFee: string;
-  currency: string;
-  maxTeamSize: number | null;
-  registrationStartDate: string | null;
-  registrationEndDate: string | null;
-  startDate: string | null;
-  endDate: string | null;
-  submissionDeadline: string | null;
-  status: HackathonStatus;
-  isFeatured: boolean;
-  isPremiumOnly: boolean;
-  createdAt: string;
-  updatedAt: string;
-  category: {
-    id: string;
-    name: string;
-    slug: string;
-  };
-};
-
-type MyHackathonsPageProps = {
-  hackathons: BackendHackathon[];
-};
+import { hackathonKeys } from "@/hooks/hackathon/hackathon.keys";
+import { BackendHackathon, HackathonStatus } from "@/types/hackathon.types";
+import { HackathonServices } from "@/services/hackathon.service";
+import { getOwnHackathonsClientQueryFn } from "@/hooks/hackathon/hackathon.queries";
 
 const statusStyles: Record<HackathonStatus, string> = {
   ONGOING:
@@ -59,18 +30,114 @@ const statusStyles: Record<HackathonStatus, string> = {
     "border-amber-400/30 bg-amber-500/15 text-amber-300 shadow-[0_0_20px_rgba(245,158,11,0.15)]",
   COMPLETED:
     "border-slate-500/30 bg-slate-500/15 text-slate-300 shadow-[0_0_20px_rgba(100,116,139,0.12)]",
+  ACTIVE:
+    "border-slate-500/30 bg-slate-500/15 text-slate-300 shadow-[0_0_20px_rgba(100,116,139,0.12)]",
+  ENDED:
+    "border-slate-500/30 bg-slate-500/15 text-slate-300 shadow-[0_0_20px_rgba(100,116,139,0.12)]",
 };
 
 const fallbackBanner =
   "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1400&auto=format&fit=crop";
 
-export default function MyHackathonsPage({
-  hackathons,
-}: MyHackathonsPageProps) {
+export default function MyHackathonsPage() {
+  const queryClient = useQueryClient();
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState("All Status");
+
+  const {
+    data: hackathons = [],
+    isLoading,
+    isError,
+  } = useQuery<BackendHackathon[]>({
+    queryKey: hackathonKeys.myHackathons,
+    queryFn: getOwnHackathonsClientQueryFn,
+  });
+
+  const deleteHackathonMutation = useMutation({
+    mutationFn: async (hackathonId: string) => {
+      if (!hackathonId) {
+        throw new Error("Hackathon id is required");
+      }
+
+      return await HackathonServices.handleDeleteHackathon(hackathonId);
+    },
+
+    onSuccess: async (data) => {
+      toast.success(data?.message || "Hackathon deleted successfully");
+
+      await queryClient.invalidateQueries({
+        queryKey: hackathonKeys.myHackathons,
+      });
+    },
+
+    onError: (error: any) => {
+      let message = "Something went wrong. Please try again.";
+
+      if (error?.response?.data?.message) {
+        message = error.response.data.message;
+      } else if (error?.code === "ERR_NETWORK") {
+        message = "Network error. Please check your internet connection.";
+      } else if (error?.response?.status === 401) {
+        message = "You are not authorized. Please sign in again.";
+      } else if (error?.response?.status === 403) {
+        message = "You do not have permission to perform this action.";
+      } else if (error?.response?.status === 404) {
+        message = "Requested resource was not found.";
+      } else if (error?.response?.status === 500) {
+        message = "Server error. Please try again later.";
+      }
+
+      toast.error(message);
+    },
+
+    retry: 0,
+  });
+
+  const filteredHackathons = useMemo(() => {
+    return hackathons.filter((hackathon) => {
+      const matchesSearch =
+        hackathon.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        hackathon.shortDescription
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase());
+
+      const matchesStatus =
+        selectedStatus === "All Status" ||
+        hackathon.status === selectedStatus.toUpperCase();
+
+      return matchesSearch && matchesStatus;
+    });
+  }, [hackathons, searchTerm, selectedStatus]);
+
   const totalHackathons = hackathons.length;
   const activeHackathons = hackathons.filter(
     (item) => item.status === "ONGOING" || item.status === "UPCOMING",
   ).length;
+
+  if (isLoading) {
+    return (
+      <section className="min-h-screen text-white">
+        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
+          <div className="rounded-[26px] border border-white/10 bg-white/[0.04] p-10 text-center text-slate-400">
+            Loading hackathons...
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (isError) {
+    return (
+      <section className="min-h-screen text-white">
+        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
+          <div className="rounded-[26px] border border-rose-500/20 bg-rose-500/10 p-10 text-center text-rose-300">
+            Failed to load hackathons
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="min-h-screen text-white">
@@ -93,7 +160,7 @@ export default function MyHackathonsPage({
               </p>
 
               <div className="mt-6 flex flex-wrap gap-3">
-                <Link href={"/dashboard/organizer/hackathons/create"}>
+                <Link href="/dashboard/organizer/hackathons/create">
                   <button className="inline-flex items-center gap-2 rounded-2xl bg-[linear-gradient(135deg,#67e8f9_0%,#22d3ee_30%,#3b82f6_100%)] px-5 py-3 text-sm font-semibold text-slate-950 shadow-[0_10px_40px_rgba(34,211,238,0.35)] transition hover:scale-[1.02]">
                     <Plus className="h-4 w-4" />
                     Create Hackathon
@@ -137,7 +204,7 @@ export default function MyHackathonsPage({
               Explore Your Hackathons
             </h2>
             <p className="mt-1 text-sm text-slate-400">
-              Total {hackathons.length} hackathons managed by you
+              Total {filteredHackathons.length} hackathons managed by you
             </p>
           </div>
 
@@ -147,11 +214,17 @@ export default function MyHackathonsPage({
               <input
                 type="text"
                 placeholder="Search hackathon"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
                 className="h-12 w-full rounded-2xl border border-white/10 bg-slate-950/50 pl-11 pr-4 text-sm text-white placeholder:text-slate-500 outline-none transition focus:border-cyan-400/40 focus:bg-slate-950/70 sm:w-[280px]"
               />
             </div>
 
-            <select className="h-12 rounded-2xl border border-white/10 bg-slate-950/50 px-4 text-sm text-slate-200 outline-none transition focus:border-cyan-400/40">
+            <select
+              value={selectedStatus}
+              onChange={(e) => setSelectedStatus(e.target.value)}
+              className="h-12 rounded-2xl border border-white/10 bg-slate-950/50 px-4 text-sm text-slate-200 outline-none transition focus:border-cyan-400/40"
+            >
               <option>All Status</option>
               <option>Ongoing</option>
               <option>Upcoming</option>
@@ -161,13 +234,13 @@ export default function MyHackathonsPage({
           </div>
         </div>
 
-        {hackathons.length === 0 ? (
+        {filteredHackathons.length === 0 ? (
           <div className="mt-6 rounded-[26px] border border-dashed border-white/10 bg-white/[0.03] p-10 text-center text-slate-400">
             No hackathons found
           </div>
         ) : (
           <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {hackathons.map((hackathon) => (
+            {filteredHackathons.map((hackathon) => (
               <article
                 key={hackathon.id}
                 className="group overflow-hidden rounded-[26px] border border-white/10 bg-[linear-gradient(180deg,rgba(12,22,36,0.96),rgba(7,15,26,0.98))] shadow-[0_18px_60px_rgba(0,0,0,0.35)] transition duration-300 hover:-translate-y-1 hover:border-cyan-400/20 hover:shadow-[0_24px_80px_rgba(8,145,178,0.16)]"
@@ -207,7 +280,7 @@ export default function MyHackathonsPage({
                     <InfoRow
                       icon={<CalendarDays className="h-4 w-4" />}
                       label="Deadline"
-                      value={hackathon.submissionDeadline || ""}
+                      value={hackathon.submissionDeadline || "Not set"}
                     />
                     <InfoRow
                       icon={<Users className="h-4 w-4" />}
@@ -253,10 +326,29 @@ export default function MyHackathonsPage({
                       </span>
                     </button>
 
-                    <button className="flex-1 rounded-2xl border border-rose-400/20 bg-rose-500/10 px-4 py-3 text-sm font-semibold text-rose-300 transition hover:border-rose-400/35 hover:bg-rose-500/15">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const shouldDelete = window.confirm(
+                          "Are you sure you want to delete this hackathon?",
+                        );
+
+                        if (!shouldDelete) return;
+
+                        deleteHackathonMutation.mutate(hackathon.id);
+                      }}
+                      disabled={
+                        deleteHackathonMutation.isPending &&
+                        deleteHackathonMutation.variables === hackathon.id
+                      }
+                      className="flex-1 rounded-2xl border border-rose-400/20 bg-rose-500/10 px-4 py-3 text-sm font-semibold text-rose-300 transition hover:border-rose-400/35 hover:bg-rose-500/15 disabled:cursor-not-allowed disabled:opacity-60"
+                    >
                       <span className="inline-flex items-center gap-2">
                         <Trash2 className="h-4 w-4" />
-                        Delete
+                        {deleteHackathonMutation.isPending &&
+                        deleteHackathonMutation.variables === hackathon.id
+                          ? "Deleting..."
+                          : "Delete"}
                       </span>
                     </button>
                   </div>

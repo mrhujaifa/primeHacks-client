@@ -4,6 +4,7 @@ import {
   IUpdateHackathonPayload,
 } from "@/types/hackathon.types";
 
+//* create hackathon
 const createHackathon = async (payload: ICreateHackathonPayload) => {
   try {
     const res = await httpClient.post("/hackathons", payload);
@@ -19,6 +20,7 @@ const createHackathon = async (payload: ICreateHackathonPayload) => {
   }
 };
 
+//* udpdate hackathon
 const updateHackathon = async (
   payload: IUpdateHackathonPayload,
   hackathonId: string,
@@ -35,7 +37,8 @@ const updateHackathon = async (
   }
 };
 
-const getOwnHackathons = async (cookieHeader: string) => {
+//* get own hackathons
+const getOwnHackathons = async (cookieHeader?: string) => {
   try {
     const res = await httpClient.get("/hackathons/my-hackathons", {
       headers: cookieHeader
@@ -56,8 +59,24 @@ const getOwnHackathons = async (cookieHeader: string) => {
   }
 };
 
+//* handle delete hackathon
+const handleDeleteHackathon = async (hackathonId: string) => {
+  try {
+    const res = await httpClient.delete(`/hackathons/${hackathonId}`);
+
+    if (res.success === false) {
+      throw new Error("Failed to delete hackathons");
+    }
+
+    return res;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
 export const HackathonServices = {
   createHackathon,
   updateHackathon,
   getOwnHackathons,
+  handleDeleteHackathon,
 };
