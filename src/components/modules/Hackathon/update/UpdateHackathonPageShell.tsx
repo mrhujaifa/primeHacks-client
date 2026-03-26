@@ -1,6 +1,9 @@
 "use client";
 
-import { getHackathonByidClientQureryFn } from "@/hooks/hackathon/hackathon.queries";
+import {
+  getAllHackathonCategoriesQueryFn,
+  getHackathonByidClientQureryFn,
+} from "@/hooks/hackathon/hackathon.queries";
 import { useQuery } from "@tanstack/react-query";
 import { hackathonKeys } from "@/hooks/hackathon/hackathon.keys";
 import UpdateHackathonHero from "./UpdateHackathonHero";
@@ -14,6 +17,11 @@ export default function UpdateHackathonPageShell({
   const { data, isLoading, isError } = useQuery({
     queryKey: hackathonKeys.details(hackathonId),
     queryFn: () => getHackathonByidClientQureryFn(hackathonId),
+  });
+
+  const { data: category = [] } = useQuery({
+    queryKey: hackathonKeys.categories(),
+    queryFn: () => getAllHackathonCategoriesQueryFn(),
   });
 
   if (isLoading) {
@@ -49,7 +57,11 @@ export default function UpdateHackathonPageShell({
     <section className="min-h-screen bg-[radial-gradient(circle_at_top,rgba(34,211,238,0.15),transparent_22%),radial-gradient(circle_at_85%_10%,rgba(59,130,246,0.16),transparent_18%),linear-gradient(180deg,#07111a_0%,#081520_40%,#0b1220_100%)] px-4 py-8 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl space-y-6">
         <UpdateHackathonHero hackathon={data} />
-        <UpdateHackathonFormUI hackathonId={hackathonId} hackathon={data} />
+        <UpdateHackathonFormUI
+          hackathonId={hackathonId}
+          hackathon={data}
+          categories={category}
+        />
       </div>
     </section>
   );

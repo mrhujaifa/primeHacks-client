@@ -6,6 +6,7 @@ import { ApiErrorResponse } from "@/interface/api.interface";
 import {
   BackendHackathon,
   HackathonStatus,
+  IGetHackathonCategories,
   THackathonFormValues,
 } from "@/types/hackathon.types";
 import { useForm } from "@tanstack/react-form";
@@ -16,10 +17,13 @@ import toast from "react-hot-toast";
 export default function UpdateHackathonFormUI({
   hackathonId,
   hackathon,
+  categories,
 }: {
   hackathonId: string;
   hackathon: BackendHackathon;
+  categories: IGetHackathonCategories;
 }) {
+  console.log(categories);
   const { mutateAsync, isPending } = useMutation({
     mutationFn: async (payload: THackathonFormValues) => {
       return await updateHackathonMutationFn({ id: hackathonId, payload });
@@ -401,11 +405,11 @@ export default function UpdateHackathonFormUI({
                         onBlur={field.handleBlur}
                         onChange={(e) => field.handleChange(e.target.value)}
                       >
-                        <option value="">Select category</option>
-                        <option value="ai">AI</option>
-                        <option value="blockchain">Blockchain</option>
-                        <option value="web-development">Web Development</option>
-                        <option value="cyber-security">Cyber Security</option>
+                        {categories.map((category) => (
+                          <option value={category.id} key={category.id}>
+                            {category.name}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   )}

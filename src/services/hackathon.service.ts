@@ -3,6 +3,7 @@ import { httpClient } from "@/lib/Axios/axios";
 import {
   BackendHackathon,
   ICreateHackathonPayload,
+  IGetHackathonCagories,
   THackathonFormValues,
 } from "@/types/hackathon.types";
 
@@ -104,10 +105,28 @@ const handleDeleteHackathon = async (hackathonId: string) => {
     throw error;
   }
 };
+
+//* Handle all hackthons categories
+const getAllHackathonCategories = async () => {
+  try {
+    const res = await httpClient.get<IGetHackathonCagories>(
+      "/hackathons/category",
+    );
+
+    if (!res.success) {
+      throw new Error("Get hackathon categories failed");
+    }
+
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
 export const HackathonServices = {
   createHackathon,
   updateHackathon,
   getOwnHackathons,
   handleDeleteHackathon,
   getHackathonById,
+  getAllHackathonCategories,
 };

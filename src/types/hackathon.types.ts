@@ -141,3 +141,10 @@ export type THackathonFormValues = {
 
   categoryId?: string;
 };
+
+export interface IHackathonCategory {
+  id: string;
+  name: string;
+}
+
+export type IGetHackathonCategories = IHackathonCategory[];

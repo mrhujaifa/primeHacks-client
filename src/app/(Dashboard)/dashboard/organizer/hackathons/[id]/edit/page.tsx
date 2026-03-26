@@ -1,6 +1,9 @@
 import UpdateHackathonPageShell from "@/components/modules/Hackathon/update/UpdateHackathonPageShell";
 import { hackathonKeys } from "@/hooks/hackathon/hackathon.keys";
-import { getHackathonByidServerQureryFn } from "@/hooks/hackathon/hackathon.queries";
+import {
+  getAllHackathonCategoriesQueryFn,
+  getHackathonByidServerQureryFn,
+} from "@/hooks/hackathon/hackathon.queries";
 import { getQueryClient } from "@/lib/Tanstack/queryClient";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { cookies } from "next/headers";
@@ -23,6 +26,13 @@ const HackathonEditPage = async ({ params }: Props) => {
     queryKey: hackathonKeys.details(id),
     queryFn: async () => {
       return await getHackathonByidServerQureryFn(id, cookieStore);
+    },
+  });
+
+  await queryClinet.prefetchQuery({
+    queryKey: hackathonKeys.categories(),
+    queryFn: async () => {
+      return await getAllHackathonCategoriesQueryFn();
     },
   });
 

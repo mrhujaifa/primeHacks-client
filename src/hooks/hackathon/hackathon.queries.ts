@@ -1,5 +1,8 @@
 import { HackathonServices } from "@/services/hackathon.service";
-import { BackendHackathon } from "@/types/hackathon.types";
+import {
+  BackendHackathon,
+  IGetHackathonCagories,
+} from "@/types/hackathon.types";
 
 export const getOwnHackathonsServerQueryFn = async (
   cookieHeader: string,
@@ -41,4 +44,14 @@ export const getHackathonByidClientQureryFn = async (
   }
 
   return hackathon;
+};
+
+export const getAllHackathonCategoriesQueryFn = async () => {
+  const category = await HackathonServices.getAllHackathonCategories();
+
+  if (!category) {
+    throw new Error("category not found");
+  }
+
+  return category;
 };
