@@ -15,3 +15,30 @@ export const getOwnHackathonsClientQueryFn = async (): Promise<
 
   return res.data || [];
 };
+
+export const getHackathonByidServerQureryFn = async (
+  hackathonId: string,
+  cookieHeader: string,
+): Promise<BackendHackathon> => {
+  const hackathon = await HackathonServices.getHackathonById(
+    hackathonId,
+    cookieHeader,
+  );
+
+  if (!hackathon) {
+    throw new Error("Hackathon not found");
+  }
+
+  return hackathon;
+};
+export const getHackathonByidClientQureryFn = async (
+  hackathonId: string,
+): Promise<BackendHackathon> => {
+  const hackathon = await HackathonServices.getHackathonById(hackathonId);
+
+  if (!hackathon) {
+    throw new Error("Hackathon not found");
+  }
+
+  return hackathon;
+};

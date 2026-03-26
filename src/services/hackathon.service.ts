@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { httpClient } from "@/lib/Axios/axios";
 import {
+  BackendHackathon,
   ICreateHackathonPayload,
-  IUpdateHackathonPayload,
+  THackathonFormValues,
 } from "@/types/hackathon.types";
 
 //* create hackathon
@@ -22,19 +24,18 @@ const createHackathon = async (payload: ICreateHackathonPayload) => {
 
 //* udpdate hackathon
 const updateHackathon = async (
-  payload: IUpdateHackathonPayload,
-  hackathonId: string,
+  id: string,
+  payload: Partial<THackathonFormValues>,
 ) => {
-  try {
-    const res = await httpClient.patch(`/hackathons/${hackathonId}`, payload);
-    if (!res.success) {
-      throw new Error(res.message || "Failed to update the hackathon");
-    }
+  const res = await httpClient.patch(`/hackathons/${id}`, payload, {
+    // withCredentials: true,
+  });
 
-    return res;
-  } catch (error) {
-    console.log(error);
+  if (!res.success) {
+    throw new Error(res.message || "Failed to update hackathon");
   }
+
+  return res.data;
 };
 
 //* get own hackathons
@@ -59,6 +60,35 @@ const getOwnHackathons = async (cookieHeader?: string) => {
   }
 };
 
+//* get hackathon by id
+const getHackathonById = async (
+  hackathonId: string,
+  cookieHeader?: string,
+): Promise<BackendHackathon> => {
+  try {
+    const res = await httpClient.get<BackendHackathon>(
+      `/hackathons/${hackathonId}`,
+      {
+        headers: cookieHeader
+          ? {
+              Cookie: cookieHeader,
+            }
+          : undefined,
+      },
+    );
+
+    if (!res.success || !res.data) {
+      throw new Error(res.message || "Failed to get hackathons by id");
+    }
+
+    return res.data;
+  } catch (error: any) {
+    console.log(error);
+
+    throw new Error(error?.message || "Failed to get hackathons by id");
+  }
+};
+
 //* handle delete hackathon
 const handleDeleteHackathon = async (hackathonId: string) => {
   try {
@@ -79,4 +109,5 @@ export const HackathonServices = {
   updateHackathon,
   getOwnHackathons,
   handleDeleteHackathon,
+  getHackathonById,
 };

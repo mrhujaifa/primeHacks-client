@@ -108,3 +108,36 @@ export type BackendHackathon = {
     slug: string;
   };
 };
+
+export type THackathonFormValues = {
+  title: string;
+  shortDescription: string;
+  fullDescription: string;
+
+  logoUrl?: string;
+  bannerImageUrl?: string;
+  websiteUrl?: string;
+  discordUrl?: string;
+  contactEmail?: string;
+
+  rules?: string;
+  eligibility?: string;
+
+  prizePoolText?: string;
+  registrationFee?: number;
+  currency?: string;
+
+  maxTeamSize?: number;
+
+  registrationStartDate?: string;
+  registrationEndDate?: string;
+  startDate?: string;
+  endDate?: string;
+  submissionDeadline: string;
+
+  status?: HackathonStatus;
+  isFeatured?: boolean;
+  isPremiumOnly?: boolean;
+
+  categoryId?: string;
+};

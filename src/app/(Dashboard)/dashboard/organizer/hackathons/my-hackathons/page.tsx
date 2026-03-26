@@ -48,7 +48,7 @@ const MyHackathonPage = async () => {
   const queryClient = getQueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: hackathonKeys.myHackathons,
+    queryKey: hackathonKeys.myHackathons(),
     queryFn: () => getOwnHackathonsServerQueryFn(cookieHeader),
   });
 

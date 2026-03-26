@@ -50,7 +50,7 @@ export default function MyHackathonsPage() {
     isLoading,
     isError,
   } = useQuery<BackendHackathon[]>({
-    queryKey: hackathonKeys.myHackathons,
+    queryKey: hackathonKeys.myHackathons(),
     queryFn: getOwnHackathonsClientQueryFn,
   });
 
@@ -67,7 +67,7 @@ export default function MyHackathonsPage() {
       toast.success(data?.message || "Hackathon deleted successfully");
 
       await queryClient.invalidateQueries({
-        queryKey: hackathonKeys.myHackathons,
+        queryKey: hackathonKeys.myHackathons(),
       });
     },
 
@@ -319,12 +319,16 @@ export default function MyHackathonsPage() {
                   </div>
 
                   <div className="mt-6 flex items-center gap-3">
-                    <button className="flex-1 rounded-2xl bg-[linear-gradient(135deg,rgba(103,232,249,0.95),rgba(59,130,246,0.95))] px-4 py-3 text-sm font-semibold text-slate-950 shadow-[0_12px_30px_rgba(34,211,238,0.22)] transition hover:scale-[1.01]">
-                      <span className="inline-flex items-center gap-2">
-                        <Pencil className="h-4 w-4" />
-                        Update
-                      </span>
-                    </button>
+                    <Link
+                      href={`/dashboard/organizer/hackathons/${hackathon.id}/edit`}
+                    >
+                      <button className="flex-1 rounded-2xl bg-[linear-gradient(135deg,rgba(103,232,249,0.95),rgba(59,130,246,0.95))] px-4 py-3 text-sm font-semibold text-slate-950 shadow-[0_12px_30px_rgba(34,211,238,0.22)] transition hover:scale-[1.01]">
+                        <span className="inline-flex items-center gap-2">
+                          <Pencil className="h-4 w-4" />
+                          Update
+                        </span>
+                      </button>
+                    </Link>
 
                     <button
                       type="button"

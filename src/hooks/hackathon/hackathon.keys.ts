@@ -1,5 +1,11 @@
 export const hackathonKeys = {
   all: ["hackathons"] as const,
-  myHackathons: ["my-hackathons"] as const,
-  details: (id: string) => ["hackathons", id] as const,
+
+  myHackathons: () => ["hackathons", "my-hackathons"] as const,
+
+  details: (id: string) => [...hackathonKeys.all, "detail", id] as const,
+
+  mutation: {
+    update: (id: string) => [...hackathonKeys.all, "update", id] as const,
+  },
 };
