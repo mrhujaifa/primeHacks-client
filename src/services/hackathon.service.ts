@@ -3,7 +3,7 @@ import { httpClient } from "@/lib/Axios/axios";
 import {
   BackendHackathon,
   ICreateHackathonPayload,
-  IGetHackathonCagories,
+  IHackathonCategory,
   THackathonFormValues,
 } from "@/types/hackathon.types";
 
@@ -42,13 +42,16 @@ const updateHackathon = async (
 //* get own hackathons
 const getOwnHackathons = async (cookieHeader?: string) => {
   try {
-    const res = await httpClient.get("/hackathons/my-hackathons", {
-      headers: cookieHeader
-        ? {
-            Cookie: cookieHeader,
-          }
-        : undefined,
-    });
+    const res = await httpClient.get<BackendHackathon[]>(
+      "/hackathons/my-hackathons",
+      {
+        headers: cookieHeader
+          ? {
+              Cookie: cookieHeader,
+            }
+          : undefined,
+      },
+    );
 
     if (!res.success) {
       throw new Error(res.message || "Failed to get own hackathons");
@@ -109,7 +112,7 @@ const handleDeleteHackathon = async (hackathonId: string) => {
 //* Handle all hackthons categories
 const getAllHackathonCategories = async () => {
   try {
-    const res = await httpClient.get<IGetHackathonCagories>(
+    const res = await httpClient.get<IHackathonCategory[]>(
       "/hackathons/category",
     );
 
@@ -117,11 +120,82 @@ const getAllHackathonCategories = async () => {
       throw new Error("Get hackathon categories failed");
     }
 
-    return res.data;
+    return res;
   } catch (error) {
     console.log(error);
   }
 };
+
+const getAllHackathons = async () => {
+  try {
+    const res = await httpClient.get<BackendHackathon[]>("/hackathons");
+    if (!res.success) {
+      throw new Error("Get All hackathons failed");
+    }
+
+    return res;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export type THackathonCardItem = {
+  id: string;
+  title: string;
+  shortDescription: string;
+  fullDescription?: string | null;
+
+  logoUrl?: string | null;
+  bannerImageUrl?: string | null;
+  websiteUrl?: string | null;
+  discordUrl?: string | null;
+  contactEmail?: string | null;
+
+  rules?: string | null;
+  eligibility?: string | null;
+
+  prizePool?: string | null;
+  prizePoolText?: string | null;
+  registrationFee?: number | string | null;
+  currency?: string | null;
+
+  maxTeamSize?: number | null;
+  registrationStartDate?: string | null;
+  registrationEndDate?: string | null;
+  startDate?: string | null;
+  endDate?: string | null;
+  submissionDeadline?: string | null;
+
+  status: string;
+  isFeatured?: boolean;
+  isPremiumOnly?: boolean;
+
+  categoryId?: string;
+  organizerName?: string | null;
+  location?: string | null;
+  platform?: string | null;
+  categories?: string[];
+  daysLeftLabel?: string | null;
+  buildCountLabel?: string | null;
+};
+
+export type THackathonFilterChip = {
+  id: string;
+  label: string;
+};
+
+export type TAllHackathonsPageViewProps = {
+  totalCount?: number;
+  hackathons?: THackathonCardItem[];
+  featuredBanners?: {
+    id: string;
+    image: string;
+    title?: string;
+  }[];
+  quickFilters?: THackathonFilterChip[];
+};
+
 export const HackathonServices = {
   createHackathon,
   updateHackathon,
@@ -129,4 +203,5 @@ export const HackathonServices = {
   handleDeleteHackathon,
   getHackathonById,
   getAllHackathonCategories,
+  getAllHackathons,
 };

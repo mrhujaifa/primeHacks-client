@@ -109,10 +109,10 @@ export type BackendHackathon = {
   };
 };
 
-export type THackathonFormValues = {
-  title: string;
-  shortDescription: string;
-  fullDescription: string;
+export type TUpdateHackathonPayload = {
+  title?: string;
+  shortDescription?: string;
+  fullDescription?: string;
 
   logoUrl?: string;
   bannerImageUrl?: string;
@@ -128,18 +128,48 @@ export type THackathonFormValues = {
   currency?: string;
 
   maxTeamSize?: number;
-
   registrationStartDate?: string;
   registrationEndDate?: string;
   startDate?: string;
   endDate?: string;
-  submissionDeadline: string;
+  submissionDeadline?: string;
 
-  status?: HackathonStatus;
+  status?: string;
   isFeatured?: boolean;
   isPremiumOnly?: boolean;
 
   categoryId?: string;
+};
+export type THackathonFormValues = {
+  title: string;
+  shortDescription: string;
+  fullDescription: string;
+
+  logoUrl: string;
+  bannerImageUrl: string;
+  websiteUrl: string;
+  discordUrl: string;
+  contactEmail: string;
+
+  rules: string;
+  eligibility: string;
+
+  prizePoolText: string;
+  registrationFee: number;
+  currency: string;
+
+  maxTeamSize: number;
+  registrationStartDate: string;
+  registrationEndDate: string;
+  startDate: string;
+  endDate: string;
+  submissionDeadline: string;
+
+  status: string;
+  isFeatured: boolean;
+  isPremiumOnly: boolean;
+
+  categoryId: string;
 };
 
 export interface IHackathonCategory {
@@ -147,4 +177,4 @@ export interface IHackathonCategory {
   name: string;
 }
 
-export type IGetHackathonCategories = IHackathonCategory[];
+// export type IGetHackathonCategories = IHackathonCategory[];

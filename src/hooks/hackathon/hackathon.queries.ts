@@ -1,14 +1,14 @@
-import { HackathonServices } from "@/services/hackathon.service";
 import {
-  BackendHackathon,
-  IGetHackathonCagories,
-} from "@/types/hackathon.types";
+  HackathonServices,
+  THackathonCardItem,
+} from "@/services/hackathon.service";
+import { BackendHackathon, IHackathonCategory } from "@/types/hackathon.types";
 
 export const getOwnHackathonsServerQueryFn = async (
   cookieHeader: string,
 ): Promise<BackendHackathon[]> => {
   const res = await HackathonServices.getOwnHackathons(cookieHeader);
-  return res?.data || [];
+  return res.data || [];
 };
 
 export const getOwnHackathonsClientQueryFn = async (): Promise<
@@ -46,12 +46,25 @@ export const getHackathonByidClientQureryFn = async (
   return hackathon;
 };
 
-export const getAllHackathonCategoriesQueryFn = async () => {
+export const getAllHackathonCategoriesQueryFn = async (): Promise<
+  IHackathonCategory[]
+> => {
   const category = await HackathonServices.getAllHackathonCategories();
 
   if (!category) {
     throw new Error("category not found");
   }
 
-  return category;
+  return category.data || [];
+};
+
+export const getAllHackathonsQueryFn = async (): Promise<
+  THackathonCardItem[]
+> => {
+  const res = await HackathonServices.getAllHackathons();
+  if (!res) {
+    throw new Error("get all hackathons not found");
+  }
+
+  return res.data || [];
 };

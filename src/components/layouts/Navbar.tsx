@@ -11,7 +11,6 @@ import {
   Sparkles,
   X,
 } from "lucide-react";
-import { authClient } from "@/lib/auth-client";
 import { useCurrentUser } from "@/hooks/useSession";
 import ProfileDropdown from "./components/ProfileDropdown";
 

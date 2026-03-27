@@ -1,6 +1,8 @@
 export const hackathonKeys = {
   all: ["hackathons"] as const,
 
+  allHackthons: () => [...hackathonKeys.all, "hackathons"] as const,
+
   myHackathons: () => ["hackathons", "my-hackathons"] as const,
 
   details: (id: string) => [...hackathonKeys.all, "detail", id] as const,

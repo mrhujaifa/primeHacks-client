@@ -6,8 +6,9 @@ import { ApiErrorResponse } from "@/interface/api.interface";
 import {
   BackendHackathon,
   HackathonStatus,
-  IGetHackathonCategories,
+  IHackathonCategory,
   THackathonFormValues,
+  TUpdateHackathonPayload,
 } from "@/types/hackathon.types";
 import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
@@ -21,16 +22,16 @@ export default function UpdateHackathonFormUI({
 }: {
   hackathonId: string;
   hackathon: BackendHackathon;
-  categories: IGetHackathonCategories;
+  categories: IHackathonCategory[];
 }) {
   console.log(categories);
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: async (payload: THackathonFormValues) => {
+    mutationFn: async (payload: TUpdateHackathonPayload) => {
       return await updateHackathonMutationFn({ id: hackathonId, payload });
     },
 
-    onSuccess: (data) => {
-      toast.success(data?.message || "Hackathon updated successfully.");
+    onSuccess: () => {
+      toast.success("Hackathon updated successfully.");
     },
 
     onError: (error) => {
@@ -50,6 +51,24 @@ export default function UpdateHackathonFormUI({
       );
     },
   });
+
+  const formatDateTimeLocal = (value?: string | Date | null) => {
+    if (!value) return "";
+
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return "";
+
+    const pad = (num: number) => String(num).padStart(2, "0");
+
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(
+      date.getDate(),
+    )}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+  };
+  const toPrismaDateTime = (value?: string) => {
+    if (!value) return undefined;
+    return new Date(value).toISOString();
+  };
+
   const formDefaultValue: THackathonFormValues = {
     title: hackathon.title ?? "",
     shortDescription: hackathon.shortDescription ?? "",
@@ -69,11 +88,12 @@ export default function UpdateHackathonFormUI({
     currency: hackathon.currency ?? "USDT",
 
     maxTeamSize: Number(hackathon.maxTeamSize ?? 0),
-    registrationStartDate: hackathon.registrationStartDate ?? "",
-    registrationEndDate: hackathon.registrationEndDate ?? "",
-    startDate: hackathon.startDate ?? "",
-    endDate: hackathon.endDate ?? "",
-    submissionDeadline: hackathon.submissionDeadline ?? "",
+
+    registrationStartDate: formatDateTimeLocal(hackathon.registrationStartDate),
+    registrationEndDate: formatDateTimeLocal(hackathon.registrationEndDate),
+    startDate: formatDateTimeLocal(hackathon.startDate),
+    endDate: formatDateTimeLocal(hackathon.endDate),
+    submissionDeadline: formatDateTimeLocal(hackathon.submissionDeadline),
 
     status: hackathon.status ?? "DRAFT",
     isFeatured: hackathon.isFeatured ?? false,
@@ -82,11 +102,30 @@ export default function UpdateHackathonFormUI({
     categoryId: hackathon.category?.id ?? "",
   };
 
+  const sanitizePayload = (
+    values: THackathonFormValues,
+  ): TUpdateHackathonPayload => ({
+    ...values,
+    logoUrl: values.logoUrl || undefined,
+    bannerImageUrl: values.bannerImageUrl || undefined,
+    websiteUrl: values.websiteUrl || undefined,
+    discordUrl: values.discordUrl || undefined,
+    contactEmail: values.contactEmail || undefined,
+    rules: values.rules || undefined,
+    eligibility: values.eligibility || undefined,
+    prizePoolText: values.prizePoolText || undefined,
+
+    registrationStartDate: toPrismaDateTime(values.registrationStartDate),
+    registrationEndDate: toPrismaDateTime(values.registrationEndDate),
+    startDate: toPrismaDateTime(values.startDate),
+    endDate: toPrismaDateTime(values.endDate),
+    submissionDeadline: toPrismaDateTime(values.submissionDeadline),
+  });
   const form = useForm({
     defaultValues: formDefaultValue,
     onSubmit: async ({ value }) => {
       try {
-        await mutateAsync(value);
+        await mutateAsync(sanitizePayload(value));
       } catch (error: any) {
         console.log(error.message);
         throw error;
