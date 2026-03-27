@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { normalizeStatus, SharedProps } from "../HackathonDetailsPage";
 
-const HackathonBanner = ({ hackathon, daysLeftText }: SharedProps) => {
+const HackathonBanner = ({ hackathon }: SharedProps) => {
   const statusMeta = normalizeStatus(hackathon.status);
 
   return (
@@ -68,7 +68,7 @@ const HackathonBanner = ({ hackathon, daysLeftText }: SharedProps) => {
               </div>
             </div>
             <div className="inline-flex w-fit items-center rounded-full border border-white/10 bg-black/45 px-4 py-2 text-sm font-medium text-slate-200 backdrop-blur-md">
-              {daysLeftText}
+              {/* {daysLeftText} */}
             </div>
           </div>
         </div>

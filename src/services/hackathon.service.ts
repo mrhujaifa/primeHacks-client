@@ -85,7 +85,7 @@ const getHackathonById = async (
       throw new Error(res.message || "Failed to get hackathons by id");
     }
 
-    return res.data;
+    return res.data || [];
   } catch (error: any) {
     console.log(error);
 
