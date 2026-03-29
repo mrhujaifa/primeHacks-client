@@ -88,7 +88,7 @@ const DashboardSidebarContent = ({
 
       <nav className="flex-1 overflow-y-auto px-2 pb-3">
         <div className="space-y-4">
-          <Link
+          {/* <Link
             href={dashboardHome}
             className={`flex h-12 items-center gap-3 rounded-2xl border px-3 transition lg:justify-start ${
               isActiveRoute(dashboardHome)
@@ -105,7 +105,7 @@ const DashboardSidebarContent = ({
               }
             />
             <span className="font-medium">Dashboard Home</span>
-          </Link>
+          </Link> */}
 
           {navItems.map((section, sectionIndex) => (
             <div key={sectionIndex} className="space-y-1.5">

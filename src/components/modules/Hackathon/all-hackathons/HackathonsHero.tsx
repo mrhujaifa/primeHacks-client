@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { ArrowRight, BookOpen, PlusCircle } from "lucide-react";
+import Link from "next/link";
 
 type HackathonsHeroProps = {
   featuredBanners?: {
@@ -30,14 +31,15 @@ export default function HackathonsHero({
         </p>
 
         <div className="mt-6 flex flex-wrap items-center gap-3">
-          <button
-            type="button"
-            className="inline-flex h-11 items-center gap-2 rounded-xl bg-[linear-gradient(135deg,#f97316,#fb923c)] px-5 text-sm font-semibold text-white shadow-[0_16px_30px_rgba(249,115,22,0.24)] transition hover:-translate-y-0.5"
-          >
-            <PlusCircle className="h-4 w-4" />
-            Create a Hackathon
-          </button>
-
+          <Link href={""}>
+            <button
+              type="button"
+              className="inline-flex h-11 items-center gap-2 rounded-xl bg-[linear-gradient(135deg,#f97316,#fb923c)] px-5 text-sm font-semibold text-white shadow-[0_16px_30px_rgba(249,115,22,0.24)] transition hover:-translate-y-0.5"
+            >
+              <PlusCircle className="h-4 w-4" />
+              Create a Hackathon
+            </button>
+          </Link>
           <button
             type="button"
             className="inline-flex h-11 items-center gap-2 rounded-xl border border-white/12 bg-white/5 px-5 text-sm font-semibold text-slate-200 backdrop-blur-sm transition hover:border-cyan-400/25 hover:bg-cyan-400/10 hover:text-cyan-200"

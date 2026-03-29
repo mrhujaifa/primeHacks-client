@@ -9,11 +9,6 @@ export const getCommonNavItems = (role: UserRole): NavSection[] => {
       items: [
         {
           title: "Home",
-          href: "/",
-          icon: "Home",
-        },
-        {
-          title: "Dashboard",
           href: defaultDashboard,
           icon: "LayoutDashboard",
         },
@@ -75,25 +70,22 @@ export const organizerNavItems = (): NavSection[] => [
         icon: "PlusSquare",
       },
       {
-        title: "Hackathon Settings",
-        href: "/dashboard/organizer/hackathons/settings",
-        icon: "Settings",
+        title: "Hackathon Submissions",
+        href: "/dashboard/organizer/hackathon-submissions",
+        icon: "FileSpreadsheet",
       },
-      {
-        title: "Draft Hackathons",
-        href: "/dashboard/organizer/hackathons/drafts",
-        icon: "FilePenLine",
-      },
+
+      // {
+      //   title: "Draft Hackathons",
+      //   href: "/dashboard/organizer/hackathons/drafts",
+      //   icon: "FilePenLine",
+      // },
       {
         title: "Manage Rewards",
         href: "/dashboard/organizer/manage-rewards",
         icon: "Gift",
       },
-      {
-        title: "Hackathon Submissions",
-        href: "/dashboard/organizer/hackathon-submissions",
-        icon: "FileSpreadsheet",
-      },
+
       {
         title: "Winners",
         href: "/dashboard/organizer/winners",
@@ -103,6 +95,11 @@ export const organizerNavItems = (): NavSection[] => [
         title: "Analytics",
         href: "/dashboard/organizer/analytics",
         icon: "BarChart3",
+      },
+      {
+        title: "Hackathon Settings",
+        href: "/dashboard/organizer/hackathons/settings",
+        icon: "Settings",
       },
     ],
   },

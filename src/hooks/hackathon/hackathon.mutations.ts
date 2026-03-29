@@ -1,4 +1,6 @@
 import { HackathonServices } from "@/services/hackathon.service";
+import { SubmissionServices } from "@/services/submission.service";
+import { ICreateSubmissionPayload } from "@/types/submission.type";
 
 export const updateHackathonMutationFn = async ({
   id,
@@ -8,4 +10,13 @@ export const updateHackathonMutationFn = async ({
   payload: Record<string, unknown>;
 }) => {
   return await HackathonServices.updateHackathon(id, payload);
+};
+
+export const createSubmissionMutationFn = async (
+  hackathonId: string,
+  payload: ICreateSubmissionPayload,
+) => {
+  const res = await SubmissionServices.createSubmisson(hackathonId, payload);
+
+  return res;
 };

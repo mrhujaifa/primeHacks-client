@@ -6,8 +6,8 @@ import {
   Sparkles,
   Users,
 } from "lucide-react";
-import DetailBlock from "./DetailsBlock";
 import { formatDisplayDate, SharedProps } from "../HackathonDetailsPage";
+import DetailBlock from "./DetailsBlock";
 
 const HackathonDetailsContent = ({ hackathon }: SharedProps) => {
   const prizeCurrency = hackathon.currency || "USD";

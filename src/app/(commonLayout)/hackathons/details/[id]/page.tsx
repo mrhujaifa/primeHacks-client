@@ -1,4 +1,4 @@
-import HackathonDetailsPage from "@/components/modules/Hackathon/Details/HackathonDetailsPage";
+import HackathonDetailsPage from "@/components/modules/Hackathon/hackathon-details/HackathonDetailsPage";
 import { hackathonKeys } from "@/hooks/hackathon/hackathon.keys";
 import { getHackathonByidServerQureryFn } from "@/hooks/hackathon/hackathon.queries";
 import { getQueryClient } from "@/lib/Tanstack/queryClient";

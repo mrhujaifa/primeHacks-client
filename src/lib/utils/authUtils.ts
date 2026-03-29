@@ -13,7 +13,7 @@ export const getDefaultDashboardRoute = (role: UserRole) => {
   }
 
   if (role === "ORGANIZER") {
-    return "/organizer/dashboard";
+    return "/dashboard/organizer";
   }
   if (role === "USER") {
     return "/dashboard";

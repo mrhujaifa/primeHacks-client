@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { formatDisplayDate, SharedProps } from "../HackathonDetailsPage";
 
 import Link from "next/link";
 import {
@@ -13,8 +12,10 @@ import {
   MapPin,
   Disc3,
 } from "lucide-react";
+import { formatDisplayDate, SharedProps } from "../HackathonDetailsPage";
+import { ProjectSubmissionModal } from "../../submission-hackathon/ProjectSubmissionModal";
 
-const HackathonSidebar = ({ hackathon, daysLeftText }: SharedProps) => {
+const HackathonSidebar = ({ hackathon }: SharedProps) => {
   const prizeText = hackathon.prizePoolText || hackathon.prizePool || "TBA";
   const prizeCurrency = hackathon.currency || "USD";
   const tagList = hackathon.categories || [];
@@ -46,7 +47,7 @@ const HackathonSidebar = ({ hackathon, daysLeftText }: SharedProps) => {
               Event Timeline
             </p>
             <div className="inline-flex rounded-full border border-emerald-400/15 bg-emerald-500/10 px-3 py-1 text-sm font-medium text-emerald-300">
-              {daysLeftText}
+              {/* {daysLeftText} */}
             </div>
             <div className="mt-4 space-y-3">
               <div className="flex items-start justify-between gap-4 rounded-2xl border border-white/8 bg-black/15 p-3">
@@ -142,6 +143,13 @@ const HackathonSidebar = ({ hackathon, daysLeftText }: SharedProps) => {
           <div className="grid grid-cols-1 gap-3">
             <button
               type="button"
+              onClick={() =>
+                (
+                  document.getElementById(
+                    "project_submission_modal",
+                  ) as HTMLDialogElement | null
+                )?.showModal()
+              }
               className="inline-flex h-12 items-center justify-center rounded-2xl bg-[linear-gradient(135deg,#f97316,#fb923c)] px-5 text-sm font-semibold text-white shadow-[0_16px_30px_rgba(249,115,22,0.24)] transition hover:-translate-y-0.5"
             >
               Submit Build
@@ -203,6 +211,8 @@ const HackathonSidebar = ({ hackathon, daysLeftText }: SharedProps) => {
           )}
         </div>
       </div>
+
+      <ProjectSubmissionModal hackathonId={hackathon.id} />
     </aside>
   );
 };
