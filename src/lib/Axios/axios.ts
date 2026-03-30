@@ -1,7 +1,8 @@
 import { ApiResponse } from "@/interface/api.interface";
 import axios from "axios";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const isServer = typeof window === 'undefined';
+const API_BASE_URL = isServer ? process.env.NEXT_PUBLIC_API_BASE_URL as string : (process.env.NODE_ENV === 'production' ? '/api/v1' : process.env.NEXT_PUBLIC_API_BASE_URL as string);
 
 if (!API_BASE_URL) {
   throw new Error("API_BASE_URL is not defined in environment variables");
@@ -9,7 +10,7 @@ if (!API_BASE_URL) {
 
 const axiosInstance = () => {
   const instance = axios.create({
-    baseURL: "https://prisma-hacks.onrender.com/api/v1",
+    baseURL: API_BASE_URL,
     timeout: 30000,
     withCredentials: true,
     headers: {

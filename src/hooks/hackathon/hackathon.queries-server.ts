@@ -5,60 +5,75 @@ import {
 import { SubmissionServices } from "@/services/submission.service";
 import { BackendHackathon, IHackathonCategory } from "@/types/hackathon.types";
 
+const BASE_API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 export const getOwnHackathonsServerQueryFn = async (
   cookieHeader: string,
 ): Promise<BackendHackathon[]> => {
-  const res = await HackathonServices.getOwnHackathons(cookieHeader);
-  return res.data || [];
+  const res = await fetch(`${BASE_API_URL}/hackathons/my-hackathons`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Cookie: cookieHeader,
+    },
+  });
+  if (!res.ok) {
+    throw new Error('Failed to fetch own hackathons');
+  }
+  const data = await res.json();
+  return data.data || [];
 };
 
 export const getHackathonByidServerQureryFn = async (
   hackathonId: string,
   cookieHeader: string,
 ): Promise<BackendHackathon> => {
-  const hackathon = await HackathonServices.getHackathonById(
-    hackathonId,
-    cookieHeader,
-  );
-
-  if (!hackathon) {
-    throw new Error("Hackathon not found");
+  const res = await fetch(`${BASE_API_URL}/hackathons/${hackathonId}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Cookie: cookieHeader,
+    },
+  });
+  if (!res.ok) {
+    throw new Error('Failed to fetch hackathon');
   }
-
-  return hackathon;
+  const data = await res.json();
+  return data;
 };
 
 export const getAllHackathonCategoriesQueryFn = async (): Promise<
   IHackathonCategory[]
 > => {
-  const category = await HackathonServices.getAllHackathonCategories();
-
-  if (!category) {
-    throw new Error("category not found");
+  const res = await fetch(`${BASE_API_URL}/hackathons/category`);
+  if (!res.ok) {
+    throw new Error('Failed to fetch categories');
   }
-
-  return category.data || [];
+  const data = await res.json();
+  return data.data || [];
 };
 
 export const getAllHackathonsQueryFn = async (): Promise<
   THackathonCardItem[]
 > => {
-  const res = await HackathonServices.getAllHackathons();
-  if (!res) {
-    throw new Error("get all hackathons not found");
+  const res = await fetch(`${BASE_API_URL}/hackathons`);
+  if (!res.ok) {
+    throw new Error('Failed to fetch all hackathons');
   }
-
-  return res.data || [];
+  const data = await res.json();
+  return data.data || [];
 };
 
 //* Submission queries
 
 export const getMySubmissionsServerQueryFn = async (cookie: string) => {
-  const res = await SubmissionServices.getMySubmissionsByHackathonId(cookie);
-
-  if (!res) {
-    throw new Error("Get my submissions not found");
+  const res = await fetch(`${BASE_API_URL}/submission/my-submission`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Cookie: cookie,
+    },
+  });
+  if (!res.ok) {
+    throw new Error('Failed to fetch submissions');
   }
-
-  return res;
+  const data = await res.json();
+  return data.data || [];
 };
