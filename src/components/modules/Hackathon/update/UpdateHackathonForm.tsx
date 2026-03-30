@@ -104,23 +104,44 @@ export default function UpdateHackathonFormUI({
 
   const sanitizePayload = (
     values: THackathonFormValues,
-  ): TUpdateHackathonPayload => ({
-    ...values,
-    logoUrl: values.logoUrl || undefined,
-    bannerImageUrl: values.bannerImageUrl || undefined,
-    websiteUrl: values.websiteUrl || undefined,
-    discordUrl: values.discordUrl || undefined,
-    contactEmail: values.contactEmail || undefined,
-    rules: values.rules || undefined,
-    eligibility: values.eligibility || undefined,
-    prizePoolText: values.prizePoolText || undefined,
+  ): TUpdateHackathonPayload => {
+    const payload: TUpdateHackathonPayload = {
+      title: values.title.trim() || undefined,
+      shortDescription: values.shortDescription.trim() || undefined,
+      fullDescription: values.fullDescription.trim() || undefined,
 
-    registrationStartDate: toPrismaDateTime(values.registrationStartDate),
-    registrationEndDate: toPrismaDateTime(values.registrationEndDate),
-    startDate: toPrismaDateTime(values.startDate),
-    endDate: toPrismaDateTime(values.endDate),
-    submissionDeadline: toPrismaDateTime(values.submissionDeadline),
-  });
+      logoUrl: values.logoUrl.trim() || undefined,
+      bannerImageUrl: values.bannerImageUrl.trim() || undefined,
+      websiteUrl: values.websiteUrl.trim() || undefined,
+      discordUrl: values.discordUrl.trim() || undefined,
+      contactEmail: values.contactEmail.trim() || undefined,
+
+      rules: values.rules.trim() || undefined,
+      eligibility: values.eligibility.trim() || undefined,
+
+      prizePoolText: values.prizePoolText.trim() || undefined,
+      registrationFee: values.registrationFee || undefined,
+      currency: values.currency.trim() || undefined,
+
+      maxTeamSize: values.maxTeamSize || undefined,
+
+      registrationStartDate: toPrismaDateTime(values.registrationStartDate),
+      registrationEndDate: toPrismaDateTime(values.registrationEndDate),
+      startDate: toPrismaDateTime(values.startDate),
+      endDate: toPrismaDateTime(values.endDate),
+      submissionDeadline: toPrismaDateTime(values.submissionDeadline),
+
+      status: values.status || undefined,
+      isFeatured: values.isFeatured,
+      isPremiumOnly: values.isPremiumOnly,
+
+      categoryId: values.categoryId || undefined,
+    };
+
+    return Object.fromEntries(
+      Object.entries(payload).filter(([_, value]) => value !== undefined),
+    ) as TUpdateHackathonPayload;
+  };
   const form = useForm({
     defaultValues: formDefaultValue,
     onSubmit: async ({ value }) => {
