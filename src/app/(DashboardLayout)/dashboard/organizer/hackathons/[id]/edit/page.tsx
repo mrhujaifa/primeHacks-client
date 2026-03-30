@@ -3,7 +3,7 @@ import { hackathonKeys } from "@/hooks/hackathon/hackathon.keys";
 import {
   getAllHackathonCategoriesQueryFn,
   getHackathonByidServerQureryFn,
-} from "@/hooks/hackathon/hackathon.queries";
+} from "@/hooks/hackathon/hackathon.queries-server";
 import { getQueryClient } from "@/lib/Tanstack/queryClient";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { cookies } from "next/headers";

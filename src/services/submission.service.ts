@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { httpClient } from "@/lib/Axios/axios";
-import { ICreateSubmissionPayload } from "@/types/submission.type";
+import {
+  ICreateSubmissionPayload,
+  IMySubmission,
+} from "@/types/submission.type";
 
 const createSubmisson = async (
   hackathonId: string,
@@ -22,7 +25,32 @@ const createSubmisson = async (
     throw error;
   }
 };
+// * Get My Submissions by Hackathon ID
+
+const getMySubmissionsByHackathonId = async (cookieHeader?: string) => {
+  try {
+    const res = await httpClient.get<IMySubmission[]>(
+      "/submission/my-submission",
+      {
+        headers: cookieHeader
+          ? {
+              Cookie: cookieHeader,
+            }
+          : undefined,
+      },
+    );
+
+    if (!res.success) {
+      throw new Error("my submission data fetched faild");
+    }
+
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const SubmissionServices = {
   createSubmisson,
+  getMySubmissionsByHackathonId,
 };

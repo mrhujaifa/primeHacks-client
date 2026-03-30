@@ -19,7 +19,7 @@ import toast from "react-hot-toast";
 import { hackathonKeys } from "@/hooks/hackathon/hackathon.keys";
 import { BackendHackathon, HackathonStatus } from "@/types/hackathon.types";
 import { HackathonServices } from "@/services/hackathon.service";
-import { getOwnHackathonsClientQueryFn } from "@/hooks/hackathon/hackathon.queries";
+import { getOwnHackathonsClientQueryFn } from "@/hooks/hackathon/hackathon.queries.client";
 
 const statusStyles: Record<HackathonStatus, string> = {
   ONGOING:

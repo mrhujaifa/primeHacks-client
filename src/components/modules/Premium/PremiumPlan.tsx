@@ -1,3 +1,6 @@
+"use client";
+
+import { createCheckoutSession } from "@/services/payment.service";
 import {
   ArrowRight,
   BadgeCheck,
@@ -6,9 +9,29 @@ import {
   Crown,
   Sparkles,
 } from "lucide-react";
-import Link from "next/link";
+import { useState } from "react";
 
 const PremiumPlan = () => {
+  const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
+
+  const handleSubscribe = async (plan: "MONTHLY" | "YEARLY") => {
+    try {
+      setLoadingPlan(plan);
+
+      const res = await createCheckoutSession(plan);
+      const checkoutUrl = res?.data?.checkoutUrl;
+
+      if (checkoutUrl) {
+        window.location.href = checkoutUrl;
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Failed to redirect to payment page");
+    } finally {
+      setLoadingPlan(null);
+    }
+  };
+
   const pricingPlans = [
     {
       name: "Starter",
@@ -22,11 +45,11 @@ const PremiumPlan = () => {
         "Standard organizer support",
       ],
       cta: "Start Free",
-      href: "/register",
+      type: "FREE",
     },
     {
       name: "Plus",
-      price: "$19",
+      price: "$9.99",
       period: "/month",
       description: "For active organizations running recurring programs.",
       icon: Crown,
@@ -37,12 +60,13 @@ const PremiumPlan = () => {
         "Judging workflows and score visibility",
         "Priority support for event operations",
       ],
-      cta: "Choose Plus",
-      href: "/register",
+      cta: loadingPlan === "MONTHLY" ? "Redirecting..." : "Choose Plus",
+      type: "MONTHLY",
     },
     {
       name: "Business",
-      price: "50$",
+      price: "$49.99",
+      period: "/year",
       description: "For universities, accelerators, and large ecosystems.",
       icon: Building2,
       features: [
@@ -51,10 +75,11 @@ const PremiumPlan = () => {
         "Advanced onboarding and admin controls",
         "Dedicated success and launch planning",
       ],
-      cta: "Add Business workspace",
-      href: "/contact",
+      cta: loadingPlan === "YEARLY" ? "Redirecting..." : "Choose Business",
+      type: "YEARLY",
     },
   ];
+
   return (
     <section className="relative px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(103,232,249,0.08),transparent_24%)]" />
@@ -93,6 +118,7 @@ const PremiumPlan = () => {
                   <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/[0.06] text-cyan-100">
                     <Icon className="h-5 w-5" />
                   </div>
+
                   {plan.featured ? (
                     <span className="rounded-full border border-cyan-300/20 bg-cyan-300/10 px-3 py-1 text-xs font-medium text-cyan-100">
                       Most Popular
@@ -103,6 +129,7 @@ const PremiumPlan = () => {
                 <h3 className="mt-6 font-[family:var(--font-space-grotesk)] text-2xl font-semibold text-white">
                   {plan.name}
                 </h3>
+
                 <p className="mt-3 text-sm leading-7 text-slate-300">
                   {plan.description}
                 </p>
@@ -127,17 +154,31 @@ const PremiumPlan = () => {
                   ))}
                 </div>
 
-                <Link
-                  href={plan.href}
-                  className={`mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full px-5 py-3.5 text-sm font-semibold transition ${
-                    plan.featured
-                      ? "bg-[linear-gradient(135deg,#67e8f9,#f59e0b)] text-slate-950 hover:scale-[1.01]"
-                      : "border border-white/10 bg-white/[0.04] text-white hover:border-cyan-300/24 hover:bg-white/[0.06]"
-                  }`}
-                >
-                  {plan.cta}
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
+                {plan.type === "FREE" ? (
+                  <button
+                    type="button"
+                    className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-5 py-3.5 text-sm font-semibold text-white"
+                  >
+                    {plan.cta}
+                    <ArrowRight className="h-4 w-4" />
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() =>
+                      handleSubscribe(plan.type as "MONTHLY" | "YEARLY")
+                    }
+                    disabled={loadingPlan === plan.type}
+                    className={`mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full px-5 py-3.5 text-sm font-semibold transition ${
+                      plan.featured
+                        ? "bg-[linear-gradient(135deg,#67e8f9,#f59e0b)] text-slate-950 hover:scale-[1.01]"
+                        : "border border-white/10 bg-white/[0.04] text-white hover:border-cyan-300/24 hover:bg-white/[0.06]"
+                    } disabled:cursor-not-allowed disabled:opacity-70`}
+                  >
+                    {plan.cta}
+                    <ArrowRight className="h-4 w-4" />
+                  </button>
+                )}
               </article>
             );
           })}

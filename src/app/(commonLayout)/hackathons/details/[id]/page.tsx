@@ -1,6 +1,6 @@
 import HackathonDetailsPage from "@/components/modules/Hackathon/hackathon-details/HackathonDetailsPage";
 import { hackathonKeys } from "@/hooks/hackathon/hackathon.keys";
-import { getHackathonByidServerQureryFn } from "@/hooks/hackathon/hackathon.queries";
+import { getHackathonByidServerQureryFn } from "@/hooks/hackathon/hackathon.queries-server";
 import { getQueryClient } from "@/lib/Tanstack/queryClient";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { cookies } from "next/headers";

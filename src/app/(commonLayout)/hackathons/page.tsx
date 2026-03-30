@@ -1,6 +1,6 @@
 import AllHackathonsPageView from "@/components/modules/Hackathon/all-hackathons/AllHackathonsPageView";
 import { hackathonKeys } from "@/hooks/hackathon/hackathon.keys";
-import { getAllHackathonCategoriesQueryFn } from "@/hooks/hackathon/hackathon.queries";
+import { getAllHackathonCategoriesQueryFn } from "@/hooks/hackathon/hackathon.queries-server";
 import { getQueryClient } from "@/lib/Tanstack/queryClient";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 

@@ -71,7 +71,7 @@ export const organizerNavItems = (): NavSection[] => [
       },
       {
         title: "Hackathon Submissions",
-        href: "/dashboard/organizer/hackathon-submissions",
+        href: "/dashboard/my-submissions",
         icon: "FileSpreadsheet",
       },
 

@@ -5,7 +5,7 @@ import HackathonToolbar from "./HackathonToolbar";
 import HackathonGrid from "./HackathonGrid";
 import { useQuery } from "@tanstack/react-query";
 import { hackathonKeys } from "@/hooks/hackathon/hackathon.keys";
-import { getAllHackathonsQueryFn } from "@/hooks/hackathon/hackathon.queries";
+import { getAllHackathonsQueryFn } from "@/hooks/hackathon/hackathon.queries-server";
 
 export default function AllHackathonsPageView({}) {
   const { data = [] } = useQuery({

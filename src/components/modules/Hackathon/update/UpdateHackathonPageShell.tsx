@@ -1,13 +1,11 @@
 "use client";
 
-import {
-  getAllHackathonCategoriesQueryFn,
-  getHackathonByidClientQureryFn,
-} from "@/hooks/hackathon/hackathon.queries";
 import { useQuery } from "@tanstack/react-query";
 import { hackathonKeys } from "@/hooks/hackathon/hackathon.keys";
 import UpdateHackathonHero from "./UpdateHackathonHero";
 import UpdateHackathonFormUI from "./UpdateHackathonForm";
+import { getHackathonByidClientQureryFn } from "@/hooks/hackathon/hackathon.queries.client";
+import { getAllHackathonCategoriesQueryFn } from "@/hooks/hackathon/hackathon.queries-server";
 
 export default function UpdateHackathonPageShell({
   hackathonId,

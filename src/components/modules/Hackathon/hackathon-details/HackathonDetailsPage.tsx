@@ -4,11 +4,11 @@ import { THackathonCardItem } from "@/services/hackathon.service";
 
 import { useQuery } from "@tanstack/react-query";
 import { hackathonKeys } from "@/hooks/hackathon/hackathon.keys";
-import { getHackathonByidClientQureryFn } from "@/hooks/hackathon/hackathon.queries";
 import HackathonBanner from "./components/HackathonBanner";
 import HackathonHeader from "./components/HackathonHeader";
 import HackathonDetailsContent from "./components/HackathonDetailsContent";
 import HackathonSidebar from "./components/HackathonDetailsSidebar";
+import { getHackathonByidClientQureryFn } from "@/hooks/hackathon/hackathon.queries.client";
 
 export type SharedProps = {
   hackathon: THackathonCardItem;
