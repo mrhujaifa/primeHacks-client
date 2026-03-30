@@ -9,7 +9,7 @@ if (!API_BASE_URL) {
 
 const axiosInstance = () => {
   const instance = axios.create({
-    baseURL: API_BASE_URL,
+    baseURL: "https://prisma-hacks.onrender.com/api/v1",
     timeout: 30000,
     withCredentials: true,
     headers: {

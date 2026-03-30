@@ -8,7 +8,7 @@ if (!NEXT_PUBLIC_API_BACKEND_URL) {
 }
 
 export const authClient = createAuthClient({
-  baseURL: NEXT_PUBLIC_API_BACKEND_URL,
+  baseURL: "https://prisma-hacks.onrender.com",
   basePath: "/api/auth",
   fetchOptions: {
     credentials: "include",

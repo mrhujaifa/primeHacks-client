@@ -20,11 +20,11 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/api/auth/:path*",
-        destination: "http://localhost:5000/api/auth/:path*",
+        destination: "https://prisma-hacks.onrender.com/api/auth/:path*",
       },
       {
         source: "/api/v1/:path*",
-        destination: "http://localhost:5000/api/v1/:path*",
+        destination: "https://prisma-hacks.onrender.com/api/v1/:path*",
       },
     ];
   },
