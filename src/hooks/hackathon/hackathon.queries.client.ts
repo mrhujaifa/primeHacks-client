@@ -1,3 +1,4 @@
+import { AdminServices } from "@/services/admin.service";
 import { HackathonServices } from "@/services/hackathon.service";
 import { SubmissionServices } from "@/services/submission.service";
 import { BackendHackathon } from "@/types/hackathon.types";
@@ -27,6 +28,16 @@ export const getMySubmissionsClientQueryFn = async () => {
 
   if (!res) {
     throw new Error("Get my submissions not found");
+  }
+
+  return res;
+};
+
+export const getAllUserClientQueryFn = async () => {
+  const res = await AdminServices.getAlluser();
+
+  if (!res) {
+    throw new Error("All user not found");
   }
 
   return res;

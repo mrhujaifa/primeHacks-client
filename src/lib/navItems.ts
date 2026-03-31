@@ -110,8 +110,8 @@ export const adminNavItems = (): NavSection[] => [
     title: "Admin Dashboard",
     items: [
       {
-        title: "Total Users",
-        href: "/dashboard/admin/total-users",
+        title: "All Users",
+        href: "/dashboard/admin/all-users",
         icon: "Users",
       },
       {
