@@ -2,6 +2,7 @@ import { HackathonServices } from "@/services/hackathon.service";
 import { SubmissionServices } from "@/services/submission.service";
 import { ICreateSubmissionPayload } from "@/types/submission.type";
 
+//* Update  submission mutation fn
 export const updateHackathonMutationFn = async ({
   id,
   payload,
@@ -12,6 +13,7 @@ export const updateHackathonMutationFn = async ({
   return await HackathonServices.updateHackathon(id, payload);
 };
 
+//* create  submission mutation fn
 export const createSubmissionMutationFn = async (
   hackathonId: string,
   payload: ICreateSubmissionPayload,
