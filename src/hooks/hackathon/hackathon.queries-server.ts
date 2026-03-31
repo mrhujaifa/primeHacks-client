@@ -1,8 +1,4 @@
-import {
-  HackathonServices,
-  THackathonCardItem,
-} from "@/services/hackathon.service";
-import { SubmissionServices } from "@/services/submission.service";
+import { THackathonCardItem } from "@/services/hackathon.service";
 import { BackendHackathon, IHackathonCategory } from "@/types/hackathon.types";
 
 const BASE_API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -12,12 +8,12 @@ export const getOwnHackathonsServerQueryFn = async (
 ): Promise<BackendHackathon[]> => {
   const res = await fetch(`${BASE_API_URL}/hackathons/my-hackathons`, {
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       Cookie: cookieHeader,
     },
   });
   if (!res.ok) {
-    throw new Error('Failed to fetch own hackathons');
+    throw new Error("Failed to fetch own hackathons");
   }
   const data = await res.json();
   return data.data || [];
@@ -29,12 +25,12 @@ export const getHackathonByidServerQureryFn = async (
 ): Promise<BackendHackathon> => {
   const res = await fetch(`${BASE_API_URL}/hackathons/${hackathonId}`, {
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       Cookie: cookieHeader,
     },
   });
   if (!res.ok) {
-    throw new Error('Failed to fetch hackathon');
+    throw new Error("Failed to fetch hackathon");
   }
   const data = await res.json();
   return data;
@@ -45,7 +41,7 @@ export const getAllHackathonCategoriesQueryFn = async (): Promise<
 > => {
   const res = await fetch(`${BASE_API_URL}/hackathons/category`);
   if (!res.ok) {
-    throw new Error('Failed to fetch categories');
+    throw new Error("Failed to fetch categories");
   }
   const data = await res.json();
   return data.data || [];
@@ -56,7 +52,7 @@ export const getAllHackathonsQueryFn = async (): Promise<
 > => {
   const res = await fetch(`${BASE_API_URL}/hackathons`);
   if (!res.ok) {
-    throw new Error('Failed to fetch all hackathons');
+    throw new Error("Failed to fetch all hackathons");
   }
   const data = await res.json();
   return data.data || [];
@@ -67,12 +63,12 @@ export const getAllHackathonsQueryFn = async (): Promise<
 export const getMySubmissionsServerQueryFn = async (cookie: string) => {
   const res = await fetch(`${BASE_API_URL}/submission/my-submission`, {
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       Cookie: cookie,
     },
   });
   if (!res.ok) {
-    throw new Error('Failed to fetch submissions');
+    throw new Error("Failed to fetch submissions");
   }
   const data = await res.json();
   return data.data || [];
