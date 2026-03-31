@@ -200,6 +200,11 @@ export default function FeaturedHackathons() {
                   <button className="inline-flex items-center gap-2 rounded-xl border border-cyan-300/20 bg-cyan-400/10 px-3.5 py-2 text-[13px] font-semibold text-cyan-100 transition hover:border-cyan-300/40 hover:bg-cyan-400/15">
                     View
                     <ArrowRight className="h-4 w-4" />
+                    {/* Updated to theme button */}
+                  </button>
+                  <button className="btn-theme-outline">
+                    View
+                    <ArrowRight className="h-4 w-4" />
                   </button>
                 </div>
               </div>
@@ -208,10 +213,7 @@ export default function FeaturedHackathons() {
         </div>
 
         <div className="mt-12 flex justify-center">
-          <Link
-            href="/hackathons"
-            className="inline-flex items-center justify-center gap-2 rounded-2xl border border-cyan-300/20 bg-white/[0.04] px-6 py-3.5 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(8,15,30,0.35)] backdrop-blur-md transition hover:border-cyan-300/40 hover:bg-white/[0.07]"
-          >
+          <Link href="/hackathons" className="btn-theme">
             See all hackathons
             <ArrowRight className="h-4 w-4" />
           </Link>
