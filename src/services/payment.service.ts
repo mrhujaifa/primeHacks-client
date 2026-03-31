@@ -3,6 +3,8 @@ import { httpClient } from "@/lib/Axios/axios";
 type CheckOutResponse = {
   checkoutUrl: string;
 };
+
+//* create checkout session
 export const createCheckoutSession = async (plan: "MONTHLY" | "YEARLY") => {
   try {
     const res = await httpClient.post<CheckOutResponse>(
@@ -18,6 +20,8 @@ export const createCheckoutSession = async (plan: "MONTHLY" | "YEARLY") => {
     throw error;
   }
 };
+
+//* verify payment session
 
 export const verifyPaymentSession = async (sessionId: string) => {
   try {

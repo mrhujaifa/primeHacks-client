@@ -126,6 +126,7 @@ const getAllHackathonCategories = async () => {
   }
 };
 
+//* get All hackathons
 const getAllHackathons = async () => {
   try {
     const res = await httpClient.get<BackendHackathon[]>("/hackathons");
