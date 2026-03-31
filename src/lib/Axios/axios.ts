@@ -2,7 +2,7 @@ import { ApiResponse } from "@/interface/api.interface";
 import axios from "axios";
 
 const isServer = typeof window === 'undefined';
-const API_BASE_URL = isServer ? process.env.NEXT_PUBLIC_API_BASE_URL as string : (process.env.NODE_ENV === 'production' ? '/api/v1' : process.env.NEXT_PUBLIC_API_BASE_URL as string);
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL as string;
 
 if (!API_BASE_URL) {
   throw new Error("API_BASE_URL is not defined in environment variables");
