@@ -10,11 +10,16 @@ import {
   Crown,
   Sparkles,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const PremiumPlan = () => {
   const { data } = useCurrentUser();
   const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const isPremiumUser = data?.isPremium === true;
 
@@ -106,7 +111,7 @@ const PremiumPlan = () => {
             workflow control that matches your organization.
           </p>
 
-          {isPremiumUser && (
+          {mounted && isPremiumUser && (
             <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-4 py-2 text-sm font-medium text-emerald-300">
               <BadgeCheck className="h-4 w-4" />
               You already have a premium plan
@@ -183,14 +188,14 @@ const PremiumPlan = () => {
                     onClick={() =>
                       handleSubscribe(plan.type as "MONTHLY" | "YEARLY")
                     }
-                    disabled={loadingPlan === plan.type || isPremiumUser}
+                    disabled={loadingPlan === plan.type || (mounted && isPremiumUser)}
                     className={`mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full px-5 py-3.5 text-sm font-semibold transition ${
                       plan.featured
                         ? "bg-[linear-gradient(135deg,#67e8f9,#f59e0b)] text-slate-950 hover:scale-[1.01]"
                         : "border border-white/10 bg-white/[0.04] text-white hover:border-cyan-300/24 hover:bg-white/[0.06]"
                     } disabled:cursor-not-allowed disabled:opacity-70`}
                   >
-                    {isPaidPlan && isPremiumUser
+                    {isPaidPlan && mounted && isPremiumUser
                       ? "Already Subscribed"
                       : plan.cta}
                     <ArrowRight className="h-4 w-4" />

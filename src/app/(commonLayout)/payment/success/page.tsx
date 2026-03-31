@@ -1,12 +1,28 @@
+"use client";
+
 import Link from "next/link";
 import { CheckCircle2, ArrowRight } from "lucide-react";
+import { useEffect } from "react";
+import { verifyPaymentSession } from "@/services/payment.service";
+import { useRouter, useSearchParams } from "next/navigation";
 
-const PaymentSuccessPage = async ({
-  searchParams,
-}: {
-  searchParams: Promise<{ session_id?: string }>;
-}) => {
-  const { session_id } = await searchParams;
+const PaymentSuccessPage = () => {
+  const searchParams = useSearchParams();
+  const session_id = searchParams.get("session_id");
+  const router = useRouter();
+
+  useEffect(() => {
+    if (session_id) {
+      verifyPaymentSession(session_id)
+        .then(() => {
+          // Refresh user data or redirect
+          router.refresh();
+        })
+        .catch((error) => {
+          console.error("Failed to verify payment session:", error);
+        });
+    }
+  }, [session_id, router]);
 
   return (
     <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-slate-950 px-4">

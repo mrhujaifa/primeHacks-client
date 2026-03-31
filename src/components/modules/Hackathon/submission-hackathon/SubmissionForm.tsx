@@ -23,6 +23,7 @@ const createSubmissionDefaultValues: ICreateSubmissionPayload = {
 };
 
 export const SubmissionForm = ({ hackathonId }: { hackathonId: string }) => {
+  console.log("SubmissionForm hackathonId:", hackathonId);
   const { mutateAsync, isPending } = useMutation({
     mutationKey: hackathonKeys.mutation.createSubmission(hackathonId),
     mutationFn: async (payload: ICreateSubmissionPayload) => {

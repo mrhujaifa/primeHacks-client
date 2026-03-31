@@ -12,6 +12,7 @@ import { getHackathonByidClientQureryFn } from "@/hooks/hackathon/hackathon.quer
 
 export type SharedProps = {
   hackathon: THackathonCardItem;
+  hackathonId?: string;
 };
 
 export const formatDisplayDate = (value?: string | null) => {
@@ -133,7 +134,7 @@ export default function HackathonDetailsPage({
             <HackathonDetailsContent hackathon={hackathon} />
           </div>
 
-          <HackathonSidebar hackathon={hackathon} />
+          <HackathonSidebar hackathon={hackathon} hackathonId={hackathonId} />
         </div>
       </div>
     </section>

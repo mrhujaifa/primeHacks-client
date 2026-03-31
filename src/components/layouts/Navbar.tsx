@@ -90,12 +90,6 @@ export default function PrimeHacksNavbar() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  useEffect(() => {
-    if (mobileOpen) {
-      setSearchOpen(false);
-    }
-  }, [mobileOpen]);
-
   return (
     <>
       <header
@@ -199,7 +193,10 @@ export default function PrimeHacksNavbar() {
             {/* Mobile Toggle */}
             <button
               type="button"
-              onClick={() => setMobileOpen((prev) => !prev)}
+              onClick={() => {
+                setMobileOpen((prev) => !prev);
+                if (!mobileOpen) setSearchOpen(false);
+              }}
               className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] text-slate-200 lg:hidden"
               aria-label="Toggle menu"
             >

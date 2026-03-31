@@ -18,3 +18,13 @@ export const createCheckoutSession = async (plan: "MONTHLY" | "YEARLY") => {
     throw error;
   }
 };
+
+export const verifyPaymentSession = async (sessionId: string) => {
+  try {
+    const res = await httpClient.get(`/payments/verify-session/${sessionId}`);
+    return res;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

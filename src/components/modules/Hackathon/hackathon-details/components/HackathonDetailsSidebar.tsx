@@ -15,7 +15,10 @@ import {
 import { formatDisplayDate, SharedProps } from "../HackathonDetailsPage";
 import { ProjectSubmissionModal } from "../../submission-hackathon/ProjectSubmissionModal";
 
-const HackathonSidebar = ({ hackathon }: SharedProps) => {
+const HackathonSidebar = ({
+  hackathon,
+  hackathonId,
+}: SharedProps & { hackathonId: string }) => {
   const prizeText = hackathon.prizePoolText || hackathon.prizePool || "TBA";
   const prizeCurrency = hackathon.currency || "USD";
   const tagList = hackathon.categories || [];
@@ -212,7 +215,7 @@ const HackathonSidebar = ({ hackathon }: SharedProps) => {
         </div>
       </div>
 
-      <ProjectSubmissionModal hackathonId={hackathon.id} />
+      <ProjectSubmissionModal hackathonId={hackathonId} />
     </aside>
   );
 };
