@@ -1,5 +1,6 @@
 "use client";
 
+import { useCurrentUser } from "@/hooks/useSession";
 import { createCheckoutSession } from "@/services/payment.service";
 import {
   ArrowRight,
@@ -12,9 +13,14 @@ import {
 import { useState } from "react";
 
 const PremiumPlan = () => {
+  const { data } = useCurrentUser();
   const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
 
+  const isPremiumUser = data?.isPremium === true;
+
   const handleSubscribe = async (plan: "MONTHLY" | "YEARLY") => {
+    if (isPremiumUser) return;
+
     try {
       setLoadingPlan(plan);
 
@@ -99,11 +105,20 @@ const PremiumPlan = () => {
             Start simple, upgrade when your events grow, and choose the level of
             workflow control that matches your organization.
           </p>
+
+          {isPremiumUser && (
+            <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-4 py-2 text-sm font-medium text-emerald-300">
+              <BadgeCheck className="h-4 w-4" />
+              You already have a premium plan
+            </div>
+          )}
         </div>
 
         <div className="mt-14 grid gap-6 lg:grid-cols-3">
           {pricingPlans.map((plan) => {
             const Icon = plan.icon;
+            const isPaidPlan =
+              plan.type === "MONTHLY" || plan.type === "YEARLY";
 
             return (
               <article
@@ -168,14 +183,16 @@ const PremiumPlan = () => {
                     onClick={() =>
                       handleSubscribe(plan.type as "MONTHLY" | "YEARLY")
                     }
-                    disabled={loadingPlan === plan.type}
+                    disabled={loadingPlan === plan.type || isPremiumUser}
                     className={`mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full px-5 py-3.5 text-sm font-semibold transition ${
                       plan.featured
                         ? "bg-[linear-gradient(135deg,#67e8f9,#f59e0b)] text-slate-950 hover:scale-[1.01]"
                         : "border border-white/10 bg-white/[0.04] text-white hover:border-cyan-300/24 hover:bg-white/[0.06]"
                     } disabled:cursor-not-allowed disabled:opacity-70`}
                   >
-                    {plan.cta}
+                    {isPaidPlan && isPremiumUser
+                      ? "Already Subscribed"
+                      : plan.cta}
                     <ArrowRight className="h-4 w-4" />
                   </button>
                 )}

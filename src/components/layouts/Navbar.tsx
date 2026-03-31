@@ -162,7 +162,20 @@ export default function PrimeHacksNavbar() {
                 <span className="relative">Premium</span>
               </Link>
 
-              {user ? (
+              {isPending ? (
+                <div className="group flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.04] pl-1.5 pr-3 py-1.5 text-left shadow-[0_10px_30px_rgba(2,8,18,0.16)] backdrop-blur-xl">
+                  <div className="relative h-10 w-10 overflow-hidden rounded-full ring-2 ring-white/10">
+                    <div className="h-full w-full animate-pulse bg-white/[0.08]" />
+                  </div>
+
+                  <div className="hidden min-w-[140px] sm:block">
+                    <div className="h-4 w-32 animate-pulse rounded bg-white/[0.08]" />
+                    <div className="mt-2 h-3 w-24 animate-pulse rounded bg-white/[0.06]" />
+                  </div>
+
+                  <div className="h-4 w-4 animate-pulse rounded bg-white/[0.08]" />
+                </div>
+              ) : user ? (
                 <ProfileDropdown />
               ) : (
                 <>
@@ -314,22 +327,35 @@ export default function PrimeHacksNavbar() {
           <div className="my-4 h-px bg-white/10" />
 
           <div className="flex flex-col gap-2">
-            <Link
-              href="/login"
-              onClick={() => setMobileOpen(false)}
-              className="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm font-medium text-slate-200 transition hover:bg-white/[0.06]"
-            >
-              Sign in
-            </Link>
+            {isPending ? (
+              <>
+                <div className="h-12 animate-pulse rounded-2xl border border-white/10 bg-white/[0.04]" />
+                <div className="h-12 animate-pulse rounded-2xl bg-white/[0.06]" />
+              </>
+            ) : user ? (
+              <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm font-medium text-slate-200">
+                Signed in as {user.name}
+              </div>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  onClick={() => setMobileOpen(false)}
+                  className="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm font-medium text-slate-200 transition hover:bg-white/[0.06]"
+                >
+                  Sign in
+                </Link>
 
-            <Link
-              href="/register"
-              onClick={() => setMobileOpen(false)}
-              className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[linear-gradient(135deg,#67e8f9,#f59e0b)] px-4 py-3 text-sm font-semibold text-slate-950 transition hover:opacity-90"
-            >
-              Launch Workspace
-              <ArrowRight className="h-4 w-4" />
-            </Link>
+                <Link
+                  href="/register"
+                  onClick={() => setMobileOpen(false)}
+                  className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[linear-gradient(135deg,#67e8f9,#f59e0b)] px-4 py-3 text-sm font-semibold text-slate-950 transition hover:opacity-90"
+                >
+                  Launch Workspace
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>

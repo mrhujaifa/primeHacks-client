@@ -11,12 +11,28 @@ import {
   User,
 } from "lucide-react";
 import { useCurrentUser } from "@/hooks/useSession";
+import { logoutUser } from "@/services/user.service";
+import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function ProfileDropdown() {
   const { data: user, isPending } = useCurrentUser();
   const [open, setOpen] = useState(false);
 
-  console.log(user);
+  const router = useRouter();
+
+  const queryClinet = useQueryClient();
+  const handleLogout = async () => {
+    try {
+      await logoutUser();
+      queryClinet.clear();
+      router.push("/login");
+      router.refresh();
+    } catch (error) {
+      throw error;
+    }
+  };
+
   return (
     <div
       className="relative"
@@ -28,19 +44,31 @@ export default function ProfileDropdown() {
         type="button"
         className="group flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.04] pl-1.5 pr-3 py-1.5 text-left shadow-[0_10px_30px_rgba(2,8,18,0.16)] backdrop-blur-xl transition duration-200 hover:border-cyan-300/20 hover:bg-white/[0.08]"
       >
-        <div className="relative h-10 w-10 overflow-hidden rounded-full ring-2 ring-white/10 transition group-hover:ring-cyan-300/30">
-          <img
-            src={user.image || "https://i.pravatar.cc/100?img=12"}
-            alt="Profile"
-            className="h-full w-full object-cover"
-          />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(2,6,23,0.08))]" />
-        </div>
+        {isPending ? (
+          <>
+            <div className="relative h-10 w-10 overflow-hidden rounded-full ring-2 ring-white/10 animate-pulse bg-white/10" />
+            <div className="hidden min-w-[90px] sm:block">
+              <div className="h-4 w-20 rounded bg-white/10 animate-pulse" />
+              <div className="mt-2 h-3 w-16 rounded bg-white/10 animate-pulse" />
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="relative h-10 w-10 overflow-hidden rounded-full ring-2 ring-white/10 transition group-hover:ring-cyan-300/30">
+              <img
+                src={user?.image || "https://i.pravatar.cc/100?img=12"}
+                alt="Profile"
+                className="h-full w-full object-cover"
+              />
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(2,6,23,0.08))]" />
+            </div>
 
-        <div className="hidden min-w-[90px] sm:block">
-          <p className="text-sm font-semibold text-white">{user.name}</p>
-          <p className="text-[11px] text-slate-400">{user.role} Account</p>
-        </div>
+            <div className="hidden min-w-[90px] sm:block">
+              <p className="text-sm font-semibold text-white">{user?.name}</p>
+              <p className="text-[11px] text-slate-400">{user?.role} Account</p>
+            </div>
+          </>
+        )}
 
         <ChevronDown
           className={`h-4 w-4 text-slate-400 transition duration-200 ${
@@ -63,26 +91,43 @@ export default function ProfileDropdown() {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(103,232,249,0.14),transparent_30%),radial-gradient(circle_at_left,rgba(245,158,11,0.12),transparent_26%)]" />
 
             <div className="relative flex items-center gap-3">
-              <div className="h-14 w-14 overflow-hidden rounded-2xl ring-1 ring-white/10">
-                <img
-                  src={user.image || "https://i.pravatar.cc/100?img=12"}
-                  alt="Profile"
-                  className="h-full w-full object-cover"
-                />
-              </div>
+              {isPending ? (
+                <>
+                  <div className="h-14 w-14 rounded-2xl ring-1 ring-white/10 animate-pulse bg-white/10" />
 
-              <div className="min-w-0 flex-1">
-                <h4 className="truncate text-sm font-semibold text-white">
-                  {user.name}
-                </h4>
-                <p className="truncate text-xs text-slate-400">{user?.email}</p>
+                  <div className="min-w-0 flex-1">
+                    <div className="h-4 w-28 rounded bg-white/10 animate-pulse" />
+                    <div className="mt-2 h-3 w-36 rounded bg-white/10 animate-pulse" />
+                    <div className="mt-2 h-6 w-28 rounded-full bg-white/10 animate-pulse" />
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="h-14 w-14 overflow-hidden rounded-2xl ring-1 ring-white/10">
+                    <img
+                      src={user?.image || "https://i.pravatar.cc/100?img=12"}
+                      alt="Profile"
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
 
-                {/*TODO: if user buy priemium conditional handle  */}
-                <div className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-amber-300/20 bg-amber-400/10 px-2.5 py-1 text-[11px] font-medium text-amber-200">
-                  <Crown className="h-3.5 w-3.5" />
-                  Premium Builder
-                </div>
-              </div>
+                  <div className="min-w-0 flex-1">
+                    <h4 className="truncate text-sm font-semibold text-white">
+                      {user?.name}
+                    </h4>
+                    <p className="truncate text-xs text-slate-400">
+                      {user?.email}
+                    </p>
+
+                    {user?.isPremium && (
+                      <div className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-amber-300/20 bg-amber-400/10 px-2.5 py-1 text-[11px] font-medium text-amber-200">
+                        <Crown className="h-3.5 w-3.5" />
+                        Premium Builder
+                      </div>
+                    )}
+                  </div>
+                </>
+              )}
             </div>
           </div>
 
@@ -132,6 +177,7 @@ export default function ProfileDropdown() {
           <div className="border-t border-white/8 p-2">
             <button
               type="button"
+              onClick={() => handleLogout()}
               className="flex w-full items-center gap-3 rounded-2xl px-3.5 py-3 text-sm font-medium text-rose-200 transition hover:bg-rose-500/10 hover:text-rose-100"
             >
               <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-rose-300/10 bg-rose-500/10">
