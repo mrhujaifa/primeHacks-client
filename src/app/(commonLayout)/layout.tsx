@@ -7,7 +7,7 @@ const CommonLayout = ({ children }: { children: React.ReactNode }) => {
     <div>
       <PrimeHacksNavbar />
       {children}
-      <PrimeHacksFooter />
+      {/* <PrimeHacksFooter /> */}
     </div>
   );
 };

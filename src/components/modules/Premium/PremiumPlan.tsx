@@ -188,7 +188,9 @@ const PremiumPlan = () => {
                     onClick={() =>
                       handleSubscribe(plan.type as "MONTHLY" | "YEARLY")
                     }
-                    disabled={loadingPlan === plan.type || (mounted && isPremiumUser)}
+                    disabled={
+                      loadingPlan === plan.type || (mounted && isPremiumUser)
+                    }
                     className={`mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full px-5 py-3.5 text-sm font-semibold transition ${
                       plan.featured
                         ? "bg-[linear-gradient(135deg,#67e8f9,#f59e0b)] text-slate-950 hover:scale-[1.01]"
