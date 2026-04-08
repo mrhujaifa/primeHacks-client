@@ -6,9 +6,22 @@ import { ILoginPayload, loginZodSchema } from "@/Zod/auth.validation";
 import { httpClient } from "@/lib/Axios/axios";
 import { setTokenInCookies } from "@/lib/utils/tokenUtils";
 import axios from "axios";
-import { redirect } from "next/navigation";
 
-export const loginAction = async (payload: ILoginPayload) => {
+export type LoginActionResult =
+  | {
+      success: true;
+      message: string;
+      user: ILoginResponse["user"];
+    }
+  | {
+      success: false;
+      message: string;
+      statusCode?: number;
+    };
+
+export const loginAction = async (
+  payload: ILoginPayload,
+): Promise<LoginActionResult> => {
   // validation data use zod
   const parsedPayload = loginZodSchema.safeParse(payload);
 
@@ -31,22 +44,16 @@ export const loginAction = async (payload: ILoginPayload) => {
     await setTokenInCookies("refreshToken", refreshToken);
     await setTokenInCookies("better-auth.session_token", token);
 
-    redirect("/dashboard");
+    return {
+      success: true,
+      message: "Login successful",
+      user: response.data.user,
+    };
   } catch (error: any) {
-    if (
-      error &&
-      typeof error === "object" &&
-      "digest" in error &&
-      typeof error.digest === "string" &&
-      error.digest.startsWith("NEXT_REDIRECT")
-    ) {
-      throw error;
-    }
-
     if (axios.isAxiosError(error)) {
       return {
         success: false,
-        message: error.response?.data?.message,
+        message: error.response?.data?.message || "Login failed",
         statusCode: error.response?.status,
       };
     }
