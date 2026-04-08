@@ -2,12 +2,40 @@
 
 import React from "react";
 import { Bell, ChevronDown, Menu } from "lucide-react";
+import { LogOut } from "lucide-react";
 import { useCurrentUser } from "@/hooks/useSession";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import BrandMark from "@/components/ui/BrandMark";
+import { logoutUser } from "@/services/user.service";
+import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import { useState } from "react";
 
 const DashboardNavbar = () => {
   const { data: user } = useCurrentUser();
+  const router = useRouter();
+  const queryClient = useQueryClient();
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+
+  const handleLogout = async () => {
+    if (isLoggingOut) return;
+
+    setIsLoggingOut(true);
+
+    try {
+      await logoutUser();
+      queryClient.clear();
+      toast.success("Signed out successfully");
+      router.replace("/login");
+      router.refresh();
+    } catch (error) {
+      console.error("Logout failed:", error);
+      toast.error("Failed to sign out. Please try again.");
+    } finally {
+      setIsLoggingOut(false);
+    }
+  };
 
   return (
     <nav className="sticky top-0 z-40 border-b border-border/70 bg-navbar/78 backdrop-blur-xl">
@@ -84,9 +112,15 @@ const DashboardNavbar = () => {
                 <a className="rounded-xl hover:bg-accent/80">Notifications</a>
               </li>
               <li>
-                <a className="rounded-xl text-destructive hover:bg-destructive/10">
-                  Logout
-                </a>
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  disabled={isLoggingOut}
+                  className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-destructive transition hover:bg-destructive/10 disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  <LogOut size={16} />
+                  {isLoggingOut ? "Signing out..." : "Logout"}
+                </button>
               </li>
             </ul>
           </div>

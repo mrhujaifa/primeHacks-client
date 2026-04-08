@@ -4,58 +4,33 @@ import {
   ICreateSubmissionPayload,
   IMySubmission,
 } from "@/types/submission.type";
-// import { headers } from "next/headers";
-
-const BASE_API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const createSubmission = async (
   hackathonId: string,
   payload: ICreateSubmissionPayload,
 ) => {
-  const res = await fetch(
-    `${BASE_API_URL}/submission/hackathon/${hackathonId}`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify(payload),
-    },
-  );
-
-  const data = await res.json().catch(() => null);
-
-  if (!res.ok) {
-    throw new Error(
-      data?.message || "Something went wrong while creating submission",
-    );
-  }
-
-  return data;
+  return await httpClient.post(`/submission/hackathon/${hackathonId}`, payload);
 };
-// * Get My Submissions by Hackathon ID
 
-const getMySubmissionsByHackathonId = async (cookieHeader?: string) => {
+// * Get My Submissions
+const getMySubmissionsByHackathonId = async (): Promise<IMySubmission[]> => {
   try {
     const res = await httpClient.get<IMySubmission[]>(
       "/submission/my-submission",
-      {
-        headers: cookieHeader
-          ? {
-              Cookie: cookieHeader,
-            }
-          : undefined,
-      },
     );
 
     if (!res.success) {
-      throw new Error("my submission data fetched faild");
+      throw new Error(res.message || "My submission data fetch failed");
     }
 
-    return res.data;
-  } catch (error) {
-    console.log(error);
+    return res.data || [];
+  } catch (error: any) {
+    console.log("getMySubmissionsByHackathonId error:", error);
+    throw new Error(
+      error?.response?.data?.message ||
+        error?.message ||
+        "Failed to fetch my submissions",
+    );
   }
 };
 
@@ -63,5 +38,3 @@ export const SubmissionServices = {
   createSubmission,
   getMySubmissionsByHackathonId,
 };
-
-//  `/submission/hackathon/${hackathonId}`,

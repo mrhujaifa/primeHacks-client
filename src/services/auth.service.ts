@@ -11,10 +11,9 @@ if (!BASE_API_URL) {
 export async function getUserInfo() {
   try {
     const cookieStore = await cookies();
-    const accessToken = cookieStore.get("accessToken")?.value;
-    const sessionToken = cookieStore.get("better-auth.session_token")?.value;
+    const cookieHeader = cookieStore.toString();
 
-    if (!accessToken) {
+    if (!cookieHeader) {
       return null;
     }
 
@@ -22,7 +21,7 @@ export async function getUserInfo() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Cookie: `accessToken=${accessToken}; better-auth.session_token=${sessionToken}`,
+        Cookie: cookieHeader,
       },
     });
 
