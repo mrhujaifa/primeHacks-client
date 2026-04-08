@@ -4,7 +4,7 @@ import React from "react";
 
 const DashboardRootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="drawer bg-[#071521] text-slate-100 lg:drawer-open">
+    <div className="drawer bg-background text-foreground lg:drawer-open">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
 
       <div className="drawer-content min-h-screen">
@@ -19,10 +19,10 @@ const DashboardRootLayout = ({ children }: { children: React.ReactNode }) => {
         <label
           htmlFor="my-drawer-4"
           aria-label="close sidebar"
-          className="drawer-overlay bg-black/45 lg:bg-transparent"
+          className="drawer-overlay bg-background/70 lg:bg-transparent"
         />
 
-        <div className="min-h-full border-r border-white/10">
+        <div className="min-h-full border-r border-border/70">
           <DashboardSidebar />
         </div>
       </div>

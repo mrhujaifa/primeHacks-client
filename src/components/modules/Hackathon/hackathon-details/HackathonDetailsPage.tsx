@@ -49,24 +49,25 @@ export const normalizeStatus = (status?: string) => {
   if (value === "ongoing" || value === "active" || value === "live") {
     return {
       label: "Ongoing",
-      className: "border-emerald-400/25 bg-emerald-500/12 text-emerald-300",
+      className: "border-success/25 bg-success/12 text-success",
     };
   }
   if (value === "extended" || value === "extended_deadline") {
     return {
       label: "Extended",
-      className: "border-orange-400/25 bg-orange-500/12 text-orange-300",
+      className:
+        "border-hero-tertiary/25 bg-hero-tertiary/12 text-hero-tertiary",
     };
   }
   if (value === "upcoming" || value === "published" || value === "draft") {
     return {
       label: "Upcoming",
-      className: "border-cyan-400/25 bg-cyan-500/12 text-cyan-300",
+      className: "border-primary/25 bg-primary/12 text-primary",
     };
   }
   return {
     label: status || "Open",
-    className: "border-white/10 bg-white/5 text-slate-200",
+    className: "border-border/70 bg-card/70 text-foreground",
   };
 };
 
@@ -91,10 +92,10 @@ export default function HackathonDetailsPage({
   if (isLoading) {
     return (
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.08),transparent_22%),radial-gradient(circle_at_top_right,rgba(249,115,22,0.08),transparent_24%),linear-gradient(180deg,#030712_0%,#07111f_45%,#020617_100%)]" />
-        <div className="absolute inset-0 opacity-[0.06] [background-image:linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px)] [background-size:32px_32px]" />
-        <div className="relative container mx-auto px-4 py-8 sm:px-6 lg:px-8 lg:py-10 mt-15">
-          <div className="rounded-[28px] border border-white/10 bg-white/[0.03] p-8 text-center text-slate-300 backdrop-blur-xl">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(124,92,255,0.08),transparent_22%),radial-gradient(circle_at_top_right,rgba(86,186,255,0.08),transparent_24%),linear-gradient(180deg,rgba(4,8,20,0.06)_0%,rgba(7,11,28,0.16)_45%,rgba(2,6,23,0.08)_100%)]" />
+        <div className="ph-grid absolute inset-0 opacity-[0.08]" />
+        <div className="relative container mx-auto mt-15 px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
+          <div className="card-theme rounded-[28px] p-8 text-center text-muted">
             Loading hackathon details...
           </div>
         </div>
@@ -105,28 +106,22 @@ export default function HackathonDetailsPage({
   if (isError || !hackathon) {
     return (
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.08),transparent_22%),radial-gradient(circle_at_top_right,rgba(249,115,22,0.08),transparent_24%),linear-gradient(180deg,#030712_0%,#07111f_45%,#020617_100%)]" />
-        <div className="absolute inset-0 opacity-[0.06] [background-image:linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px)] [background-size:32px_32px]" />
-        <div className="relative container mx-auto px-4 py-8 sm:px-6 lg:px-8 lg:py-10 mt-15">
-          <div className="rounded-[28px] border border-rose-500/20 bg-white/[0.03] p-8 text-center text-slate-300 backdrop-blur-xl">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(124,92,255,0.08),transparent_22%),radial-gradient(circle_at_top_right,rgba(86,186,255,0.08),transparent_24%),linear-gradient(180deg,rgba(4,8,20,0.06)_0%,rgba(7,11,28,0.16)_45%,rgba(2,6,23,0.08)_100%)]" />
+        <div className="ph-grid absolute inset-0 opacity-[0.08]" />
+        <div className="relative container mx-auto mt-15 px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
+          <div className="card-theme rounded-[28px] border-destructive/25 p-8 text-center text-muted">
             Unable to load hackathon details.
           </div>
         </div>
       </section>
     );
   }
-
-  const daysLeftText = getDaysLeft(
-    hackathon.submissionDeadline,
-    hackathon.daysLeftLabel,
-  );
-
   return (
-    <section className="relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.08),transparent_22%),radial-gradient(circle_at_top_right,rgba(249,115,22,0.08),transparent_24%),linear-gradient(180deg,#030712_0%,#07111f_45%,#020617_100%)]" />
-      <div className="absolute inset-0 opacity-[0.06] [background-image:linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px)] [background-size:32px_32px]" />
+    <section className=" relative overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(124,92,255,0.08),transparent_22%),radial-gradient(circle_at_top_right,rgba(86,186,255,0.08),transparent_24%),linear-gradient(180deg,rgba(4,8,20,0.06)_0%,rgba(7,11,28,0.16)_45%,rgba(2,6,23,0.08)_100%)]" />
+      <div className="ph-grid absolute inset-0 opacity-[0.08]" />
 
-      <div className="relative container mx-auto px-4 py-8 sm:px-6 lg:px-8 lg:py-10 mt-15">
+      <div className="relative container mx-auto mt-15 px-4 py-8 ">
         <div className="grid grid-cols-1 gap-8 xl:grid-cols-[minmax(0,1.55fr)_380px]">
           <div className="space-y-6">
             <HackathonBanner hackathon={hackathon} />

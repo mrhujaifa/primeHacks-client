@@ -17,7 +17,7 @@ export default function AllHackathonsPageView({}) {
 
   console.log(data);
   return (
-    <section className="relative overflow-hidden">
+    <section className="container mx-auto relative overflow-hidden">
       <div className="absolute inset-0 " />
       <div className="ph-grid pointer-events-none absolute inset-0 opacity-[0.08]" />
 

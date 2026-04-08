@@ -29,17 +29,17 @@ const Testimonials = () => {
       <div className="container mx-auto">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 rounded-full border border-amber-300/18 bg-amber-300/10 px-4 py-2 text-xs uppercase tracking-[0.32em] text-amber-100">
+            <div className="badge-theme">
               <MessagesSquare className="h-3.5 w-3.5" />
               Testimonials
             </div>
 
-            <h2 className="mt-6 font-[family:var(--font-space-grotesk)] text-4xl font-semibold tracking-[-0.05em] text-white sm:text-5xl">
+            <h2 className="mt-6 font-display text-4xl font-semibold tracking-[-0.05em] text-foreground sm:text-5xl">
               Teams choose structure when the event stakes get real
             </h2>
           </div>
 
-          <p className="max-w-xl text-sm leading-7 text-slate-300 sm:text-base">
+          <p className="max-w-xl text-sm leading-7 text-muted sm:text-base">
             The strongest platforms make it easier for people to understand the
             event, submit with confidence, and move through judging without
             confusion.
@@ -50,21 +50,21 @@ const Testimonials = () => {
           {testimonials.map((item) => (
             <article
               key={item.name}
-              className="ph-panel rounded-[30px] p-6 sm:p-7"
+              className="card-theme rounded-[30px] p-6 sm:p-7"
             >
-              <div className="flex items-center gap-1 text-amber-200">
+              <div className="flex items-center gap-1 text-primary">
                 {Array.from({ length: 5 }).map((_, index) => (
                   <Star key={index} className="h-4 w-4 fill-current" />
                 ))}
               </div>
 
-              <p className="mt-6 text-base leading-8 text-slate-200">
+              <p className="mt-6 text-base leading-8 text-foreground">
                 &ldquo;{item.quote}&rdquo;
               </p>
 
-              <div className="mt-8 border-t border-white/8 pt-5">
-                <p className="font-semibold text-white">{item.name}</p>
-                <p className="mt-1 text-sm text-slate-400">
+              <div className="mt-8 border-t border-border/70 pt-5">
+                <p className="font-semibold text-foreground">{item.name}</p>
+                <p className="mt-1 text-sm text-muted">
                   {item.role} - {item.company}
                 </p>
               </div>

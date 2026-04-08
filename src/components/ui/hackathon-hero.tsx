@@ -1,208 +1,116 @@
 import Link from "next/link";
-import {
-  ArrowRight,
-  BadgeCheck,
-  Boxes,
-  BrainCircuit,
-  Sparkles,
-  Trophy,
-  UsersRound,
-  Zap,
-} from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 
-const stats = [
+const heroSignals = [
   { value: "25K+", label: "global builders" },
-  { value: "320+", label: "live hackathons" },
-  { value: "48h", label: "launch-ready setup" },
+  { value: "320+", label: "hackathons launched" },
+  { value: "$2.4M+", label: "prize pools supported" },
 ];
 
-const quickSignals = [
-  { icon: UsersRound, title: "Active Teams", value: "1,248" },
-  { icon: Trophy, title: "Prize Pools", value: "$180K" },
-  { icon: BrainCircuit, title: "Live Judging", value: "32 panels" },
-];
+const heroBackgroundUrl =
+  "https://themes.muffingroup.com/be/ai3/wp-content/uploads/2024/08/ai3-home-bg1.webp";
 
 export default function HackathonHero() {
   return (
-    <section className="relative overflow-hidden px-4 pb-20 pt-32 sm:px-6 lg:px-8 lg:pb-28">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_18%,rgba(103,232,249,0.18),transparent_20%),radial-gradient(circle_at_82%_18%,rgba(245,158,11,0.12),transparent_18%),radial-gradient(circle_at_50%_78%,rgba(6,182,212,0.08),transparent_28%)]" />
+    <section className="relative min-h-[100svh] overflow-hidden pt-28 sm:pt-32 lg:pt-36">
+      <div
+        className="absolute inset-0"
+        style={{
+          background: `
+            radial-gradient(circle at 16% 18%, rgb(var(--hero-glow-primary) / 0.22), transparent 24%),
+            radial-gradient(circle at 86% 14%, rgb(var(--hero-glow-secondary) / 0.16), transparent 20%),
+            radial-gradient(circle at 88% 8%, rgb(var(--hero-glow-tertiary) / 0.18), transparent 16%),
+            linear-gradient(180deg, rgb(var(--background-elevated)) 0%, rgb(var(--background)) 46%, rgb(var(--background-deep)) 100%)
+          `,
+        }}
+      />
 
-      <div className="container mx-auto grid gap-14 lg:grid-cols-[1.04fr_0.96fr] lg:items-center">
-        <div className="relative z-10">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-cyan-300/18 bg-cyan-300/10 px-4 py-2 text-xs uppercase tracking-[0.32em] text-cyan-100">
-            <Sparkles className="h-3.5 w-3.5" />
-            3D Hackathon Experience
-          </div>
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: `url(${heroBackgroundUrl})`,
+          backgroundPosition: "center top",
+          opacity: 0.92,
+          maskImage:
+            "linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.98) 56%, rgba(0,0,0,0.48) 78%, transparent 100%)",
+          WebkitMaskImage:
+            "linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.98) 56%, rgba(0,0,0,0.48) 78%, transparent 100%)",
+        }}
+      />
 
-          <h1 className="max-w-4xl font-[family:var(--font-space-grotesk)] text-5xl font-semibold tracking-[-0.06em] text-white sm:text-6xl lg:text-7xl">
-            Build hackathons that feel
-            <span className="ph-text-gradient"> futuristic</span>,
-            <br />
-            run with
-            <span className="ph-amber-gradient"> production confidence</span>.
-          </h1>
+      <div
+        className="absolute inset-0"
+        style={{
+          background: `
+            radial-gradient(circle at 50% 14%, rgb(var(--hero-glow-primary) / 0.16), transparent 16%),
+            radial-gradient(circle at 82% 14%, rgb(var(--hero-glow-tertiary) / 0.16), transparent 18%),
+            radial-gradient(circle at 78% 78%, rgb(var(--hero-glow-secondary) / 0.16), transparent 24%)
+          `,
+        }}
+      />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,8,23,0.14)_0%,rgba(5,8,23,0.20)_16%,rgba(5,8,23,0.36)_54%,rgba(5,8,23,0.70)_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,8,23,0.64)_0%,rgba(5,8,23,0.34)_24%,rgba(5,8,23,0.10)_50%,rgba(5,8,23,0.34)_100%)]" />
+      <div
+        className="absolute inset-x-0 bottom-0 h-[42%]"
+        style={{
+          background: `
+            radial-gradient(circle at 16% 56%, rgb(var(--hero-glow-primary) / 0.18), transparent 26%),
+            radial-gradient(circle at 86% 50%, rgb(var(--hero-glow-secondary) / 0.16), transparent 28%),
+            linear-gradient(180deg, transparent 0%, rgb(var(--background)) 52%, rgb(var(--background-deep)) 100%)
+          `,
+        }}
+      />
+      <div className="absolute left-[-10%] top-[64%] h-px w-[130%] rotate-[-15deg] bg-[linear-gradient(90deg,transparent,rgba(255,124,247,0.34),rgba(92,193,255,0.24),transparent)] blur-sm" />
 
-          <p className="mt-6 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">
-            PrimeHacks gives your project a bold launchpad with immersive 3D
-            visuals, live operations storytelling, and a premium interface made
-            for organizers, judges, sponsors, and builders.
-          </p>
-
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link
-              href="/register"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-[linear-gradient(135deg,#67e8f9,#f59e0b)] px-6 py-3.5 text-sm font-semibold text-slate-950 transition hover:scale-[1.02]"
-            >
-              Start a Hackathon
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-
-            <Link
-              href="/login"
-              className="inline-flex items-center justify-center rounded-full border border-white/12 bg-white/[0.03] px-6 py-3.5 text-sm font-medium text-white transition hover:border-cyan-300/24 hover:bg-white/[0.05]"
-            >
-              Explore Dashboard
-            </Link>
-          </div>
-
-          <div className="mt-10 grid gap-4 sm:grid-cols-3">
-            {stats.map((stat) => (
-              <div
-                key={stat.label}
-                className="ph-panel rounded-[24px] px-5 py-5"
-              >
-                <p className="font-[family:var(--font-space-grotesk)] text-3xl font-semibold text-white">
-                  {stat.value}
-                </p>
-                <p className="mt-2 text-sm text-slate-400">{stat.label}</p>
+      <div className="relative z-10 flex min-h-[100svh] items-center">
+        <div className="container mx-auto px-6 pb-28 pt-8 sm:px-8 lg:px-12 lg:pb-36">
+          <div className="max-w-5xl">
+            <div className="max-w-[720px] text-left">
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/14 bg-white/[0.05] px-4 py-2 text-[11px] font-medium uppercase tracking-[0.28em] text-white/80 backdrop-blur-xl">
+              <Sparkles className="h-3.5 w-3.5 text-primary" />
+              AI-Powered Hackathon Platform
               </div>
-            ))}
-          </div>
-        </div>
 
-        <div className="relative">
-          <div className="ph-hero-perspective relative mx-auto flex h-[620px] w-full max-w-[620px] items-center justify-center">
-            <div className="ph-hero-grid-floor absolute inset-x-8 bottom-10 h-56 rounded-[40px]" />
-            <div className="ph-hero-ring ph-hero-ring-one absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-300/18" />
-            <div className="ph-hero-ring ph-hero-ring-two absolute left-1/2 top-1/2 h-[300px] w-[300px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-amber-300/18" />
+              <h1 className="mt-9 max-w-[11ch] font-display text-5xl font-semibold leading-[0.95] tracking-[-0.06em] text-white sm:text-6xl lg:text-[5.3rem]">
+                <span className="bg-[linear-gradient(135deg,#8e4dff_0%,#c35dff_54%,#ff88f6_100%)] bg-clip-text text-transparent">
+                  AI-Powered
+                </span>
+                <br />
+                Hackathons for
+                <br />
+                Builders Who Ship
+              </h1>
 
-            <div className="ph-panel ph-hero-core relative z-20 w-full max-w-[420px] overflow-hidden rounded-[34px] p-6 sm:p-7">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(103,232,249,0.18),transparent_24%),radial-gradient(circle_at_bottom_left,rgba(245,158,11,0.14),transparent_26%)]" />
-              <div className="relative">
-                <div className="mb-6 flex items-center justify-between">
-                  <div>
-                    <p className="text-xs uppercase tracking-[0.28em] text-cyan-200">
-                      PrimeHacks Console
-                    </p>
-                    <h2 className="mt-2 font-[family:var(--font-space-grotesk)] text-2xl font-semibold text-white">
-                      Orbiting event command
-                    </h2>
-                  </div>
-                  <div className="rounded-full border border-emerald-400/20 bg-emerald-400/12 px-3 py-1 text-xs font-medium text-emerald-200">
-                    Live sync
-                  </div>
-                </div>
+              <p className="mt-6 max-w-[640px] text-base leading-8 text-white/72 sm:text-lg">
+                Launch global hackathons, collect standout submissions, and
+                help creators, developers, and teams turn bold prototypes into
+                prize-winning products on one premium innovation platform.
+              </p>
 
-                <div className="grid gap-3 sm:grid-cols-3">
-                  {quickSignals.map((signal) => {
-                    const Icon = signal.icon;
+              <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+                <Link href="/register" className="btn-theme min-w-[220px]">
+                  Start 30 day trial
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
 
-                    return (
-                      <div
-                        key={signal.title}
-                        className="rounded-[22px] border border-white/8 bg-white/[0.04] p-4"
-                      >
-                        <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/[0.06] text-cyan-100">
-                          <Icon className="h-4 w-4" />
-                        </div>
-                        <p className="mt-4 text-xs uppercase tracking-[0.2em] text-slate-400">
-                          {signal.title}
-                        </p>
-                        <p className="mt-2 text-lg font-semibold text-white">
-                          {signal.value}
-                        </p>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                <div className="mt-4 rounded-[26px] border border-white/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02))] p-5">
-                  <div className="mb-4 flex items-center justify-between">
-                    <p className="text-sm font-medium text-white">
-                      Event readiness pulse
-                    </p>
-                    <BadgeCheck className="h-5 w-5 text-cyan-200" />
-                  </div>
-
-                  <div className="space-y-3">
-                    {[
-                      "Team onboarding pipeline active",
-                      "Project submission system connected",
-                      "Judging dashboards synced in real time",
-                    ].map((item, index) => (
-                      <div
-                        key={item}
-                        className="flex items-center gap-3 rounded-2xl border border-white/6 bg-black/10 px-4 py-3"
-                      >
-                        <div className="flex h-7 w-7 items-center justify-center rounded-full bg-cyan-300/12 text-xs font-semibold text-cyan-100">
-                          0{index + 1}
-                        </div>
-                        <p className="text-sm text-slate-300">{item}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                <Link href="/login" className="btn-theme-outline min-w-[220px]">
+                  Explore dashboard
+                </Link>
               </div>
             </div>
 
-            <div className="ph-hero-card ph-hero-card-left absolute left-0 top-16 z-10 w-[220px] rounded-[28px] border border-cyan-300/16 bg-[linear-gradient(180deg,rgba(7,20,31,0.94),rgba(7,17,27,0.76))] p-5 shadow-[0_30px_70px_rgba(2,8,18,0.32)] backdrop-blur-2xl">
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-300/12 text-cyan-100">
-                <Boxes className="h-5 w-5" />
-              </div>
-              <p className="text-xs uppercase tracking-[0.24em] text-slate-400">
-                Tracks Online
-              </p>
-              <p className="mt-2 font-[family:var(--font-space-grotesk)] text-3xl font-semibold text-white">
-                18
-              </p>
-              <p className="mt-3 text-sm leading-6 text-slate-300">
-                AI, fintech, health, climate, and sponsor-backed challenge
-                rooms.
-              </p>
-            </div>
-
-            <div className="ph-hero-card ph-hero-card-right absolute right-2 top-10 z-30 w-[210px] rounded-[28px] border border-amber-300/16 bg-[linear-gradient(180deg,rgba(28,18,7,0.92),rgba(19,12,5,0.72))] p-5 shadow-[0_30px_70px_rgba(2,8,18,0.32)] backdrop-blur-2xl">
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-300/12 text-amber-100">
-                <Zap className="h-5 w-5" />
-              </div>
-              <p className="text-xs uppercase tracking-[0.24em] text-slate-400">
-                Submission Surge
-              </p>
-              <p className="mt-2 font-[family:var(--font-space-grotesk)] text-3xl font-semibold text-white">
-                92%
-              </p>
-              <p className="mt-3 text-sm leading-6 text-slate-300">
-                Teams are shipping demos, repos, and pitches before deadline.
-              </p>
-            </div>
-
-            <div className="ph-hero-card ph-hero-card-bottom absolute bottom-8 right-10 z-10 w-[240px] rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(9,22,34,0.94),rgba(7,17,27,0.76))] p-5 shadow-[0_30px_70px_rgba(2,8,18,0.32)] backdrop-blur-2xl">
-              <p className="text-xs uppercase tracking-[0.24em] text-slate-400">
-                Sponsor Visibility
-              </p>
-              <div className="mt-3 flex items-end justify-between gap-3">
-                <div>
-                  <p className="font-[family:var(--font-space-grotesk)] text-3xl font-semibold text-white">
-                    14
+            <div className="mt-14 grid max-w-5xl gap-3 sm:grid-cols-3">
+              {heroSignals.map((signal) => (
+                <div
+                  key={signal.label}
+                  className="rounded-[1.6rem] border border-border/60 bg-[linear-gradient(180deg,rgba(18,22,46,0.52),rgba(10,14,32,0.62))] px-5 py-5 shadow-[0_18px_50px_rgba(2,6,23,0.16)] backdrop-blur-xl"
+                >
+                  <p className="font-display text-3xl font-semibold text-white">
+                    {signal.value}
                   </p>
-                  <p className="mt-1 text-sm text-slate-300">
-                    branded challenge partners
-                  </p>
+                  <p className="mt-2 text-sm text-white/62">{signal.label}</p>
                 </div>
-                <div className="rounded-2xl bg-cyan-300/12 px-3 py-2 text-xs font-medium text-cyan-100">
-                  Premium mode
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>

@@ -1,19 +1,23 @@
 import Image from "next/image";
-
 import Link from "next/link";
 import {
+  ArrowUpRight,
   CalendarDays,
   CircleDollarSign,
+  Disc3,
   Globe,
+  MapPin,
   MessageSquare,
   Tag,
   Trophy,
-  ArrowUpRight,
-  MapPin,
-  Disc3,
 } from "lucide-react";
-import { formatDisplayDate, SharedProps } from "../HackathonDetailsPage";
+import {
+  formatDisplayDate,
+  getDaysLeft,
+  SharedProps,
+} from "../HackathonDetailsPage";
 import { ProjectSubmissionModal } from "../../submission-hackathon/ProjectSubmissionModal";
+import HackathonTag from "../../all-hackathons/HackathonTag";
 
 const HackathonSidebar = ({
   hackathon,
@@ -22,103 +26,104 @@ const HackathonSidebar = ({
   const prizeText = hackathon.prizePoolText || hackathon.prizePool || "TBA";
   const prizeCurrency = hackathon.currency || "USD";
   const tagList = hackathon.categories || [];
+  const daysLeftText = getDaysLeft(
+    hackathon.submissionDeadline,
+    hackathon.daysLeftLabel,
+  );
 
   return (
     <aside className="xl:sticky xl:top-24 xl:self-start">
-      <div className="overflow-hidden rounded-[24px] border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,42,0.82),rgba(4,10,20,0.94))] shadow-[0_20px_50px_rgba(2,6,23,0.28)] backdrop-blur-xl">
+      <div className="card-theme overflow-hidden rounded-[24px]">
         <div className="space-y-5 p-5">
           <div>
-            <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-              <Trophy className="h-4 w-4 text-orange-400" />
+            <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+              <Trophy className="h-4 w-4 text-primary" />
               Prize Pool
             </p>
             <div className="mt-2 flex items-end gap-2">
-              <span className="text-4xl font-bold leading-none text-orange-400">
+              <span className="text-4xl font-bold leading-none text-primary">
                 {prizeText}
               </span>
-              <span className="pb-1 text-sm font-semibold uppercase tracking-[0.14em] text-slate-400">
+              <span className="pb-1 text-sm font-semibold uppercase tracking-[0.14em] text-muted">
                 {prizeCurrency}
               </span>
             </div>
           </div>
 
-          <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+          <div className="h-px bg-gradient-to-r from-transparent via-border/70 to-transparent" />
 
           <div>
-            <p className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-              <CalendarDays className="h-4 w-4" />
+            <p className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+              <CalendarDays className="h-4 w-4 text-primary" />
               Event Timeline
             </p>
-            <div className="inline-flex rounded-full border border-emerald-400/15 bg-emerald-500/10 px-3 py-1 text-sm font-medium text-emerald-300">
-              {/* {daysLeftText} */}
+            <div className="inline-flex rounded-full border border-success/15 bg-success/10 px-3 py-1 text-sm font-medium text-success">
+              {daysLeftText}
             </div>
             <div className="mt-4 space-y-3">
-              <div className="flex items-start justify-between gap-4 rounded-2xl border border-white/8 bg-black/15 p-3">
+              <div className="flex items-start justify-between gap-4 rounded-2xl border border-border/60 bg-background/35 p-3">
                 <div>
-                  <p className="text-sm font-semibold text-white">Submission</p>
-                  <p className="mt-1 text-xs text-slate-400">Deadline</p>
+                  <p className="text-sm font-semibold text-foreground">
+                    Submission
+                  </p>
+                  <p className="mt-1 text-xs text-muted">Deadline</p>
                 </div>
-                <p className="text-right text-sm font-medium text-cyan-300">
+                <p className="text-right text-sm font-medium text-primary">
                   {formatDisplayDate(hackathon.submissionDeadline)}
                 </p>
               </div>
-              <div className="flex items-start justify-between gap-4 rounded-2xl border border-white/8 bg-black/15 p-3">
+              <div className="flex items-start justify-between gap-4 rounded-2xl border border-border/60 bg-background/35 p-3">
                 <div>
-                  <p className="text-sm font-semibold text-white">
+                  <p className="text-sm font-semibold text-foreground">
                     Event Start
                   </p>
-                  <p className="mt-1 text-xs text-slate-400">Kickoff</p>
+                  <p className="mt-1 text-xs text-muted">Kickoff</p>
                 </div>
-                <p className="text-right text-sm font-medium text-slate-200">
+                <p className="text-right text-sm font-medium text-foreground">
                   {formatDisplayDate(hackathon.startDate)}
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+          <div className="h-px bg-gradient-to-r from-transparent via-border/70 to-transparent" />
 
           <div className="space-y-4">
-            <div className="flex items-center gap-2 text-sm text-slate-300">
-              <MapPin className="h-4 w-4 text-slate-500" />
+            <div className="flex items-center gap-2 text-sm text-muted">
+              <MapPin className="h-4 w-4 text-primary" />
               <span>{hackathon.location || "Virtual"}</span>
             </div>
             <div>
-              <p className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-                <Tag className="h-4 w-4" />
+              <p className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                <Tag className="h-4 w-4 text-primary" />
                 Hackathon Tags
               </p>
               <div className="flex flex-wrap gap-2">
                 {tagList.length > 0 ? (
                   tagList.map((tag, index) => (
-                    <span
-                      key={`${tag}-${index}`}
-                      className="inline-flex items-center rounded-full border border-orange-400/15 bg-orange-400/10 px-2.5 py-1 text-xs font-medium text-orange-300"
-                    >
-                      {tag}
-                    </span>
+                    <HackathonTag key={`${tag}-${index}`} label={tag} />
                   ))
                 ) : (
-                  <span className="text-sm text-slate-400">No tags added</span>
+                  <span className="text-sm text-muted">No tags added</span>
                 )}
               </div>
             </div>
             <div>
-              <p className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-                <Disc3 className="h-4 w-4" />
+              <p className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                <Disc3 className="h-4 w-4 text-primary" />
                 Web3 Ecosystem
               </p>
-              <p className="text-sm font-medium text-white">
+              <p className="text-sm font-medium text-foreground">
                 {hackathon.platform || "Not specified"}
               </p>
             </div>
           </div>
 
-          <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+          <div className="h-px bg-gradient-to-r from-transparent via-border/70 to-transparent" />
 
-          <div className="rounded-2xl border border-white/8 bg-black/15 p-4">
+          <div className="rounded-2xl border border-border/60 bg-background/35 p-4">
             <div className="flex items-center gap-3">
-              <div className="relative h-10 w-10 overflow-hidden rounded-full border border-white/10 bg-black/60">
+              <div className="relative h-10 w-10 overflow-hidden rounded-full border border-border/70 bg-background/60">
                 {hackathon.logoUrl ? (
                   <Image
                     src={hackathon.logoUrl}
@@ -127,18 +132,16 @@ const HackathonSidebar = ({
                     className="object-cover"
                   />
                 ) : (
-                  <div className="flex h-full w-full items-center justify-center text-sm font-bold text-white">
+                  <div className="flex h-full w-full items-center justify-center text-sm font-bold text-foreground">
                     {(hackathon.organizerName?.charAt(0) || "O").toUpperCase()}
                   </div>
                 )}
               </div>
               <div className="min-w-0">
-                <p className="truncate text-sm font-semibold text-white">
+                <p className="truncate text-sm font-semibold text-foreground">
                   {hackathon.organizerName || "Organizer"}
                 </p>
-                <p className="text-xs text-slate-400">
-                  Official organizer profile
-                </p>
+                <p className="text-xs text-muted">Official organizer profile</p>
               </div>
             </div>
           </div>
@@ -153,13 +156,13 @@ const HackathonSidebar = ({
                   ) as HTMLDialogElement | null
                 )?.showModal()
               }
-              className="inline-flex h-12 items-center justify-center rounded-2xl bg-[linear-gradient(135deg,#f97316,#fb923c)] px-5 text-sm font-semibold text-white shadow-[0_16px_30px_rgba(249,115,22,0.24)] transition hover:-translate-y-0.5"
+              className="btn-theme h-12 rounded-2xl px-5"
             >
               Submit Build
             </button>
             <button
               type="button"
-              className="inline-flex h-12 items-center justify-center rounded-2xl border border-white/12 bg-white/5 px-5 text-sm font-semibold text-slate-200 backdrop-blur-sm transition hover:border-cyan-400/25 hover:bg-cyan-400/10 hover:text-cyan-200"
+              className="btn-theme-outline h-12 rounded-2xl px-5"
             >
               Register as Hacker
             </button>
@@ -168,13 +171,13 @@ const HackathonSidebar = ({
           <div className="grid grid-cols-2 gap-3">
             <button
               type="button"
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-2xl border border-white/10 bg-black/20 px-4 text-sm font-medium text-slate-200 transition hover:border-white/20 hover:bg-white/5"
+              className="btn-theme-outline h-11 rounded-2xl px-4 text-sm"
             >
               <MessageSquare className="h-4 w-4" /> Message
             </button>
             <button
               type="button"
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-2xl border border-white/10 bg-black/20 px-4 text-sm font-medium text-slate-200 transition hover:border-white/20 hover:bg-white/5"
+              className="btn-theme-outline h-11 rounded-2xl px-4 text-sm"
             >
               <ArrowUpRight className="h-4 w-4" /> Share
             </button>
@@ -188,7 +191,7 @@ const HackathonSidebar = ({
                 <Link
                   href={hackathon.websiteUrl}
                   target="_blank"
-                  className="flex items-center gap-2 text-sm text-cyan-300 transition hover:text-cyan-200"
+                  className="flex items-center gap-2 text-sm text-primary transition hover:text-foreground"
                 >
                   <Globe className="h-4 w-4" /> Visit website
                 </Link>
@@ -197,7 +200,7 @@ const HackathonSidebar = ({
                 <Link
                   href={hackathon.discordUrl}
                   target="_blank"
-                  className="flex items-center gap-2 text-sm text-cyan-300 transition hover:text-cyan-200"
+                  className="flex items-center gap-2 text-sm text-primary transition hover:text-foreground"
                 >
                   <MessageSquare className="h-4 w-4" /> Join community
                 </Link>
@@ -205,7 +208,7 @@ const HackathonSidebar = ({
               {hackathon.contactEmail && (
                 <a
                   href={`mailto:${hackathon.contactEmail}`}
-                  className="flex items-center gap-2 text-sm text-cyan-300 transition hover:text-cyan-200"
+                  className="flex items-center gap-2 text-sm text-primary transition hover:text-foreground"
                 >
                   <CircleDollarSign className="h-4 w-4" /> Contact organizer
                 </a>

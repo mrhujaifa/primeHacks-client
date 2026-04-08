@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import TanstackProvider from "@/providers/TanstackProvider";
 import { Toaster } from "react-hot-toast";
@@ -31,10 +32,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} antialiased`}
       >
+        <Script id="primehacks-theme" strategy="beforeInteractive">
+          {`
+            try {
+              const storedTheme = window.localStorage.getItem("primehacks-theme");
+              const theme = storedTheme === "light" ? "light" : "dark";
+              const root = document.documentElement;
+              root.classList.toggle("dark", theme === "dark");
+              root.dataset.theme = theme;
+            } catch (error) {
+              document.documentElement.classList.add("dark");
+              document.documentElement.dataset.theme = "dark";
+            }
+          `}
+        </Script>
         <Toaster position="top-right" reverseOrder={false} />
         <TanstackProvider>{children}</TanstackProvider>
       </body>

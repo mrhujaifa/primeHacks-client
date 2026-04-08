@@ -37,7 +37,7 @@ export default function HackathonCard({
       return {
         label: "Ongoing",
         className:
-          "border border-emerald-400/30 bg-emerald-500/15 text-emerald-300",
+          "border border-success/30 bg-success/12 text-success",
       };
     }
 
@@ -48,7 +48,7 @@ export default function HackathonCard({
       return {
         label: "Extended",
         className:
-          "border border-orange-400/30 bg-orange-500/15 text-orange-300",
+          "border border-hero-tertiary/30 bg-hero-tertiary/12 text-hero-tertiary",
       };
     }
 
@@ -59,13 +59,13 @@ export default function HackathonCard({
     ) {
       return {
         label: "Upcoming",
-        className: "border border-cyan-400/30 bg-cyan-500/15 text-cyan-300",
+        className: "border border-primary/30 bg-primary/12 text-primary",
       };
     }
 
     return {
       label: status || "Open",
-      className: "border border-white/15 bg-white/10 text-slate-200",
+      className: "border border-border/70 bg-card/70 text-foreground",
     };
   })();
 
@@ -75,12 +75,12 @@ export default function HackathonCard({
 
   return (
     <Link href={`/hackathons/details/${hackathon.id}`}>
-      <div className="group relative w-full max-w-[380px] overflow-hidden rounded-[24px] border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,42,0.88),rgba(7,12,24,0.96))] shadow-[0_12px_40px_rgba(2,6,23,0.32)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/20 hover:shadow-[0_20px_60px_rgba(34,211,238,0.12)]">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.12),transparent_28%),radial-gradient(circle_at_bottom_right,rgba(249,115,22,0.10),transparent_30%)]" />
+      <div className="card-theme group relative w-full max-w-[380px] rounded-[24px] transition-all duration-300 hover:-translate-y-1 hover:border-primary/20">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(124,92,255,0.12),transparent_28%),radial-gradient(circle_at_bottom_right,rgba(86,186,255,0.10),transparent_30%)]" />
 
         <div className="relative flex items-center justify-between px-4 pt-4 pb-2">
           <div className="flex min-w-0 items-center gap-3">
-            <div className="relative h-10 w-10 overflow-hidden rounded-full border border-white/10 bg-black/50 ring-1 ring-white/5">
+            <div className="relative h-10 w-10 overflow-hidden rounded-full border border-border/70 bg-background/50 ring-1 ring-border/50">
               {logoUrl ? (
                 <Image
                   src={logoUrl}
@@ -89,26 +89,26 @@ export default function HackathonCard({
                   className="object-cover"
                 />
               ) : (
-                <div className="flex h-full w-full items-center justify-center bg-[linear-gradient(135deg,#0f172a,#111827)] text-xs font-semibold text-white">
+                <div className="flex h-full w-full items-center justify-center bg-button-primary text-xs font-semibold text-white">
                   {(organizerName?.charAt(0) || "H").toUpperCase()}
                 </div>
               )}
             </div>
 
             <div className="min-w-0">
-              <p className="truncate text-sm font-medium text-slate-200">
+              <p className="truncate text-sm font-medium text-foreground">
                 {organizerName || "Organizer"}
               </p>
 
               {(isFeatured || isPremiumOnly) && (
                 <div className="mt-1 flex items-center gap-2">
                   {isFeatured && (
-                    <span className="inline-flex items-center rounded-full border border-cyan-400/20 bg-cyan-400/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-cyan-300">
+                    <span className="inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-primary">
                       Featured
                     </span>
                   )}
                   {isPremiumOnly && (
-                    <span className="inline-flex items-center rounded-full border border-orange-400/20 bg-orange-400/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-orange-300">
+                    <span className="inline-flex items-center rounded-full border border-hero-tertiary/20 bg-hero-tertiary/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-hero-tertiary">
                       Premium
                     </span>
                   )}
@@ -124,14 +124,14 @@ export default function HackathonCard({
               {statusConfig.label}
             </span>
 
-            <span className="text-[12px] font-medium text-slate-400">
+            <span className="text-[12px] font-medium text-muted">
               {daysLeftLabel || "No deadline"}
             </span>
           </div>
         </div>
 
         <div className="relative px-3">
-          <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[18px] border border-white/10 bg-slate-900">
+          <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[18px] border border-border/70 bg-background">
             {bannerImageUrl ? (
               <Image
                 src={bannerImageUrl}
@@ -140,7 +140,7 @@ export default function HackathonCard({
                 className="object-cover transition duration-500 group-hover:scale-[1.03]"
               />
             ) : (
-              <div className="flex h-full w-full items-center justify-center bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.20),transparent_22%),radial-gradient(circle_at_80%_20%,rgba(249,115,22,0.18),transparent_18%),linear-gradient(180deg,#071521_0%,#06111a_46%,#081a25_100%)] px-6 text-center">
+              <div className="flex h-full w-full items-center justify-center bg-[radial-gradient(circle_at_top_left,rgba(124,92,255,0.20),transparent_22%),radial-gradient(circle_at_80%_20%,rgba(86,186,255,0.18),transparent_18%),linear-gradient(180deg,#080c1f_0%,#060918_46%,#081021_100%)] px-6 text-center">
                 <p className="line-clamp-2 text-lg font-bold tracking-wide text-white">
                   {title}
                 </p>
@@ -149,20 +149,20 @@ export default function HackathonCard({
 
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#020617]/70 via-transparent to-[#020617]/10" />
 
-            <div className="absolute bottom-3 right-3 inline-flex items-center rounded-full border border-white/10 bg-black/55 px-3 py-1 text-[11px] font-semibold text-white backdrop-blur-md">
+            <div className="absolute bottom-3 right-3 inline-flex items-center rounded-full border border-border/70 bg-background/75 px-3 py-1 text-[11px] font-semibold text-foreground backdrop-blur-md">
               {buildCountLabel || "0 BUILDS"}
             </div>
           </div>
         </div>
 
         <div className="relative px-4 pt-4 pb-4">
-          <h3 className="line-clamp-2 min-h-[56px] text-[18px] font-semibold leading-7 text-white">
+          <h3 className="line-clamp-2 min-h-[56px] text-[18px] font-semibold leading-7 text-foreground">
             {title}
           </h3>
 
-          <div className="mt-3 flex items-center gap-2 text-sm text-slate-400">
+          <div className="mt-3 flex items-center gap-2 text-sm text-muted">
             <MapPin
-              className="h-4 w-4 shrink-0 text-slate-500"
+              className="h-4 w-4 shrink-0 text-muted-foreground"
               strokeWidth={1.9}
             />
             <span className="truncate">{location || "Virtual"}</span>
@@ -173,23 +173,23 @@ export default function HackathonCard({
               {tagList.map((tag, index) => (
                 <span
                   key={`${tag}-${index}`}
-                  className="inline-flex items-center rounded-full border border-orange-400/15 bg-orange-400/10 px-2.5 py-1 text-[12px] font-medium text-orange-300"
+                  className="inline-flex items-center rounded-full border border-primary/15 bg-primary/10 px-2.5 py-1 text-[12px] font-medium text-primary"
                 >
                   {tag}
                 </span>
               ))}
 
               {categories && categories.length > 5 && (
-                <span className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[12px] font-medium text-slate-300">
+                <span className="inline-flex items-center rounded-full border border-border/70 bg-card/70 px-2.5 py-1 text-[12px] font-medium text-muted">
                   ...
                 </span>
               )}
             </div>
           )}
 
-          <div className="mt-3 flex items-center gap-2 text-sm text-slate-400">
+          <div className="mt-3 flex items-center gap-2 text-sm text-muted">
             <Building2
-              className="h-4 w-4 shrink-0 text-slate-500"
+              className="h-4 w-4 shrink-0 text-muted-foreground"
               strokeWidth={1.9}
             />
             <span className="truncate">
@@ -197,21 +197,21 @@ export default function HackathonCard({
             </span>
           </div>
 
-          <div className="mt-5 border-t border-white/10 pt-4">
+          <div className="mt-5 border-t border-border/70 pt-4">
             <div className="flex items-end justify-between gap-3">
-              <div className="flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.18em] text-slate-500">
+              <div className="flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
                 <Trophy
-                  className="h-4 w-4 shrink-0 text-orange-400"
+                  className="h-4 w-4 shrink-0 text-primary"
                   strokeWidth={1.9}
                 />
                 <span>Prize Pool</span>
               </div>
 
               <div className="flex items-end gap-1.5">
-                <span className="text-[20px] font-bold leading-none text-orange-400">
+                <span className="text-[20px] font-bold leading-none text-primary">
                   {prizeText}
                 </span>
-                <span className="pb-[2px] text-[12px] font-semibold uppercase tracking-[0.1em] text-slate-400">
+                <span className="pb-[2px] text-[12px] font-semibold uppercase tracking-[0.1em] text-muted">
                   {prizeCurrency}
                 </span>
               </div>

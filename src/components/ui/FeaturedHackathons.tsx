@@ -7,6 +7,8 @@ import {
   Clock3,
 } from "lucide-react";
 
+type FeaturedAccent = "primary" | "secondary" | "tertiary" | "mixed";
+
 const featuredHackathons = [
   {
     status: "Registrations are open",
@@ -18,14 +20,7 @@ const featuredHackathons = [
     prize: "$9,000",
     daysLeft: 39,
     progress: "24%",
-    badgeClass:
-      "bg-[#5b46ff]/90 text-white shadow-[0_10px_24px_rgba(91,70,255,0.35)]",
-    coverClass:
-      "bg-[linear-gradient(180deg,#85e8f8_0%,#6ec6d7_40%,#4d8f9c_100%)]",
-    artClass:
-      "bg-[radial-gradient(circle_at_20%_18%,rgba(255,255,255,0.58),transparent_16%),radial-gradient(circle_at_72%_26%,rgba(255,255,255,0.16),transparent_12%),linear-gradient(180deg,transparent_0%,rgba(7,17,27,0.22)_100%)]",
-    logoClass: "bg-[linear-gradient(135deg,#1bbad1,#0f7c92)] text-white",
-    progressClass: "bg-[linear-gradient(90deg,#5b46ff,#7c6cff)]",
+    accent: "primary",
     initials: "AI",
   },
   {
@@ -38,14 +33,7 @@ const featuredHackathons = [
     prize: "$12,500",
     daysLeft: 82,
     progress: "8%",
-    badgeClass:
-      "bg-[#5b46ff]/90 text-white shadow-[0_10px_24px_rgba(91,70,255,0.35)]",
-    coverClass:
-      "bg-[linear-gradient(180deg,#8ede3f_0%,#45ba2f_56%,#1e6f2b_100%)]",
-    artClass:
-      "bg-[radial-gradient(circle_at_22%_24%,rgba(255,241,128,0.42),transparent_14%),radial-gradient(circle_at_60%_34%,rgba(21,85,37,0.28),transparent_24%),linear-gradient(180deg,transparent_0%,rgba(8,28,12,0.18)_100%)]",
-    logoClass: "bg-[linear-gradient(135deg,#7cd93d,#338e25)] text-[#103d16]",
-    progressClass: "bg-[linear-gradient(90deg,#5b46ff,#7c6cff)]",
+    accent: "secondary",
     initials: "FS",
   },
   {
@@ -58,14 +46,7 @@ const featuredHackathons = [
     prize: "$10,000",
     daysLeft: 7,
     progress: "74%",
-    badgeClass:
-      "bg-[#5b46ff]/90 text-white shadow-[0_10px_24px_rgba(91,70,255,0.35)]",
-    coverClass:
-      "bg-[linear-gradient(90deg,#11238b_0%,#11238b_34%,#f2c11b_34%,#f2c11b_67%,#c7333a_67%,#c7333a_100%)]",
-    artClass:
-      "bg-[linear-gradient(180deg,rgba(255,255,255,0.12),transparent_40%),radial-gradient(circle_at_82%_22%,rgba(255,255,255,0.18),transparent_18%)]",
-    logoClass: "bg-[linear-gradient(135deg,#1f0f63,#3b248d)] text-white",
-    progressClass: "bg-[linear-gradient(90deg,#5b46ff,#7c6cff)]",
+    accent: "tertiary",
     initials: "RO",
   },
   {
@@ -78,33 +59,76 @@ const featuredHackathons = [
     prize: "$10,000",
     daysLeft: 7,
     progress: "68%",
-    badgeClass:
-      "bg-[#5b46ff]/90 text-white shadow-[0_10px_24px_rgba(91,70,255,0.35)]",
-    coverClass:
-      "bg-[linear-gradient(180deg,#f7f8fc_0%,#f7f8fc_30%,#104d8d_30%,#104d8d_62%,#cc3640_62%,#cc3640_100%)]",
-    artClass:
-      "bg-[linear-gradient(135deg,rgba(19,34,72,0.22),transparent_38%),radial-gradient(circle_at_82%_22%,rgba(255,255,255,0.18),transparent_18%)]",
-    logoClass: "bg-[linear-gradient(135deg,#1f0f63,#3b248d)] text-white",
-    progressClass: "bg-[linear-gradient(90deg,#5b46ff,#7c6cff)]",
+    accent: "mixed",
     initials: "CZ",
   },
-];
+] satisfies Array<{
+  status: string;
+  title: string;
+  description: string;
+  participants: number;
+  projects: number;
+  prize: string;
+  daysLeft: number;
+  progress: string;
+  accent: FeaturedAccent;
+  initials: string;
+}>;
+
+const accentStyles = {
+  primary: {
+    badge: "border-primary/18 bg-primary/85 text-white shadow-glow",
+    meta: "text-primary",
+    pill: "border-primary/18 bg-primary/10 text-primary",
+    cover:
+      "linear-gradient(135deg, rgb(var(--background-elevated)), rgb(var(--primary) / 0.72), rgb(var(--background-deep)))",
+    art: "radial-gradient(circle at 20% 18%, rgb(var(--surface-overlay) / 0.44), transparent 14%), radial-gradient(circle at 72% 26%, rgb(var(--hero-glow-secondary) / 0.26), transparent 20%), linear-gradient(180deg, transparent 0%, rgb(var(--background-deep) / 0.32) 100%)",
+    logo: "linear-gradient(135deg, rgb(var(--primary)), rgb(var(--hero-glow-secondary)))",
+  },
+  secondary: {
+    badge: "border-hero-secondary/18 bg-hero-secondary/85 text-white shadow-glow-soft",
+    meta: "text-hero-secondary",
+    pill: "border-hero-secondary/18 bg-hero-secondary/10 text-hero-secondary",
+    cover:
+      "linear-gradient(135deg, rgb(var(--background-elevated)), rgb(var(--hero-glow-secondary) / 0.6), rgb(var(--background-deep)))",
+    art: "radial-gradient(circle at 22% 24%, rgb(var(--surface-overlay) / 0.34), transparent 14%), radial-gradient(circle at 60% 34%, rgb(var(--primary) / 0.28), transparent 24%), linear-gradient(180deg, transparent 0%, rgb(var(--background-deep) / 0.24) 100%)",
+    logo: "linear-gradient(135deg, rgb(var(--hero-glow-secondary)), rgb(var(--primary)))",
+  },
+  tertiary: {
+    badge: "border-hero-tertiary/18 bg-hero-tertiary/80 text-white shadow-glow-soft",
+    meta: "text-hero-tertiary",
+    pill: "border-hero-tertiary/18 bg-hero-tertiary/10 text-hero-tertiary",
+    cover:
+      "linear-gradient(135deg, rgb(var(--background-elevated)), rgb(var(--hero-glow-tertiary) / 0.64), rgb(var(--background-deep)))",
+    art: "radial-gradient(circle at 14% 24%, rgb(var(--surface-overlay) / 0.28), transparent 14%), radial-gradient(circle at 82% 22%, rgb(var(--primary) / 0.34), transparent 18%), linear-gradient(180deg, transparent 0%, rgb(var(--background-deep) / 0.26) 100%)",
+    logo: "linear-gradient(135deg, rgb(var(--hero-glow-tertiary)), rgb(var(--primary)))",
+  },
+  mixed: {
+    badge: "border-primary/18 bg-primary/85 text-white shadow-glow",
+    meta: "text-primary",
+    pill: "border-primary/18 bg-primary/10 text-primary",
+    cover:
+      "linear-gradient(135deg, rgb(var(--background-elevated)), rgb(var(--secondary-foreground) / 0.74), rgb(var(--hero-glow-secondary) / 0.48), rgb(var(--background-deep)))",
+    art: "radial-gradient(circle at 18% 18%, rgb(var(--surface-overlay) / 0.32), transparent 12%), radial-gradient(circle at 78% 30%, rgb(var(--hero-glow-secondary) / 0.26), transparent 18%), linear-gradient(180deg, transparent 0%, rgb(var(--background-deep) / 0.3) 100%)",
+    logo: "linear-gradient(135deg, rgb(var(--secondary-foreground)), rgb(var(--hero-glow-secondary)))",
+  },
+} as const;
 
 export default function FeaturedHackathons() {
   return (
     <section className="relative px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(88,196,255,0.08),transparent_26%),linear-gradient(180deg,#050816_0%,#07111f_45%,#08131f_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(124,92,255,0.10),transparent_26%),linear-gradient(180deg,transparent_0%,rgba(7,11,28,0.16)_100%)]" />
       <div className="relative container mx-auto">
         <div className="mx-auto max-w-3xl text-center">
-          <span className="inline-flex rounded-full border border-cyan-300/20 bg-cyan-400/10 px-4 py-1 text-[11px] font-medium uppercase tracking-[0.22em] text-cyan-200 backdrop-blur-md">
+          <span className="badge-theme px-4 py-1 text-[11px] tracking-[0.22em]">
             Featured Hackathons
           </span>
 
-          <h2 className="mt-6 font-[family:var(--font-space-grotesk)] text-4xl font-semibold tracking-[-0.05em] text-white sm:text-5xl">
+          <h2 className="mt-6 font-display text-4xl font-semibold tracking-[-0.05em] text-foreground sm:text-5xl">
             Discover high-impact challenges worth joining
           </h2>
 
-          <p className="mt-4 text-base leading-7 text-slate-400 sm:text-lg">
+          <p className="mt-4 text-base leading-7 text-muted sm:text-lg">
             Explore curated hackathons with strong rewards, active participants,
             and meaningful problem spaces.
           </p>
@@ -114,25 +138,36 @@ export default function FeaturedHackathons() {
           {featuredHackathons.map((hackathon) => (
             <article
               key={hackathon.title}
-              className="group overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.03] text-white shadow-[0_24px_70px_rgba(2,8,24,0.45)] backdrop-blur-xl transition duration-300 hover:-translate-y-1.5 hover:border-cyan-300/25 hover:bg-white/[0.05]"
+              className="card-theme group rounded-[1.8rem] transition duration-300 hover:-translate-y-1.5 hover:border-primary/25"
             >
               <div
-                className={`relative h-[180px] overflow-hidden ${hackathon.coverClass}`}
+                className="relative h-[180px] overflow-hidden"
+                style={{
+                  background: accentStyles[hackathon.accent].cover,
+                }}
               >
-                <div className={`absolute inset-0 ${hackathon.artClass}`} />
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background: accentStyles[hackathon.accent].art,
+                  }}
+                />
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,10,18,0)_10%,rgba(6,10,18,0.18)_55%,rgba(6,10,18,0.36)_100%)]" />
 
                 <div className="absolute left-4 top-4">
                   <span
-                    className={`inline-flex rounded-xl px-3 py-2 text-[12px] font-semibold tracking-[0.01em] ${hackathon.badgeClass}`}
+                    className={`inline-flex rounded-xl border px-3 py-2 text-[12px] font-semibold tracking-[0.01em] ${accentStyles[hackathon.accent].badge}`}
                   >
                     {hackathon.status}
                   </span>
                 </div>
 
-                <div className="absolute bottom-[-30px] left-5 flex h-[64px] w-[64px] items-center justify-center rounded-2xl border border-white/30 bg-slate-950/90 p-[4px] shadow-[0_14px_32px_rgba(0,0,0,0.35)] backdrop-blur-md">
+                <div className="absolute bottom-[-30px] left-5 flex h-[64px] w-[64px] items-center justify-center rounded-2xl border border-white/30 bg-background/90 p-[4px] shadow-panel backdrop-blur-md">
                   <div
-                    className={`flex h-full w-full items-center justify-center rounded-[14px] text-lg font-semibold ${hackathon.logoClass}`}
+                    className="flex h-full w-full items-center justify-center rounded-[14px] text-lg font-semibold text-white"
+                    style={{
+                      background: accentStyles[hackathon.accent].logo,
+                    }}
                   >
                     {hackathon.initials}
                   </div>
@@ -140,70 +175,75 @@ export default function FeaturedHackathons() {
               </div>
 
               <div className="px-5 pb-5 pt-11">
-                <div className="flex items-center justify-between gap-3 text-[12px] text-slate-400">
+                <div className="flex items-center justify-between gap-3 text-[12px] text-muted">
                   <div className="flex items-center gap-3">
                     <div className="flex items-center gap-1.5">
-                      <UsersRound className="h-3.5 w-3.5 text-cyan-300" />
+                      <UsersRound
+                        className={`h-3.5 w-3.5 ${accentStyles[hackathon.accent].meta}`}
+                      />
                       <span>{hackathon.participants}</span>
                     </div>
                     <div className="flex items-center gap-1.5">
-                      <GitBranch className="h-3.5 w-3.5 text-violet-300" />
+                      <GitBranch className="h-3.5 w-3.5 text-primary" />
                       <span>{hackathon.projects}</span>
                     </div>
                   </div>
 
-                  <div className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[11px] text-slate-300">
-                    <Clock3 className="h-3.5 w-3.5 text-cyan-300" />
+                  <div
+                    className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] ${accentStyles[hackathon.accent].pill}`}
+                  >
+                    <Clock3 className="h-3.5 w-3.5" />
                     {hackathon.daysLeft} days left
                   </div>
                 </div>
 
-                <h3 className="mt-4 font-[family:var(--font-space-grotesk)] text-[21px] font-semibold leading-8 tracking-[-0.03em] text-white">
+                <h3 className="mt-4 font-display text-[21px] font-semibold leading-8 tracking-[-0.03em] text-foreground">
                   {hackathon.title}
                 </h3>
 
-                <p className="mt-3 min-h-[72px] text-[14px] leading-7 text-slate-400">
+                <p className="mt-3 min-h-[72px] text-[14px] leading-7 text-muted">
                   {hackathon.description}
                 </p>
 
                 <div className="mt-6">
                   <div className="mb-2 flex items-center justify-between">
-                    <span className="text-[12px] font-medium uppercase tracking-[0.14em] text-slate-500">
+                    <span className="text-[12px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
                       Registration progress
                     </span>
-                    <span className="text-[12px] font-semibold text-cyan-200">
+                    <span
+                      className={`text-[12px] font-semibold ${accentStyles[hackathon.accent].meta}`}
+                    >
                       {hackathon.progress}
                     </span>
                   </div>
 
-                  <div className="h-2 w-full overflow-hidden rounded-full bg-white/10">
+                  <div className="h-2 w-full overflow-hidden rounded-full bg-border/40">
                     <div
-                      className={`h-full rounded-full ${hackathon.progressClass} shadow-[0_8px_18px_rgba(91,70,255,0.38)]`}
-                      style={{ width: hackathon.progress }}
+                      className="h-full rounded-full shadow-glow"
+                      style={{
+                        width: hackathon.progress,
+                        backgroundImage:
+                          "linear-gradient(90deg, rgb(var(--gradient-start)), rgb(var(--gradient-end)))",
+                      }}
                     />
                   </div>
                 </div>
 
-                <div className="mt-6 flex items-end justify-between border-t border-white/10 pt-4">
+                <div className="mt-6 flex items-end justify-between border-t border-border/70 pt-4">
                   <div>
-                    <p className="text-[12px] uppercase tracking-[0.16em] text-slate-500">
+                    <p className="text-[12px] uppercase tracking-[0.16em] text-muted-foreground">
                       Prize Pool
                     </p>
                     <div className="mt-2 flex items-center gap-2">
-                      <Trophy className="h-4 w-4 text-amber-300" />
-                      <p className="font-[family:var(--font-space-grotesk)] text-[28px] font-semibold leading-none text-white">
+                      <Trophy className="h-4 w-4 text-primary" />
+                      <p className="font-display text-[28px] font-semibold leading-none text-foreground">
                         {hackathon.prize}
                       </p>
                     </div>
                   </div>
 
-                  <button className="inline-flex items-center gap-2 rounded-xl border border-cyan-300/20 bg-cyan-400/10 px-3.5 py-2 text-[13px] font-semibold text-cyan-100 transition hover:border-cyan-300/40 hover:bg-cyan-400/15">
-                    View
-                    <ArrowRight className="h-4 w-4" />
-                    {/* Updated to theme button */}
-                  </button>
-                  <button className="btn-theme-outline">
-                    View
+                  <button className="btn-theme-outline rounded-xl px-3.5 py-2 text-[13px]">
+                    View details
                     <ArrowRight className="h-4 w-4" />
                   </button>
                 </div>

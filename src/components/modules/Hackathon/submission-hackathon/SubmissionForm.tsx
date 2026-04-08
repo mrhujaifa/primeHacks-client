@@ -70,7 +70,7 @@ export const SubmissionForm = ({ hackathonId }: { hackathonId: string }) => {
   });
 
   return (
-    <div className="rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,42,0.72),rgba(2,6,23,0.8))] p-5 backdrop-blur-xl md:p-6">
+    <div className="card-theme rounded-[28px] p-5 md:p-6">
       <form
         className="space-y-5"
         onSubmit={(e) => {
@@ -82,7 +82,7 @@ export const SubmissionForm = ({ hackathonId }: { hackathonId: string }) => {
         <form.Field name="title">
           {(field) => (
             <div>
-              <label className="mb-2 block text-sm font-medium text-slate-200">
+              <label className="mb-2 block text-sm font-medium text-foreground">
                 Project Title <span className="text-rose-400">*</span>
               </label>
               <input
@@ -91,7 +91,7 @@ export const SubmissionForm = ({ hackathonId }: { hackathonId: string }) => {
                 value={field.state.value}
                 onBlur={field.handleBlur}
                 onChange={(e) => field.handleChange(e.target.value)}
-                className="input h-12 w-full rounded-2xl border border-white/10 bg-slate-950/60 text-sm text-white placeholder:text-slate-500 focus:border-cyan-400 focus:outline-none"
+                className="input-theme"
               />
               {field.state.meta.isTouched &&
                 typeof field.state.meta.errors?.[0] === "string" && (
@@ -106,7 +106,7 @@ export const SubmissionForm = ({ hackathonId }: { hackathonId: string }) => {
         <form.Field name="shortSummary">
           {(field) => (
             <div>
-              <label className="mb-2 block text-sm font-medium text-slate-200">
+              <label className="mb-2 block text-sm font-medium text-foreground">
                 Short Summary <span className="text-rose-400">*</span>
               </label>
               <input
@@ -115,7 +115,7 @@ export const SubmissionForm = ({ hackathonId }: { hackathonId: string }) => {
                 value={field.state.value}
                 onBlur={field.handleBlur}
                 onChange={(e) => field.handleChange(e.target.value)}
-                className="input h-12 w-full rounded-2xl border border-white/10 bg-slate-950/60 text-sm text-white placeholder:text-slate-500 focus:border-cyan-400 focus:outline-none"
+                className="input-theme"
               />
               {field.state.meta.isTouched &&
                 typeof field.state.meta.errors?.[0] === "string" && (
@@ -130,7 +130,7 @@ export const SubmissionForm = ({ hackathonId }: { hackathonId: string }) => {
         <form.Field name="description">
           {(field) => (
             <div>
-              <label className="mb-2 block text-sm font-medium text-slate-200">
+              <label className="mb-2 block text-sm font-medium text-foreground">
                 Project Description <span className="text-rose-400">*</span>
               </label>
               <textarea
@@ -138,7 +138,7 @@ export const SubmissionForm = ({ hackathonId }: { hackathonId: string }) => {
                 value={field.state.value}
                 onBlur={field.handleBlur}
                 onChange={(e) => field.handleChange(e.target.value)}
-                className="textarea min-h-[130px] w-full rounded-2xl border border-white/10 bg-slate-950/60 text-sm text-white placeholder:text-slate-500 focus:border-cyan-400 focus:outline-none"
+                className="textarea-theme"
               />
               {field.state.meta.isTouched &&
                 typeof field.state.meta.errors?.[0] === "string" && (
@@ -153,7 +153,7 @@ export const SubmissionForm = ({ hackathonId }: { hackathonId: string }) => {
         <form.Field name="techStack">
           {(field) => (
             <div>
-              <label className="mb-2 block text-sm font-medium text-slate-200">
+              <label className="mb-2 block text-sm font-medium text-foreground">
                 Tech Stack <span className="text-rose-400">*</span>
               </label>
               <input
@@ -169,9 +169,9 @@ export const SubmissionForm = ({ hackathonId }: { hackathonId: string }) => {
                     .filter(Boolean);
                   field.handleChange(value);
                 }}
-                className="input h-12 w-full rounded-2xl border border-white/10 bg-slate-950/60 text-sm text-white placeholder:text-slate-500 focus:border-cyan-400 focus:outline-none"
+                className="input-theme"
               />
-              <p className="mt-2 text-xs text-slate-400">
+              <p className="mt-2 text-xs text-muted">
                 Separate each technology with commas.
               </p>
               {field.state.meta.isTouched &&
@@ -188,7 +188,7 @@ export const SubmissionForm = ({ hackathonId }: { hackathonId: string }) => {
           <form.Field name="repositoryUrl">
             {(field) => (
               <div>
-                <label className="mb-2 block text-sm font-medium text-slate-200">
+                <label className="mb-2 block text-sm font-medium text-foreground">
                   Repository URL
                 </label>
                 <input
@@ -197,7 +197,7 @@ export const SubmissionForm = ({ hackathonId }: { hackathonId: string }) => {
                   value={field.state.value ?? ""}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
-                  className="input h-12 w-full rounded-2xl border border-white/10 bg-slate-950/60 text-sm text-white placeholder:text-slate-500 focus:border-cyan-400 focus:outline-none"
+                  className="input-theme"
                 />
                 {field.state.meta.isTouched &&
                   typeof field.state.meta.errors?.[0] === "string" && (
@@ -212,7 +212,7 @@ export const SubmissionForm = ({ hackathonId }: { hackathonId: string }) => {
           <form.Field name="demoUrl">
             {(field) => (
               <div>
-                <label className="mb-2 block text-sm font-medium text-slate-200">
+                <label className="mb-2 block text-sm font-medium text-foreground">
                   Demo URL
                 </label>
                 <input
@@ -221,7 +221,7 @@ export const SubmissionForm = ({ hackathonId }: { hackathonId: string }) => {
                   value={field.state.value ?? ""}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
-                  className="input h-12 w-full rounded-2xl border border-white/10 bg-slate-950/60 text-sm text-white placeholder:text-slate-500 focus:border-cyan-400 focus:outline-none"
+                  className="input-theme"
                 />
                 {field.state.meta.isTouched &&
                   typeof field.state.meta.errors?.[0] === "string" && (
@@ -236,7 +236,7 @@ export const SubmissionForm = ({ hackathonId }: { hackathonId: string }) => {
           <form.Field name="videoUrl">
             {(field) => (
               <div>
-                <label className="mb-2 block text-sm font-medium text-slate-200">
+                <label className="mb-2 block text-sm font-medium text-foreground">
                   Video URL
                 </label>
                 <input
@@ -245,7 +245,7 @@ export const SubmissionForm = ({ hackathonId }: { hackathonId: string }) => {
                   value={field.state.value ?? ""}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
-                  className="input h-12 w-full rounded-2xl border border-white/10 bg-slate-950/60 text-sm text-white placeholder:text-slate-500 focus:border-cyan-400 focus:outline-none"
+                  className="input-theme"
                 />
                 {field.state.meta.isTouched &&
                   typeof field.state.meta.errors?.[0] === "string" && (
@@ -260,7 +260,7 @@ export const SubmissionForm = ({ hackathonId }: { hackathonId: string }) => {
           <form.Field name="thumbnailUrl">
             {(field) => (
               <div>
-                <label className="mb-2 block text-sm font-medium text-slate-200">
+                <label className="mb-2 block text-sm font-medium text-foreground">
                   Thumbnail URL
                 </label>
                 <input
@@ -269,7 +269,7 @@ export const SubmissionForm = ({ hackathonId }: { hackathonId: string }) => {
                   value={field.state.value ?? ""}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
-                  className="input h-12 w-full rounded-2xl border border-white/10 bg-slate-950/60 text-sm text-white placeholder:text-slate-500 focus:border-cyan-400 focus:outline-none"
+                  className="input-theme"
                 />
                 {field.state.meta.isTouched &&
                   typeof field.state.meta.errors?.[0] === "string" && (
@@ -282,11 +282,11 @@ export const SubmissionForm = ({ hackathonId }: { hackathonId: string }) => {
           </form.Field>
         </div>
 
-        <div className="flex items-center justify-end gap-3 border-t border-white/10 pt-5">
+        <div className="flex items-center justify-end gap-3 border-t border-border/70 pt-5">
           <button
             type="button"
             onClick={() => form.reset()}
-            className="btn h-12 rounded-2xl border border-white/10 bg-white/5 px-5 text-slate-200 shadow-none hover:border-white/20 hover:bg-white/10"
+            className="btn-theme-outline h-12 rounded-2xl px-5"
           >
             Cancel
           </button>
@@ -298,7 +298,7 @@ export const SubmissionForm = ({ hackathonId }: { hackathonId: string }) => {
               <button
                 type="submit"
                 disabled={isSubmitting || isPending}
-                className="btn h-12 rounded-2xl border-0 bg-[linear-gradient(135deg,#22d3ee,#3b82f6)] px-5 font-semibold text-slate-950 shadow-[0_10px_30px_rgba(34,211,238,0.25)] hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-60"
+                className="btn-theme h-12 rounded-2xl px-5 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 <Send className="size-4" />
                 {isPending || isSubmitting ? "Submitting..." : "Submit Project"}

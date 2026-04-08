@@ -9,8 +9,7 @@ import { ArrowRight, Eye, EyeOff, LockKeyhole, Mail, User } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-const inputClassName =
-  "h-13 w-full rounded-2xl border border-white/10 bg-white/[0.06] pl-11 pr-4 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-300/40 focus:ring-4 focus:ring-cyan-300/10";
+const inputClassName = "input-theme h-13 pl-11 pr-4";
 
 export default function RegisterCredentialsForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -63,12 +62,12 @@ export default function RegisterCredentialsForm() {
           <div>
             <label
               htmlFor={field.name}
-              className="mb-2 block text-sm font-medium text-slate-200"
+              className="mb-2 block text-sm font-medium text-foreground"
             >
               Name
             </label>
             <div className="group relative">
-              <User className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400 transition group-focus-within:text-cyan-200" />
+              <User className="field-icon pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2" />
 
               <input
                 id={field.name}
@@ -101,13 +100,13 @@ export default function RegisterCredentialsForm() {
           <div>
             <label
               htmlFor={field.name}
-              className="mb-2 block text-sm font-medium text-slate-200"
+              className="mb-2 block text-sm font-medium text-foreground"
             >
               Email
             </label>
 
             <div className="group relative">
-              <Mail className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400 transition group-focus-within:text-cyan-200" />
+              <Mail className="field-icon pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2" />
 
               <input
                 id={field.name}
@@ -147,17 +146,17 @@ export default function RegisterCredentialsForm() {
             <div className="mb-2 flex items-center justify-between">
               <label
                 htmlFor={field.name}
-                className="block text-sm font-medium text-slate-200"
+                className="block text-sm font-medium text-foreground"
               >
                 Password
               </label>
-              <span className="text-xs text-slate-400">
+              <span className="text-xs text-muted">
                 Minimum 6 characters
               </span>
             </div>
 
             <div className="group relative">
-              <LockKeyhole className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400 transition group-focus-within:text-cyan-200" />
+              <LockKeyhole className="field-icon pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2" />
 
               <input
                 id={field.name}
@@ -174,7 +173,7 @@ export default function RegisterCredentialsForm() {
               <button
                 type="button"
                 onClick={() => setShowPassword((prev) => !prev)}
-                className="absolute right-3 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-xl text-slate-400 transition hover:bg-white/5 hover:text-white"
+                className="absolute right-3 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-xl text-muted transition hover:bg-accent/70 hover:text-foreground"
               >
                 {showPassword ? (
                   <EyeOff className="h-4 w-4" />
@@ -196,7 +195,7 @@ export default function RegisterCredentialsForm() {
       <button
         type="submit"
         disabled={isPending}
-        className="inline-flex h-13 w-full items-center justify-center gap-2 rounded-2xl bg-[linear-gradient(135deg,#67e8f9,#f59e0b)] px-4 text-sm font-semibold text-slate-950 shadow-lg shadow-cyan-950/30 transition hover:scale-[1.01] hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-70"
+        className="btn-theme h-13 w-full rounded-2xl px-4 disabled:cursor-not-allowed disabled:opacity-70"
       >
         {isPending ? "Creating account..." : "Create an account"}
         {!isPending && <ArrowRight className="h-4 w-4" />}

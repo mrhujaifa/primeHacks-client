@@ -16,7 +16,6 @@ const DashboardSidebar = async () => {
       <DashboardSidebarContent
         dashboardHome={dashboardHome}
         navItems={navItems}
-        userInfo={userInfo}
       />
     </div>
   );

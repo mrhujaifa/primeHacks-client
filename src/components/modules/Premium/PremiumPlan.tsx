@@ -49,6 +49,8 @@ const PremiumPlan = () => {
       price: "Free",
       description: "For small community hackathons and first launches.",
       icon: Sparkles,
+      accent:
+        "linear-gradient(135deg, rgba(120,78,255,0.16), rgba(10,15,34,0.22), rgba(86,186,255,0.08))",
       features: [
         "Single hackathon workspace",
         "Event page and basic registration flow",
@@ -64,6 +66,8 @@ const PremiumPlan = () => {
       period: "/month",
       description: "For active organizations running recurring programs.",
       icon: Crown,
+      accent:
+        "linear-gradient(135deg, rgba(178,122,255,0.24), rgba(18,21,47,0.22), rgba(255,120,244,0.10))",
       featured: true,
       features: [
         "Everything in Starter",
@@ -80,6 +84,8 @@ const PremiumPlan = () => {
       period: "/year",
       description: "For universities, accelerators, and large ecosystems.",
       icon: Building2,
+      accent:
+        "linear-gradient(135deg, rgba(86,186,255,0.14), rgba(10,15,34,0.24), rgba(120,78,255,0.10))",
       features: [
         "Multi-event management",
         "Partner-ready workflows and governance support",
@@ -92,27 +98,27 @@ const PremiumPlan = () => {
   ];
 
   return (
-    <section className="relative px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(103,232,249,0.08),transparent_24%)]" />
+    <section className="relative overflow-hidden px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_12%,rgba(178,122,255,0.14),transparent_22%),radial-gradient(circle_at_86%_10%,rgba(86,186,255,0.10),transparent_18%),linear-gradient(180deg,transparent,rgba(6,9,24,0.14))]" />
 
       <div className="container relative z-10 mx-auto">
         <div className="mx-auto max-w-3xl text-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-4 py-2 text-xs uppercase tracking-[0.32em] text-slate-200">
+          <div className="badge-muted">
             <BarChart3 className="h-3.5 w-3.5" />
             Pricing
           </div>
 
-          <h2 className="mt-6 font-[family:var(--font-space-grotesk)] text-4xl font-semibold tracking-[-0.05em] text-white sm:text-5xl">
+          <h2 className="mt-6 font-display text-4xl font-semibold tracking-[-0.05em] text-foreground sm:text-5xl">
             Pricing that fits both first launches and scaled programs
           </h2>
 
-          <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">
+          <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-muted sm:text-lg">
             Start simple, upgrade when your events grow, and choose the level of
             workflow control that matches your organization.
           </p>
 
           {mounted && isPremiumUser && (
-            <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-4 py-2 text-sm font-medium text-emerald-300">
+            <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-emerald-400/18 bg-emerald-400/10 px-4 py-2 text-sm font-medium text-emerald-300">
               <BadgeCheck className="h-4 w-4" />
               You already have a premium plan
             </div>
@@ -128,46 +134,60 @@ const PremiumPlan = () => {
             return (
               <article
                 key={plan.name}
-                className={`rounded-[32px] border p-6 sm:p-7 ${
+                className={`card-theme rounded-[2rem] p-6 sm:p-7 ${
                   plan.featured
-                    ? "border-cyan-300/22 bg-[linear-gradient(180deg,rgba(12,31,43,0.98),rgba(7,18,28,0.96))] shadow-[0_30px_90px_rgba(6,182,212,0.16)]"
-                    : "border-white/8 bg-[linear-gradient(180deg,rgba(10,23,35,0.92),rgba(6,16,26,0.96))] shadow-[0_30px_80px_rgba(2,8,18,0.28)]"
+                    ? "border-primary/20 bg-[linear-gradient(180deg,rgba(20,18,46,0.84),rgba(10,14,32,0.94))] shadow-[0_28px_90px_rgba(120,78,255,0.16)]"
+                    : "border-border/60 bg-card/78"
                 }`}
               >
+                <div
+                  className="rounded-[1.5rem] border border-border/60 px-5 py-5"
+                  style={{ background: plan.accent }}
+                >
                 <div className="flex items-start justify-between gap-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/[0.06] text-cyan-100">
+                  <div
+                    className={`flex h-12 w-12 items-center justify-center rounded-2xl border ${
+                      plan.featured
+                        ? "border-primary/22 bg-primary/14 text-primary shadow-glow-soft"
+                        : "border-white/10 bg-white/[0.06] text-primary"
+                    }`}
+                  >
                     <Icon className="h-5 w-5" />
                   </div>
 
                   {plan.featured ? (
-                    <span className="rounded-full border border-cyan-300/20 bg-cyan-300/10 px-3 py-1 text-xs font-medium text-cyan-100">
+                    <span className="rounded-full border border-primary/20 bg-primary/12 px-3 py-1 text-xs font-medium text-primary">
                       Most Popular
                     </span>
                   ) : null}
                 </div>
 
-                <h3 className="mt-6 font-[family:var(--font-space-grotesk)] text-2xl font-semibold text-white">
+                <h3 className="mt-6 font-display text-2xl font-semibold text-white">
                   {plan.name}
                 </h3>
 
-                <p className="mt-3 text-sm leading-7 text-slate-300">
+                <p className="mt-3 text-sm leading-7 text-white/70">
                   {plan.description}
                 </p>
 
                 <div className="mt-6 flex items-end gap-1">
-                  <p className="font-[family:var(--font-space-grotesk)] text-4xl font-semibold text-white">
+                  <p className="font-display text-4xl font-semibold text-white">
                     {plan.price}
                   </p>
                   {plan.period ? (
-                    <p className="pb-1 text-sm text-slate-400">{plan.period}</p>
+                    <p className="pb-1 text-sm text-white/52">{plan.period}</p>
                   ) : null}
+                </div>
                 </div>
 
                 <div className="mt-6 space-y-3">
                   {plan.features.map((feature) => (
-                    <div key={feature} className="flex items-start gap-3">
-                      <BadgeCheck className="mt-0.5 h-4.5 w-4.5 shrink-0 text-cyan-200" />
-                      <p className="text-sm leading-6 text-slate-300">
+                    <div
+                      key={feature}
+                      className="flex items-start gap-3 rounded-[1.15rem] border border-border/50 bg-background/24 px-4 py-3"
+                    >
+                      <BadgeCheck className="mt-0.5 h-4.5 w-4.5 shrink-0 text-primary" />
+                      <p className="text-sm leading-6 text-muted">
                         {feature}
                       </p>
                     </div>
@@ -177,7 +197,7 @@ const PremiumPlan = () => {
                 {plan.type === "FREE" ? (
                   <button
                     type="button"
-                    className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-5 py-3.5 text-sm font-semibold text-white"
+                    className="btn-theme-outline mt-8 w-full"
                   >
                     {plan.cta}
                     <ArrowRight className="h-4 w-4" />
@@ -193,8 +213,8 @@ const PremiumPlan = () => {
                     }
                     className={`mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full px-5 py-3.5 text-sm font-semibold transition ${
                       plan.featured
-                        ? "bg-[linear-gradient(135deg,#67e8f9,#f59e0b)] text-slate-950 hover:scale-[1.01]"
-                        : "border border-white/10 bg-white/[0.04] text-white hover:border-cyan-300/24 hover:bg-white/[0.06]"
+                        ? "bg-button-primary text-primary-foreground shadow-glow hover:-translate-y-0.5 hover:shadow-glow-soft"
+                        : "border border-border/70 bg-card/60 text-foreground shadow-inset backdrop-blur-xl hover:border-primary/35 hover:bg-accent/80"
                     } disabled:cursor-not-allowed disabled:opacity-70`}
                   >
                     {isPaidPlan && mounted && isPremiumUser

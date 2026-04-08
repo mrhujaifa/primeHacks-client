@@ -1,17 +1,18 @@
+@config "../../tailwind.config.ts";
 @import "tailwindcss";
 @plugin "daisyui";
 :root {
-  --background: #06111a;
-  --foreground: #f8fafc;
-  --muted: #93a7bb;
-  --surface: rgba(10, 24, 36, 0.74);
-  --surface-strong: rgba(8, 18, 30, 0.92);
-  --line: rgba(148, 163, 184, 0.16);
-  --line-strong: rgba(125, 211, 252, 0.28);
-  --brand: #66d9ff;
-  --brand-strong: #06b6d4;
-  --accent: #f59e0b;
-  --accent-soft: rgba(245, 158, 11, 0.18);
+  --background: #040814;
+  --foreground: #f4f7ff;
+  --muted: #949bb4;
+  --surface: rgba(10, 15, 34, 0.74);
+  --surface-strong: rgba(8, 12, 28, 0.92);
+  --line: rgba(105, 90, 166, 0.18);
+  --line-strong: rgba(178, 122, 255, 0.24);
+  --brand: #b27aff;
+  --brand-strong: #7550ff;
+  --accent: #56baff;
+  --accent-soft: rgba(86, 186, 255, 0.16);
 }
 
 @theme inline {
@@ -109,7 +110,7 @@ a {
 }
 
 .ph-amber-gradient {
-  background: linear-gradient(135deg, #fde68a 0%, #f59e0b 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #cabdff 50%, #8b5cf6 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -525,6 +526,391 @@ a {
   .ph-hero-card-left,
   .ph-hero-card-right,
   .ph-hero-card-bottom {
+    animation: none !important;
+  }
+}
+
+:root {
+  --background: 250 251 255;
+  --background-deep: 238 242 255;
+  --background-elevated: 255 255 255;
+  --foreground: 18 22 43;
+  --foreground-strong: 8 12 28;
+  --muted: 104 113 145;
+  --muted-foreground: 120 128 158;
+  --card: 255 255 255;
+  --card-strong: 244 247 255;
+  --card-foreground: 18 22 43;
+  --popover: 255 255 255;
+  --popover-foreground: 18 22 43;
+  --border: 205 213 236;
+  --border-strong: 170 181 216;
+  --input: 214 223 243;
+  --primary: 120 78 255;
+  --primary-foreground: 255 255 255;
+  --secondary: 238 233 255;
+  --secondary-foreground: 74 51 160;
+  --accent: 245 242 255;
+  --accent-foreground: 39 31 76;
+  --ring: 150 115 255;
+  --navbar: 255 255 255;
+  --navbar-border: 217 224 244;
+  --hero-glow-primary: 141 92 255;
+  --hero-glow-secondary: 93 190 255;
+  --hero-glow-tertiary: 214 115 255;
+  --gradient-start: 111 72 255;
+  --gradient-mid: 162 90 255;
+  --gradient-end: 80 187 255;
+  --success: 34 197 94;
+  --warning: 250 204 21;
+  --destructive: 244 63 94;
+  --surface-overlay: 255 255 255;
+  --grid: 128 137 170;
+}
+
+.dark {
+  --background: 4 8 20;
+  --background-deep: 2 5 16;
+  --background-elevated: 8 12 29;
+  --foreground: 244 247 255;
+  --foreground-strong: 255 255 255;
+  --muted: 148 155 180;
+  --muted-foreground: 116 124 150;
+  --card: 10 15 34;
+  --card-strong: 16 21 47;
+  --card-foreground: 244 247 255;
+  --popover: 10 14 32;
+  --popover-foreground: 244 247 255;
+  --border: 70 79 111;
+  --border-strong: 105 90 166;
+  --input: 63 71 100;
+  --primary: 178 122 255;
+  --primary-foreground: 7 5 18;
+  --secondary: 28 23 55;
+  --secondary-foreground: 231 223 255;
+  --accent: 18 23 46;
+  --accent-foreground: 239 243 255;
+  --ring: 184 130 255;
+  --navbar: 9 13 30;
+  --navbar-border: 92 79 148;
+  --hero-glow-primary: 168 93 255;
+  --hero-glow-secondary: 91 192 255;
+  --hero-glow-tertiary: 255 93 210;
+  --gradient-start: 117 77 255;
+  --gradient-mid: 180 96 255;
+  --gradient-end: 86 186 255;
+  --success: 74 222 128;
+  --warning: 250 204 21;
+  --destructive: 251 113 133;
+  --surface-overlay: 255 255 255;
+  --grid: 97 108 153;
+}
+
+html {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  background:
+    radial-gradient(
+      circle at 16% 18%,
+      rgb(var(--hero-glow-primary) / 0.18),
+      transparent 22%
+    ),
+    radial-gradient(
+      circle at 86% 14%,
+      rgb(var(--hero-glow-secondary) / 0.14),
+      transparent 18%
+    ),
+    radial-gradient(
+      circle at 90% 6%,
+      rgb(var(--hero-glow-tertiary) / 0.16),
+      transparent 14%
+    ),
+    linear-gradient(
+      180deg,
+      rgb(var(--background-elevated)) 0%,
+      rgb(var(--background)) 44%,
+      rgb(var(--background-deep)) 100%
+    );
+}
+
+body::before {
+  background:
+    linear-gradient(rgb(var(--grid) / 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--grid) / 0.05) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(circle at center, black, transparent 84%);
+  opacity: 0.4;
+}
+
+body::after {
+  inset: auto -10% -8% auto;
+  height: 28rem;
+  width: 28rem;
+  background: radial-gradient(
+    circle,
+    rgb(var(--hero-glow-tertiary) / 0.28),
+    transparent 66%
+  );
+  filter: blur(54px);
+  opacity: 0.7;
+}
+
+::selection {
+  background: rgb(var(--primary) / 0.28);
+  color: rgb(var(--primary-foreground));
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display text-foreground;
+  }
+
+  .btn {
+    @apply rounded-2xl border border-input bg-card text-foreground shadow-none transition;
+  }
+
+  .btn:hover {
+    @apply border-primary/25 bg-accent/80 text-foreground;
+  }
+
+  .btn:focus-visible,
+  .input:focus-visible,
+  .textarea:focus-visible,
+  .select:focus-visible {
+    @apply outline-none ring-2 ring-ring/60 ring-offset-2 ring-offset-background;
+  }
+
+  .input,
+  .textarea,
+  .select {
+    @apply border-input bg-card/80 text-foreground placeholder:text-muted shadow-none;
+  }
+
+  .menu :where(li:not(.menu-title) > *:not(ul):not(.active)):hover {
+    @apply bg-accent/80 text-foreground;
+  }
+
+  .menu li > *:not(ul):not(.menu-title):active,
+  .menu li > details > summary:active {
+    @apply bg-accent text-foreground;
+  }
+
+  .modal-box {
+    @apply border border-border/70 bg-popover text-popover-foreground shadow-panel;
+  }
+}
+
+@layer components {
+  .ph-grid {
+    background-image:
+      linear-gradient(rgb(var(--grid) / 0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(var(--grid) / 0.08) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  .ph-panel {
+    @apply border border-border/60 shadow-panel backdrop-blur-2xl;
+    background:
+      linear-gradient(180deg, rgb(var(--surface-overlay) / 0.06), transparent),
+      linear-gradient(
+        180deg,
+        rgb(var(--card) / 0.84),
+        rgb(var(--card-strong) / 0.94)
+      );
+  }
+
+  .ph-glow {
+    box-shadow:
+      0 0 0 1px rgb(var(--primary) / 0.18),
+      0 18px 45px rgb(var(--primary) / 0.22);
+  }
+
+  .ph-text-gradient {
+    background: linear-gradient(
+      135deg,
+      rgb(var(--foreground-strong)) 0%,
+      rgb(var(--primary)) 48%,
+      rgb(var(--hero-glow-secondary)) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .ph-violet-gradient {
+    background: linear-gradient(
+      135deg,
+      rgb(var(--foreground-strong)) 0%,
+      rgb(var(--secondary-foreground)) 42%,
+      rgb(var(--primary)) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .section-shell {
+    @apply relative overflow-hidden rounded-[2.25rem] border border-border/60 bg-card/72 shadow-panel backdrop-blur-2xl;
+  }
+
+  .card-theme {
+    @apply relative overflow-hidden rounded-[1.75rem] border border-border/60 bg-card/75 shadow-panel backdrop-blur-xl;
+  }
+
+  .badge-theme {
+    @apply inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-xs font-medium uppercase tracking-[0.28em] text-primary;
+  }
+
+  .badge-muted {
+    @apply inline-flex items-center gap-2 rounded-full border border-border/70 bg-card/65 px-4 py-2 text-xs font-medium uppercase tracking-[0.28em] text-muted;
+  }
+
+  .btn-theme {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-transparent bg-button-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-glow transition duration-300 hover:-translate-y-0.5 hover:shadow-glow-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+  }
+
+  .btn-theme-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-border/70 bg-card/60 px-6 py-3.5 text-sm font-semibold text-foreground shadow-inset backdrop-blur-xl transition duration-300 hover:border-primary/35 hover:bg-accent/80 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+  }
+
+  .btn-theme-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-medium text-muted transition duration-300 hover:bg-accent/70 hover:text-foreground;
+  }
+
+  .input-theme {
+    @apply h-12 w-full rounded-2xl border border-input bg-card/80 px-4 text-sm text-foreground shadow-inset backdrop-blur-xl transition placeholder:text-muted focus-visible:border-primary/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60;
+  }
+
+  .textarea-theme {
+    @apply min-h-[130px] w-full rounded-[1.5rem] border border-input bg-card/80 px-4 py-3 text-sm text-foreground shadow-inset backdrop-blur-xl transition placeholder:text-muted focus-visible:border-primary/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60;
+  }
+
+  .field-icon {
+    @apply text-muted transition group-focus-within:text-primary;
+  }
+
+  .theme-toggle {
+    @apply inline-flex h-11 items-center gap-2 rounded-full border border-border/70 bg-card/70 px-3 text-sm font-medium text-foreground shadow-inset backdrop-blur-xl transition duration-300 hover:border-primary/30 hover:text-foreground;
+  }
+
+  .section-background {
+    background:
+      radial-gradient(
+        circle at 14% 14%,
+        rgb(var(--hero-glow-primary) / 0.1),
+        transparent 24%
+      ),
+      radial-gradient(
+        circle at 84% 14%,
+        rgb(var(--hero-glow-secondary) / 0.08),
+        transparent 22%
+      ),
+      linear-gradient(
+        180deg,
+        rgb(var(--card) / 0.72),
+        rgb(var(--card-strong) / 0.9)
+      );
+  }
+
+  .hero-surface {
+    @apply relative overflow-hidden rounded-[2.75rem] border border-border/60 shadow-hero;
+    background:
+      radial-gradient(
+        circle at 50% 14%,
+        rgb(var(--hero-glow-primary) / 0.18),
+        transparent 18%
+      ),
+      radial-gradient(
+        circle at 86% 16%,
+        rgb(var(--hero-glow-secondary) / 0.16),
+        transparent 18%
+      ),
+      radial-gradient(
+        circle at 82% 6%,
+        rgb(var(--hero-glow-tertiary) / 0.22),
+        transparent 13%
+      ),
+      linear-gradient(
+        180deg,
+        rgb(var(--background-elevated)) 0%,
+        rgb(var(--background)) 48%,
+        rgb(var(--background-deep)) 100%
+      );
+  }
+
+  .ph-hero-orb {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(80px);
+  }
+
+  .ph-hero-arc {
+    position: absolute;
+    border-radius: 9999px;
+    border-style: solid;
+    border-color: rgb(var(--hero-glow-primary) / 0.78) transparent transparent
+      transparent;
+    filter:
+      drop-shadow(0 0 24px rgb(var(--hero-glow-primary) / 0.48))
+      drop-shadow(0 0 46px rgb(var(--hero-glow-tertiary) / 0.28));
+    animation: hero-sweep 18s ease-in-out infinite;
+  }
+
+  .ph-hero-arc-secondary {
+    position: absolute;
+    border-radius: 9999px;
+    border-style: solid;
+    border-color: transparent rgb(var(--hero-glow-secondary) / 0.62)
+      rgb(var(--hero-glow-tertiary) / 0.52) transparent;
+    filter:
+      drop-shadow(0 0 20px rgb(var(--hero-glow-secondary) / 0.42))
+      drop-shadow(0 0 40px rgb(var(--hero-glow-tertiary) / 0.28));
+    animation: hero-sweep-reverse 20s ease-in-out infinite;
+  }
+}
+
+@keyframes hero-sweep {
+  0%,
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(6deg) scale(1.02);
+  }
+}
+
+@keyframes hero-sweep-reverse {
+  0%,
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(-8deg) scale(0.98);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ph-hero-arc,
+  .ph-hero-arc-secondary {
     animation: none !important;
   }
 }

@@ -48,12 +48,12 @@ const items = [
 
 export const SubmissionHighlights = () => {
   return (
-    <div className="rounded-[28px] border border-white/10 bg-white/5 p-5 backdrop-blur-xl md:p-6">
+    <div className="card-theme rounded-[28px] p-5 md:p-6">
       <div className="mb-5">
-        <h3 className="text-lg font-semibold text-white md:text-xl">
+        <h3 className="text-lg font-semibold text-foreground md:text-xl">
           What makes a great submission?
         </h3>
-        <p className="mt-2 text-sm leading-6 text-slate-300">
+        <p className="mt-2 text-sm leading-6 text-muted">
           Make your project easier to review with a clean summary, useful links,
           and clear technical details.
         </p>
@@ -66,18 +66,18 @@ export const SubmissionHighlights = () => {
           return (
             <div
               key={item.title}
-              className="rounded-2xl border border-white/10 bg-slate-950/40 p-4 transition duration-300 hover:border-cyan-400/20 hover:bg-slate-950/60"
+              className="rounded-2xl border border-border/70 bg-background/35 p-4 transition duration-300 hover:border-primary/20 hover:bg-accent/60"
             >
               <div className="flex items-start gap-3">
-                <div className="mt-0.5 flex size-10 shrink-0 items-center justify-center rounded-2xl border border-cyan-400/20 bg-cyan-400/10 text-cyan-300">
+                <div className="mt-0.5 flex size-10 shrink-0 items-center justify-center rounded-2xl border border-primary/20 bg-primary/10 text-primary">
                   <Icon className="size-4" />
                 </div>
 
                 <div>
-                  <h4 className="text-sm font-semibold text-white">
+                  <h4 className="text-sm font-semibold text-foreground">
                     {item.title}
                   </h4>
-                  <p className="mt-1 text-sm leading-6 text-slate-400">
+                  <p className="mt-1 text-sm leading-6 text-muted">
                     {item.description}
                   </p>
                 </div>

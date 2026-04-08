@@ -1,5 +1,5 @@
-import PrimeHacksFooter from "@/components/layouts/Footer";
 import PrimeHacksNavbar from "@/components/layouts/Navbar";
+import PrimeHacksFooter from "@/components/layouts/Footer";
 import React from "react";
 
 const CommonLayout = ({ children }: { children: React.ReactNode }) => {
@@ -7,7 +7,7 @@ const CommonLayout = ({ children }: { children: React.ReactNode }) => {
     <div>
       <PrimeHacksNavbar />
       {children}
-      {/* <PrimeHacksFooter /> */}
+      <PrimeHacksFooter />
     </div>
   );
 };

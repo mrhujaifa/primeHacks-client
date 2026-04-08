@@ -16,7 +16,7 @@ const HackathonDetailsContent = ({ hackathon }: SharedProps) => {
     <div className="space-y-6">
       <DetailBlock icon={<Sparkles className="h-4 w-4" />} label="Overview">
         <div className="space-y-4">
-          <p className="text-sm leading-7 text-slate-300 md:text-[15px]">
+          <p className="text-sm leading-7 text-muted md:text-[15px]">
             {hackathon.fullDescription ||
               "Build, collaborate, and launch innovative solutions with a production-grade hackathon workflow. This event page is designed to help participants clearly understand the scope, rewards, timeline, and submission process."}
           </p>
@@ -53,10 +53,10 @@ const HackathonDetailsContent = ({ hackathon }: SharedProps) => {
             ].map((item) => (
               <div
                 key={item.label}
-                className="flex items-center justify-between gap-3 border-b border-white/6 pb-3 last:border-none last:pb-0"
+                className="flex items-center justify-between gap-3 border-b border-border/60 pb-3 last:border-none last:pb-0"
               >
-                <p className="text-sm text-slate-400">{item.label}</p>
-                <p className="text-right text-sm font-medium text-white">
+                <p className="text-sm text-muted">{item.label}</p>
+                <p className="text-right text-sm font-medium text-foreground">
                   {item.value}
                 </p>
               </div>
@@ -66,23 +66,23 @@ const HackathonDetailsContent = ({ hackathon }: SharedProps) => {
 
         <DetailBlock icon={<Users className="h-4 w-4" />} label="Participation">
           <div className="space-y-3">
-            <div className="flex items-center justify-between gap-3 border-b border-white/6 pb-3">
-              <p className="text-sm text-slate-400">Team Size</p>
-              <p className="text-sm font-medium text-white">
+            <div className="flex items-center justify-between gap-3 border-b border-border/60 pb-3">
+              <p className="text-sm text-muted">Team Size</p>
+              <p className="text-sm font-medium text-foreground">
                 {hackathon.maxTeamSize
                   ? `Up to ${hackathon.maxTeamSize} members`
                   : "Flexible"}
               </p>
             </div>
-            <div className="flex items-center justify-between gap-3 border-b border-white/6 pb-3">
-              <p className="text-sm text-slate-400">Registration Fee</p>
-              <p className="text-sm font-medium text-white">
+            <div className="flex items-center justify-between gap-3 border-b border-border/60 pb-3">
+              <p className="text-sm text-muted">Registration Fee</p>
+              <p className="text-sm font-medium text-foreground">
                 {hackathon.registrationFee ?? 0} {prizeCurrency}
               </p>
             </div>
             <div className="flex items-center justify-between gap-3">
-              <p className="text-sm text-slate-400">Format</p>
-              <p className="text-sm font-medium text-white">
+              <p className="text-sm text-muted">Format</p>
+              <p className="text-sm font-medium text-foreground">
                 {hackathon.location || "Virtual"}
               </p>
             </div>
@@ -95,14 +95,14 @@ const HackathonDetailsContent = ({ hackathon }: SharedProps) => {
           icon={<ShieldCheck className="h-4 w-4" />}
           label="Eligibility"
         >
-          <p className="text-sm leading-7 text-slate-300">
+          <p className="text-sm leading-7 text-muted">
             {hackathon.eligibility ||
               "Open to students, developers, designers, researchers, and builders who want to ship practical solutions. Both solo and team participation can be supported depending on organizer rules."}
           </p>
         </DetailBlock>
 
-        <DetailBlock icon label="Rules & Guidelines">
-          <p className="text-sm leading-7 text-slate-300">
+        <DetailBlock label="Rules & Guidelines">
+          <p className="text-sm leading-7 text-muted">
             {hackathon.rules ||
               "Projects should be original, submitted within the deadline, and aligned with the hackathon scope. Teams should respect platform rules, judging fairness, and organizer communication guidelines."}
           </p>
@@ -124,10 +124,10 @@ const HackathonDetailsContent = ({ hackathon }: SharedProps) => {
           ].map((item) => (
             <div
               key={item}
-              className="flex items-start gap-3 rounded-2xl border border-white/8 bg-black/15 p-3"
+              className="flex items-start gap-3 rounded-2xl border border-border/60 bg-background/35 p-3"
             >
-              <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-cyan-300" />
-              <p className="text-sm text-slate-300">{item}</p>
+              <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+              <p className="text-sm text-muted">{item}</p>
             </div>
           ))}
         </div>

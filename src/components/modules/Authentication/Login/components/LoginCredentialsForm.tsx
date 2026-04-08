@@ -10,8 +10,7 @@ import Link from "next/link";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-const inputClassName =
-  "h-13 w-full rounded-2xl border border-white/10 bg-white/[0.06] pl-11 pr-4 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-300/40 focus:ring-4 focus:ring-cyan-300/10";
+const inputClassName = "input-theme h-13 pl-11 pr-4";
 
 export default function LoginCredentialsForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -73,13 +72,13 @@ export default function LoginCredentialsForm() {
           <div>
             <label
               htmlFor={field.name}
-              className="mb-2 block text-sm font-medium text-slate-200"
+              className="mb-2 block text-sm font-medium text-foreground"
             >
               Email address
             </label>
 
             <div className="group relative">
-              <Mail className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400 transition group-focus-within:text-cyan-200" />
+              <Mail className="field-icon pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2" />
 
               <input
                 id={field.name}
@@ -119,21 +118,21 @@ export default function LoginCredentialsForm() {
             <div className="mb-2 flex items-center justify-between">
               <label
                 htmlFor={field.name}
-                className="block text-sm font-medium text-slate-200"
+                className="block text-sm font-medium text-foreground"
               >
                 Password
               </label>
 
               <Link
                 href="/forgot-password"
-                className="text-xs font-medium text-cyan-200 transition hover:text-white"
+                className="text-xs font-medium text-primary transition hover:text-foreground"
               >
                 Forgot password?
               </Link>
             </div>
 
             <div className="group relative">
-              <LockKeyhole className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400 transition group-focus-within:text-cyan-200" />
+              <LockKeyhole className="field-icon pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2" />
 
               <input
                 id={field.name}
@@ -150,7 +149,7 @@ export default function LoginCredentialsForm() {
               <button
                 type="button"
                 onClick={() => setShowPassword((prev) => !prev)}
-                className="absolute right-3 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-xl text-slate-400 transition hover:bg-white/5 hover:text-white"
+                className="absolute right-3 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-xl text-muted transition hover:bg-accent/70 hover:text-foreground"
               >
                 {showPassword ? (
                   <EyeOff className="h-4 w-4" />
@@ -172,7 +171,7 @@ export default function LoginCredentialsForm() {
       <form.Field name="rememberMe">
         {(field) => (
           <div className="flex items-center justify-between gap-3 pt-1">
-            <label className="inline-flex cursor-pointer items-center gap-3 text-sm text-slate-300">
+            <label className="inline-flex cursor-pointer items-center gap-3 text-sm text-muted">
               <span className="relative flex h-5 w-5 items-center justify-center">
                 <input
                   type="checkbox"
@@ -180,9 +179,9 @@ export default function LoginCredentialsForm() {
                   checked={field.state.value}
                   onChange={(e) => field.handleChange(e.target.checked)}
                 />
-                <span className="h-5 w-5 rounded-md border border-white/15 bg-white/[0.03] transition peer-checked:border-cyan-300/60 peer-checked:bg-cyan-300/20" />
+                <span className="h-5 w-5 rounded-md border border-border/70 bg-card/70 transition peer-checked:border-primary/60 peer-checked:bg-primary/20" />
                 <svg
-                  className="pointer-events-none absolute h-3 w-3 scale-0 text-cyan-100 transition peer-checked:scale-100"
+                  className="pointer-events-none absolute h-3 w-3 scale-0 text-primary transition peer-checked:scale-100"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -196,7 +195,7 @@ export default function LoginCredentialsForm() {
               Remember me
             </label>
 
-            <p className="text-xs text-slate-400">Protected session</p>
+            <p className="text-xs text-muted">Protected session</p>
           </div>
         )}
       </form.Field>
@@ -204,7 +203,7 @@ export default function LoginCredentialsForm() {
       <button
         type="submit"
         disabled={isPending}
-        className="inline-flex h-13 w-full items-center justify-center gap-2 rounded-2xl bg-[linear-gradient(135deg,#67e8f9,#f59e0b)] px-4 text-sm font-semibold text-slate-950 shadow-lg shadow-cyan-950/30 transition hover:scale-[1.01] hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-70"
+        className="btn-theme h-13 w-full rounded-2xl px-4 disabled:cursor-not-allowed disabled:opacity-70"
       >
         {isPending ? "Signing in..." : "Sign in"}
         {!isPending && <ArrowRight className="h-4 w-4" />}

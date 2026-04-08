@@ -1,7 +1,6 @@
 "use client";
 
 import { NavSection } from "@/interface/dashboard.interface";
-import { UserInfo } from "@/types/user.types";
 import {
   Album,
   BadgeCheck,
@@ -25,7 +24,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 interface DashboardSidebarContentProps {
-  userInfo: UserInfo;
   navItems: NavSection[];
   dashboardHome: string;
 }
@@ -52,7 +50,6 @@ const iconMap: Record<string, LucideIcon> = {
 const DashboardSidebarContent = ({
   dashboardHome,
   navItems,
-  userInfo,
 }: DashboardSidebarContentProps) => {
   const pathname = usePathname();
 
@@ -60,33 +57,32 @@ const DashboardSidebarContent = ({
     return pathname === href || pathname.startsWith(`${href}/`);
   };
 
-  const getInitial = () => {
-    if (userInfo?.name) return userInfo.name.charAt(0).toUpperCase();
-    if (userInfo?.email) return userInfo.email.charAt(0).toUpperCase();
-    return "U";
-  };
-
   return (
-    <aside className="flex min-h-screen w-64 flex-col border-r border-white/10 bg-[linear-gradient(180deg,#071521_0%,#081824_45%,#0b1d2a_100%)] text-slate-100 lg:w-72">
-      <div className="border-b border-white/10 p-3">
+    <aside className="relative flex min-h-screen w-64 flex-col overflow-hidden border-r border-border/70 bg-[linear-gradient(180deg,rgb(var(--background-elevated))_0%,rgb(var(--card))_38%,rgb(var(--card-strong))_100%)] text-foreground lg:w-72 dark:bg-[linear-gradient(180deg,rgba(10,15,34,0.96)_0%,rgba(8,12,30,0.98)_45%,rgba(6,10,24,1)_100%)]">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(141,92,255,0.12),transparent_28%),radial-gradient(circle_at_78%_12%,rgba(93,190,255,0.08),transparent_20%),linear-gradient(180deg,rgba(255,255,255,0.54),transparent_38%)] dark:bg-[radial-gradient(circle_at_top_left,rgba(168,93,255,0.14),transparent_28%),radial-gradient(circle_at_78%_12%,rgba(91,192,255,0.10),transparent_20%),linear-gradient(180deg,rgba(255,255,255,0.04),transparent_34%)]"
+      />
+
+      <div className="relative border-b border-border/70 p-3">
         <Link
           href={dashboardHome}
-          className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-3 lg:justify-start"
+          className="flex items-center gap-3 rounded-2xl border border-border/70 bg-card/76 p-3 shadow-panel backdrop-blur-xl transition hover:border-primary/20 lg:justify-start"
         >
-          <div className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-[linear-gradient(135deg,rgba(34,211,238,0.18),rgba(245,158,11,0.16))]">
-            <LayoutDashboard size={18} className="text-cyan-300" />
+          <div className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-button-primary">
+            <LayoutDashboard size={18} className="text-white" />
           </div>
 
           <div className="min-w-0">
-            <p className="truncate text-sm font-semibold text-white">
+            <p className="truncate text-sm font-semibold text-foreground">
               PrimeHacks Dashboard
             </p>
-            <p className="text-xs text-slate-400">Hackathon</p>
+            <p className="text-xs text-muted">Hackathon</p>
           </div>
         </Link>
       </div>
 
-      <nav className="flex-1 overflow-y-auto px-2 pb-3">
+      <nav className="relative flex-1 overflow-y-auto px-2 pb-3">
         <div className="space-y-4">
           {/* <Link
             href={dashboardHome}
@@ -110,7 +106,7 @@ const DashboardSidebarContent = ({
           {navItems.map((section, sectionIndex) => (
             <div key={sectionIndex} className="space-y-1.5">
               {section.title && (
-                <p className="px-3 pb-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">
+                <p className="px-3 pb-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
                   {section.title}
                 </p>
               )}
@@ -125,13 +121,15 @@ const DashboardSidebarContent = ({
                     href={item.href}
                     className={`flex h-12 items-center gap-3 rounded-2xl border px-3 transition lg:justify-start ${
                       isActive
-                        ? "border-cyan-300/20 bg-cyan-400/10 text-white"
-                        : "border-transparent text-slate-300 hover:border-white/10 hover:bg-white/5 hover:text-white"
+                        ? "border-primary/20 bg-primary/10 text-foreground shadow-[0_16px_32px_rgb(var(--primary)/0.12)]"
+                        : "border-transparent text-muted hover:border-border/70 hover:bg-accent/85 hover:text-foreground"
                     }`}
                   >
                     <Icon
                       size={18}
-                      className={isActive ? "text-cyan-300" : "text-slate-400"}
+                      className={
+                        isActive ? "text-primary" : "text-muted-foreground"
+                      }
                     />
                     <span className="flex-1 font-medium">{item.title}</span>
                   </Link>
@@ -142,10 +140,10 @@ const DashboardSidebarContent = ({
         </div>
       </nav>
 
-      <div className="border-t border-white/10 p-3">
+      <div className="relative border-t border-border/70 p-3">
         <Link
           href="/"
-          className="flex h-12 items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-3 text-slate-300 transition hover:bg-white/10 hover:text-white lg:justify-start"
+          className="flex h-12 items-center gap-3 rounded-2xl border border-border/70 bg-card/76 px-3 text-muted transition hover:border-primary/18 hover:bg-accent/80 hover:text-foreground lg:justify-start"
         >
           <Home size={18} />
           <span>Back to Home</span>
