@@ -18,7 +18,7 @@ export const createSubmissionMutationFn = async (
   hackathonId: string,
   payload: ICreateSubmissionPayload,
 ) => {
-  const res = await SubmissionServices.createSubmisson(hackathonId, payload);
+  const res = await SubmissionServices.createSubmission(hackathonId, payload);
 
-  return res;
+  return res.data;
 };

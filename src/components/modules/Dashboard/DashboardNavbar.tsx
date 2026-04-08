@@ -4,6 +4,7 @@ import React from "react";
 import { Bell, ChevronDown, Menu } from "lucide-react";
 import { useCurrentUser } from "@/hooks/useSession";
 import ThemeToggle from "@/components/ui/ThemeToggle";
+import BrandMark from "@/components/ui/BrandMark";
 
 const DashboardNavbar = () => {
   const { data: user } = useCurrentUser();
@@ -14,6 +15,13 @@ const DashboardNavbar = () => {
 
       <div className="navbar relative min-h-[74px] px-4 sm:px-6 lg:px-8">
         <div className="flex min-w-0 flex-1 items-center gap-3 lg:hidden">
+          <BrandMark
+            href="/dashboard"
+            size="sm"
+            showSubtitle={false}
+            className="min-w-0"
+          />
+
           <label
             htmlFor="my-drawer-4"
             aria-label="open sidebar"
@@ -21,15 +29,6 @@ const DashboardNavbar = () => {
           >
             <Menu size={18} />
           </label>
-
-          <div className="min-w-0">
-            <h1 className="truncate text-sm font-semibold tracking-tight text-foreground">
-              PrimeHacks Dashboard
-            </h1>
-            <p className="truncate text-xs text-muted">
-              Manage your workspace
-            </p>
-          </div>
         </div>
 
         <div className="flex flex-1 items-center justify-end gap-2 sm:gap-3">

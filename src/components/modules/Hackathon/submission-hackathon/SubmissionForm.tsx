@@ -33,11 +33,9 @@ export const SubmissionForm = ({ hackathonId }: { hackathonId: string }) => {
       form.reset();
     },
     onError: (error: any) => {
-      const message =
-        error?.response?.data?.message ||
-        error?.message ||
-        "Something went wrong while submitting your project.";
-      toast.error(message);
+      toast.error(
+        error?.message || "Something went wrong while submitting your project.",
+      );
     },
   });
 

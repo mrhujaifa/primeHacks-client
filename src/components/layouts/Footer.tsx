@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Instagram, Linkedin, Sparkles, Twitter } from "lucide-react";
+import { Instagram, Linkedin, Twitter } from "lucide-react";
+import BrandMark from "@/components/ui/BrandMark";
 
 const footerSections = [
   {
@@ -56,20 +57,7 @@ export default function PrimeHacksFooter() {
       <div className="relative mx-auto max-w-[1400px] px-5 py-14 sm:px-8 lg:px-12 lg:py-16">
         <div className="grid gap-14 lg:grid-cols-[1.2fr_2fr] lg:gap-20">
           <div className="space-y-10">
-            <Link href="/" className="inline-flex items-center gap-3">
-              <div className="ph-glow flex h-11 w-11 items-center justify-center rounded-2xl bg-button-primary text-white">
-                <Sparkles className="h-4 w-4" />
-              </div>
-
-              <div>
-                <p className="font-display text-[30px] font-semibold leading-none text-white">
-                  PrimeHacks
-                </p>
-                <p className="mt-2 text-sm text-white/68">
-                  Premium hackathon platform
-                </p>
-              </div>
-            </Link>
+            <BrandMark href="/" size="lg" tone="inverse" subtitle="Premium hackathon platform" />
 
             <div>
               <p className="text-sm font-semibold uppercase tracking-[0.18em] text-white">

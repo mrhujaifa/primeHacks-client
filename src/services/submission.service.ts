@@ -4,26 +4,35 @@ import {
   ICreateSubmissionPayload,
   IMySubmission,
 } from "@/types/submission.type";
+// import { headers } from "next/headers";
 
-const createSubmisson = async (
+const BASE_API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+const createSubmission = async (
   hackathonId: string,
   payload: ICreateSubmissionPayload,
 ) => {
-  try {
-    const res = await httpClient.post(
-      `/submission/hackathon/${hackathonId}`,
-      payload,
+  const res = await fetch(
+    `${BASE_API_URL}/submission/hackathon/${hackathonId}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(payload),
+    },
+  );
+
+  const data = await res.json().catch(() => null);
+
+  if (!res.ok) {
+    throw new Error(
+      data?.message || "Something went wrong while creating submission",
     );
-
-    if (!res.success) {
-      throw new Error(res.message || "Submission create failed!");
-    }
-
-    return res.data;
-  } catch (error: any) {
-    console.log("submission service error:", error);
-    throw error;
   }
+
+  return data;
 };
 // * Get My Submissions by Hackathon ID
 
@@ -51,6 +60,8 @@ const getMySubmissionsByHackathonId = async (cookieHeader?: string) => {
 };
 
 export const SubmissionServices = {
-  createSubmisson,
+  createSubmission,
   getMySubmissionsByHackathonId,
 };
+
+//  `/submission/hackathon/${hackathonId}`,

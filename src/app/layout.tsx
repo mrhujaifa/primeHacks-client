@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
+import { Geist, Geist_Mono, Space_Grotesk, Sora } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import TanstackProvider from "@/providers/TanstackProvider";
@@ -20,6 +20,11 @@ const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
 });
 
+const sora = Sora({
+  variable: "--font-sora",
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
   title: "PrimeHacks | Industrial Hackathon Platform",
   description:
@@ -34,7 +39,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} ${sora.variable} antialiased`}
       >
         <Script id="primehacks-theme" strategy="beforeInteractive">
           {`

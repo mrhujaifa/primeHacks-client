@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import BrandMark from "@/components/ui/BrandMark";
 
 interface DashboardSidebarContentProps {
   navItems: NavSection[];
@@ -65,21 +66,12 @@ const DashboardSidebarContent = ({
       />
 
       <div className="relative border-b border-border/70 p-3">
-        <Link
+        <BrandMark
           href={dashboardHome}
-          className="flex items-center gap-3 rounded-2xl border border-border/70 bg-card/76 p-3 shadow-panel backdrop-blur-xl transition hover:border-primary/20 lg:justify-start"
-        >
-          <div className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-button-primary">
-            <LayoutDashboard size={18} className="text-white" />
-          </div>
-
-          <div className="min-w-0">
-            <p className="truncate text-sm font-semibold text-foreground">
-              PrimeHacks Dashboard
-            </p>
-            <p className="text-xs text-muted">Hackathon</p>
-          </div>
-        </Link>
+          size="sm"
+          subtitle="Hackathon Dashboard"
+          className="w-full px-1 py-1 transition hover:opacity-90"
+        />
       </div>
 
       <nav className="relative flex-1 overflow-y-auto px-2 pb-3">

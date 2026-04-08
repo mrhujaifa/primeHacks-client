@@ -10,7 +10,6 @@ import {
   Menu,
   Rocket,
   Search,
-  Sparkles,
   Trophy,
   Users2,
   X,
@@ -20,6 +19,7 @@ import { useCurrentUser } from "@/hooks/useSession";
 import ProfileDropdown from "./components/ProfileDropdown";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import { usePathname } from "next/navigation";
+import BrandMark from "@/components/ui/BrandMark";
 
 const navItems = [
   {
@@ -151,20 +151,7 @@ export default function PrimeHacksNavbar() {
           <div className="mx-auto container">
             <div className="relative flex h-[76px] items-center justify-between px-4  lg:px-0">
               <div className="flex items-center gap-8">
-                <Link href="/" className="flex items-center gap-3">
-                  <div className="ph-glow flex h-11 w-11 items-center justify-center rounded-2xl bg-button-primary text-white">
-                    <Sparkles className="h-4 w-4" />
-                  </div>
-
-                  <div className="flex flex-col leading-none">
-                    <span className="font-display text-[17px] font-semibold tracking-tight text-foreground">
-                      PrimeHacks
-                    </span>
-                    <span className="mt-1 text-[11px] uppercase tracking-[0.28em] text-muted">
-                      AI Event Platform
-                    </span>
-                  </div>
-                </Link>
+                <BrandMark href="/" size="md" />
 
                 <nav className="hidden items-center gap-7 lg:flex">
                   {navItems.map((item: NavItem) => (
@@ -333,24 +320,12 @@ export default function PrimeHacksNavbar() {
 
           <div className="relative flex h-full flex-col">
             <div className="flex items-center justify-between border-b border-border/70 px-4 py-4">
-              <Link
+              <BrandMark
                 href="/"
+                size="sm"
+                className="min-w-0"
                 onClick={() => setMobileOpen(false)}
-                className="flex min-w-0 items-center gap-3"
-              >
-                <div className="ph-glow flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-button-primary text-white">
-                  <Sparkles className="h-4 w-4" />
-                </div>
-
-                <div className="min-w-0">
-                  <p className="truncate font-display text-[17px] font-semibold tracking-tight text-foreground">
-                    PrimeHacks
-                  </p>
-                  <p className="mt-1 truncate text-[11px] uppercase tracking-[0.28em] text-muted">
-                    AI Event Platform
-                  </p>
-                </div>
-              </Link>
+              />
 
               <div className="flex items-center gap-2">
                 <ThemeToggle className="h-11 px-2.5" />
