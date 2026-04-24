@@ -13,7 +13,7 @@ const RegisterForm = () => {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(124,92,255,0.14),transparent_24%),radial-gradient(circle_at_bottom_right,rgba(86,186,255,0.12),transparent_24%),linear-gradient(180deg,rgba(4,8,20,0.94)_0%,rgba(6,9,24,0.98)_100%)]" />
           <div className="ph-grid absolute inset-0 opacity-30" />
 
-          <div className="relative z-10 w-full max-w-md">
+          <div className="relative z-10 w-full max-w-md lg:mt-30 mt-25">
             <div className="ph-panel rounded-[30px] p-5 sm:p-7">
               <div className="mb-6">
                 <p className="text-xs uppercase tracking-[0.28em] text-primary">

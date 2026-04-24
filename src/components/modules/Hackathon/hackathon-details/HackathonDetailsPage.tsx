@@ -118,8 +118,8 @@ export default function HackathonDetailsPage({
   }
   return (
     <section className=" relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(124,92,255,0.08),transparent_22%),radial-gradient(circle_at_top_right,rgba(86,186,255,0.08),transparent_24%),linear-gradient(180deg,rgba(4,8,20,0.06)_0%,rgba(7,11,28,0.16)_45%,rgba(2,6,23,0.08)_100%)]" />
-      <div className="ph-grid absolute inset-0 opacity-[0.08]" />
+      <div className="absolute " />
+      <div className="ph-grid absolute " />
 
       <div className="relative container mx-auto mt-15 px-4 py-8 ">
         <div className="grid grid-cols-1 gap-8 xl:grid-cols-[minmax(0,1.55fr)_380px]">

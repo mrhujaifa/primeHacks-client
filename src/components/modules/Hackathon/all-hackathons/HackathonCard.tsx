@@ -36,8 +36,7 @@ export default function HackathonCard({
     ) {
       return {
         label: "Ongoing",
-        className:
-          "border border-success/30 bg-success/12 text-success",
+        className: "border border-success/30 bg-success/12 text-success",
       };
     }
 

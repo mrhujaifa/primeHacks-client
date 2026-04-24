@@ -49,7 +49,7 @@ export default function LoginCredentialsForm() {
 
   return (
     <form
-      className="space-y-4"
+      className="space-y-4 "
       onSubmit={(e) => {
         e.preventDefault();
         e.stopPropagation();

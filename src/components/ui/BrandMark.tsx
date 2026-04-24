@@ -16,18 +16,18 @@ type BrandMarkProps = {
 
 const sizeMap = {
   sm: {
-    icon: "h-10 w-10",
-    title: "text-[16px]",
-    subtitle: "text-[10px]",
+    icon: "h-9 w-9",
+    title: "text-[18px]",
+    subtitle: "text-[9px]",
   },
   md: {
     icon: "h-11 w-11",
-    title: "text-[17px]",
-    subtitle: "text-[11px]",
+    title: "text-[21px]",
+    subtitle: "text-[10px]",
   },
   lg: {
-    icon: "h-12 w-12",
-    title: "text-[19px]",
+    icon: "h-13 w-13",
+    title: "text-[24px]",
     subtitle: "text-[11px]",
   },
 } as const;
@@ -35,7 +35,7 @@ const sizeMap = {
 const BrandMark = ({
   href = "/",
   size = "md",
-  subtitle = "AI Event Platform",
+  subtitle = "Hack the Future",
   showSubtitle = true,
   tone = "auto",
   className = "",
@@ -44,41 +44,45 @@ const BrandMark = ({
   const sizeStyles = sizeMap[size];
   const isInverse = tone === "inverse";
   const titleColor = isInverse ? "text-white" : "text-foreground";
-  const subtitleColor = isInverse ? "text-white/68" : "text-muted";
+  const subtitleColor = isInverse
+    ? "text-white/60"
+    : "text-muted-foreground/70";
 
   return (
     <Link
       href={href}
       aria-label="PrimeHacks home"
       onClick={onClick}
-      className={`inline-flex items-center gap-3 ${className}`}
+      className={`inline-flex items-center gap-3 transition-transform duration-300 hover:scale-[1.02] active:scale-[0.98] ${className}`}
     >
-      <Image
-        src="/logos/app-logo.png"
-        alt="PrimeHacks logo"
-        width={500}
-        height={500}
-        priority={false}
-        className={`shrink-0 object-contain ${sizeStyles.icon}`}
-      />
+      <div className="relative shrink-0">
+        <Image
+          src="/logos/app-logo.png"
+          alt="PrimeHacks logo"
+          width={400}
+          height={400}
+          priority
+          className={`object-contain transition-all duration-500 ${sizeStyles.icon}`}
+        />
+      </div>
 
-      <div className="min-w-0 leading-none">
+      <div className="flex flex-col justify-center leading-none">
         <p
-          className={`font-brand ${sizeStyles.title} font-semibold tracking-[-0.06em] ${titleColor}`}
+          className={`${sizeStyles.title} tracking-tighter flex items-center gap-0.5`}
         >
-          <span>Prime</span>
-          <span className="bg-[linear-gradient(135deg,rgb(var(--primary))_0%,rgb(var(--hero-glow-secondary))_100%)] bg-clip-text text-transparent">
+          <span className={`font-medium ${titleColor}`}>Prime</span>
+          <span className="font-black bg-gradient-to-br from-primary via-primary/90 to-primary/70 bg-clip-text text-transparent">
             Hacks
           </span>
         </p>
 
-        {showSubtitle ? (
+        {showSubtitle && (
           <p
-            className={`mt-1 text-[11px] uppercase tracking-[0.28em] ${subtitleColor}`}
+            className={`mt-1 font-bold uppercase tracking-[0.3em] ${sizeStyles.subtitle} ${subtitleColor}`}
           >
             {subtitle}
           </p>
-        ) : null}
+        )}
       </div>
     </Link>
   );

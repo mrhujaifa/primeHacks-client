@@ -17,7 +17,7 @@ export const ProjectSubmissionModal = ({
           </button>
         </form>
 
-        <div className="p-6 md:p-8">
+        <div className="p-3 lg:p-6 md:p-8">
           <div className="mb-8">
             <h2 className="text-2xl font-bold text-foreground md:text-3xl">
               Submit Your Project

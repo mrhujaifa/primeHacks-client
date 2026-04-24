@@ -16,71 +16,42 @@ export default function HackathonsHero({
   const activeBanner = featuredBanners[0];
 
   return (
-    <section className="mt-20 flex flex-col gap-10 lg:flex-row lg:items-center lg:justify-between">
-      <div className="relative z-10 w-full max-w-3xl flex-1">
-        <h1 className="max-w-3xl text-3xl font-bold leading-tight tracking-tight text-foreground md:text-4xl xl:text-5xl">
+    <section className="mt-14 flex flex-col gap-8 sm:mt-16 sm:gap-10 lg:mt-20 lg:flex-row lg:items-center lg:justify-between lg:gap-12 xl:gap-16">
+      {/* Left Content */}
+      <div className="relative z-10 w-full max-w-3xl flex-1 text-center lg:text-left">
+        <h1 className="mx-auto max-w-[15ch] text-3xl font-bold leading-[1.08] tracking-tight text-foreground sm:max-w-[18ch] sm:text-4xl lg:mx-0 lg:max-w-3xl lg:text-5xl xl:text-6xl">
           The Ultimate Hub for{" "}
-          <span className="ph-violet-gradient">
-            Hackathons
-          </span>
+          <span className="ph-violet-gradient">Hackathons</span>
         </h1>
 
-        <p className="mt-4 max-w-2xl text-sm leading-7 text-muted md:text-base">
+        <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-muted sm:mt-5 sm:text-base sm:leading-7 lg:mx-0 lg:max-w-2xl">
           Learn, build, and compete in premium hackathons. Join ongoing events
           or launch your own with a modern organizer experience.
         </p>
 
-        <div className="mt-6 flex flex-wrap items-center gap-3">
-          <Link href={""}>
-            <button type="button" className="btn-theme h-11 rounded-xl px-5">
+        <div className="mt-6 flex flex-col gap-3 sm:mt-7 sm:flex-row sm:flex-wrap sm:justify-center lg:justify-start">
+          <Link href="" className="w-full sm:w-auto">
+            <button
+              type="button"
+              className="btn-theme flex h-11 w-full items-center justify-center gap-2 rounded-xl px-5 text-sm sm:h-12 sm:w-auto sm:px-6"
+            >
               <PlusCircle className="h-4 w-4" />
               Create a Hackathon
             </button>
           </Link>
+
           <button
             type="button"
-            className="btn-theme-outline h-11 rounded-xl px-5"
+            className="btn-theme-outline flex h-11 w-full items-center justify-center gap-2 rounded-xl px-5 text-sm sm:h-12 sm:w-auto sm:px-6"
           >
             <BookOpen className="h-4 w-4" />
             View Guide
           </button>
         </div>
 
-        <p className="mt-5 max-w-2xl text-sm leading-6 text-muted">
+        <p className="mx-auto mt-5 max-w-md text-sm leading-6 text-muted sm:mt-6 lg:mx-0 lg:max-w-2xl">
           Any community can create and run hackathons on Prime Hackathons.
         </p>
-      </div>
-
-      <div className="relative w-full max-w-[370px] shrink-0 mx-auto lg:mx-0 lg:ml-auto">
-        <div className="absolute inset-0 rounded-[24px] bg-[radial-gradient(circle_at_top_right,rgba(86,186,255,0.18),transparent_24%),radial-gradient(circle_at_bottom_left,rgba(168,85,247,0.14),transparent_26%)] blur-2xl" />
-
-        <div className="card-theme relative overflow-hidden rounded-[24px] p-3">
-          <div className="relative overflow-hidden rounded-[18px] border border-border/70 bg-background">
-            {activeBanner ? (
-              <div className="relative aspect-[16/9] w-full">
-                <Image
-                  src={activeBanner.image}
-                  alt={activeBanner.title || "Featured hackathon"}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            ) : (
-              <div className="aspect-[16/9] w-full bg-[radial-gradient(circle_at_top_left,rgba(124,92,255,0.18),transparent_24%),radial-gradient(circle_at_80%_20%,rgba(86,186,255,0.18),transparent_18%),linear-gradient(180deg,#080c1f_0%,#060918_46%,#081021_100%)]" />
-            )}
-          </div>
-
-          <div className="mt-3 flex items-center justify-center gap-2">
-            {[0, 1, 2, 3].map((dot) => (
-              <span
-                key={dot}
-                className={`h-2 w-2 rounded-full ${
-                  dot === 1 ? "bg-primary" : "bg-border/60"
-                }`}
-              />
-            ))}
-          </div>
-        </div>
       </div>
     </section>
   );

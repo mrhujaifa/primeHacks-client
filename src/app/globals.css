@@ -90,12 +90,12 @@ a {
   backdrop-filter: blur(24px);
 }
 
-.ph-grid {
+/* .ph-grid {
   background-image:
     linear-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px),
     linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
   background-size: 24px 24px;
-}
+} */
 
 .ph-glow {
   box-shadow:
@@ -465,17 +465,16 @@ a {
   color: #ffffff;
 }
 
-.ph-tablet-screen__mini-orb {
+/* .ph-tablet-screen__mini-orb {
   height: 44px;
   width: 44px;
   border-radius: 9999px;
   background:
-    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.96), transparent 20%),
-    radial-gradient(circle at center, rgba(124, 58, 237, 0.92), rgba(49, 15, 117, 0.9));
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.96), transparent 20%)
   box-shadow:
     0 0 20px rgba(124, 58, 237, 0.5),
     inset 0 0 14px rgba(255, 255, 255, 0.18);
-}
+} */
 
 @media (max-width: 1024px) {
   .ph-hero-scene-wrapper {
@@ -915,3 +914,4 @@ body::after {
     animation: none !important;
   }
 }
+

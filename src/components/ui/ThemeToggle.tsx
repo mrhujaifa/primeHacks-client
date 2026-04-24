@@ -26,15 +26,18 @@ const applyTheme = (theme: ThemeMode) => {
 
 export default function ThemeToggle({
   showLabel = false,
+  tone = "default",
   className = "",
 }: {
   showLabel?: boolean;
+  tone?: "default" | "inverse";
   className?: string;
 }) {
   const [theme, setTheme] = useState<ThemeMode>("dark");
   const resolvedTheme =
     typeof document === "undefined" ? theme : getCurrentTheme();
   const nextTheme = resolvedTheme === "dark" ? "light" : "dark";
+  const isInverse = tone === "inverse";
 
   return (
     <button
@@ -46,11 +49,17 @@ export default function ThemeToggle({
         setTheme(updatedTheme);
         applyTheme(updatedTheme);
       }}
-      className={`theme-toggle ${className}`}
+      className={`theme-toggle ${
+        isInverse
+          ? "border-white/15 bg-white/10 text-white hover:border-white/25 hover:bg-white/15"
+          : ""
+      } ${className}`}
     >
       <span
         suppressHydrationWarning
-        className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/12 text-primary"
+        className={`flex h-7 w-7 items-center justify-center rounded-full ${
+          isInverse ? "bg-white/15 text-white" : "bg-primary/10 text-primary"
+        }`}
       >
         {resolvedTheme === "dark" ? (
           <MoonStar className="h-4 w-4" />
@@ -62,7 +71,9 @@ export default function ThemeToggle({
       {showLabel ? (
         <span
           suppressHydrationWarning
-          className="pr-1 text-sm font-medium text-foreground"
+          className={`pr-1 text-sm font-medium ${
+            isInverse ? "text-white" : "text-foreground"
+          }`}
         >
           {resolvedTheme === "dark" ? "Dark" : "Light"}
         </span>

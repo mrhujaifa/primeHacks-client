@@ -160,7 +160,6 @@ export const SubmissionForm = ({ hackathonId }: { hackathonId: string }) => {
                 value={field.state.value.join(", ")}
                 onBlur={field.handleBlur}
                 onChange={(e) => {
-                  // ✅ FIX 3: filter(Boolean) added here too
                   const value = e.target.value
                     .split(",")
                     .map((item) => item.trim())

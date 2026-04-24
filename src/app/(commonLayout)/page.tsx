@@ -1,11 +1,17 @@
+import FAQSection from "@/components/modules/Home/FAQSection";
+
+import PartnersSection from "@/components/modules/Home/PartnersSection";
+import WhyChoosePrimeHacks from "@/components/modules/Home/WhyChoosePrimeHacks";
 import HackathonHero from "@/components/ui/hackathon-hero";
-import HomeLandingV2 from "@/components/ui/home-landing-v2";
 
 const HomePage = () => {
   return (
-    <main className="">
+    <main className="overflow-hidden">
       <HackathonHero />
-      <HomeLandingV2 />
+      <WhyChoosePrimeHacks />
+
+      <FAQSection />
+      <PartnersSection />
     </main>
   );
 };

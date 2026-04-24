@@ -21,10 +21,10 @@ export default function AllHackathonsPageView({}) {
       <div className="absolute inset-0 " />
       <div className="ph-grid pointer-events-none absolute inset-0 opacity-[0.08]" />
 
-      <div className="relative mx-auto container space-y-10 px-4 py-6 lg:px-0">
+      <div className="mx-auto container space-y-10 py-10">
         <HackathonsHero />
 
-        <div className="space-y-6 rounded-[28px]  p-2 lg:px-0">
+        <div className="space-y-6 rounded-[28px] lg:px-0">
           <HackathonToolbar />
 
           <HackathonGrid data={data} />
