@@ -52,7 +52,7 @@ export default function UpdateHackathonPageShell({
   }
 
   return (
-    <section className="min-h-screen bg-[radial-gradient(circle_at_top,rgba(34,211,238,0.15),transparent_22%),radial-gradient(circle_at_85%_10%,rgba(59,130,246,0.16),transparent_18%),linear-gradient(180deg,#07111a_0%,#081520_40%,#0b1220_100%)] px-4 py-8 sm:px-6 lg:px-8">
+    <section className="min-h-screen  px-4 py-8 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl space-y-6">
         <UpdateHackathonHero hackathon={data} />
         <UpdateHackathonFormUI

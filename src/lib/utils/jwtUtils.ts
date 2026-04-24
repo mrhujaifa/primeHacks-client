@@ -1,4 +1,3 @@
-
 import jwt, { JwtPayload } from "jsonwebtoken";
 
 const verifyToken = (token: string, secret: string) => {

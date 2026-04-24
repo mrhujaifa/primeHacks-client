@@ -1,4 +1,3 @@
-
 "use client";
 
 import { getAllUserClientQueryFn } from "@/hooks/hackathon/hackathon.queries.client";

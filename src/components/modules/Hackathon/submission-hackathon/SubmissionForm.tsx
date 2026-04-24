@@ -1,7 +1,5 @@
 "use client";
 
-
-
 import { hackathonKeys } from "@/hooks/hackathon/hackathon.keys";
 import { createSubmissionMutationFn } from "@/hooks/hackathon/hackathon.mutations";
 import { ICreateSubmissionPayload } from "@/types/submission.type";

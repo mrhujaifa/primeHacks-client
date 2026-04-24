@@ -1,4 +1,3 @@
-
 "use server";
 
 import { IResigterResponse } from "@/interface/auth.interface";

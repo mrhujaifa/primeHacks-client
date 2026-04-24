@@ -1,4 +1,3 @@
-
 "use client";
 
 import { registerAction } from "@/app/(commonLayout)/(Auth-Routes)/register/_action";
@@ -150,9 +149,7 @@ export default function RegisterCredentialsForm() {
               >
                 Password
               </label>
-              <span className="text-xs text-muted">
-                Minimum 6 characters
-              </span>
+              <span className="text-xs text-muted">Minimum 6 characters</span>
             </div>
 
             <div className="group relative">
