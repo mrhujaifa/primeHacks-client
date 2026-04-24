@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 "use client";
 
 import { getAllUserClientQueryFn } from "@/hooks/hackathon/hackathon.queries.client";

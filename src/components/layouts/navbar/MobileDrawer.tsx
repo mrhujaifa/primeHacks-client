@@ -41,7 +41,6 @@ export default function MobileNavigation({
     { label: "Hackathons", href: "/hackathons", icon: LayoutGrid },
     { label: "Chat", href: "/messages", icon: MessageSquare },
     { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-    // { label: "Host", href: "/host", isAction: true },
     { label: "Profile", href: user ? "/profile" : "/login", icon: User },
   ];
 

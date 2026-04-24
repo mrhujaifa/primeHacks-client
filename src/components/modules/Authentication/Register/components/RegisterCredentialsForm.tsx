@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 "use client";
 
 import { registerAction } from "@/app/(commonLayout)/(Auth-Routes)/register/_action";

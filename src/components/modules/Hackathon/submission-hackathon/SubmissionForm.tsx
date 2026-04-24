@@ -1,6 +1,6 @@
 "use client";
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 
 import { hackathonKeys } from "@/hooks/hackathon/hackathon.keys";
 import { createSubmissionMutationFn } from "@/hooks/hackathon/hackathon.mutations";

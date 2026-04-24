@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 "use client";
 
 import { loginAction } from "@/app/(commonLayout)/(Auth-Routes)/login/_action";

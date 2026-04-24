@@ -176,5 +176,3 @@ export interface IHackathonCategory {
   id: string;
   name: string;
 }
-
-// export type IGetHackathonCategories = IHackathonCategory[];

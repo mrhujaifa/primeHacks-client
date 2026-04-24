@@ -74,12 +74,6 @@ export const organizerNavItems = (): NavSection[] => [
         href: "/dashboard/my-submissions",
         icon: "FileSpreadsheet",
       },
-
-      // {
-      //   title: "Draft Hackathons",
-      //   href: "/dashboard/organizer/hackathons/drafts",
-      //   icon: "FilePenLine",
-      // },
       {
         title: "Manage Rewards",
         href: "/dashboard/organizer/manage-rewards",

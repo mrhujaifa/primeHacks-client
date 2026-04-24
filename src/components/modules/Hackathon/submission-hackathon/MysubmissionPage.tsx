@@ -4,7 +4,6 @@ import { hackathonKeys } from "@/hooks/hackathon/hackathon.keys";
 import { getMySubmissionsClientQueryFn } from "@/hooks/hackathon/hackathon.queries.client";
 import { useQuery } from "@tanstack/react-query";
 import SubmissionCard from "./SubmissionCard";
-// import SubmissionCard from "./SubmissionCard";
 
 const Mysubmission = () => {
   const { data, isError, isLoading } = useQuery({

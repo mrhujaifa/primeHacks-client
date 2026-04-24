@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import Link from "next/link";
 import { Search, Crown, ArrowRight, Menu, X, Command } from "lucide-react";
 import BrandMark from "@/components/ui/BrandMark";

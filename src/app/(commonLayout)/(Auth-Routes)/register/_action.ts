@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 "use server";
 
 import { IResigterResponse } from "@/interface/auth.interface";
