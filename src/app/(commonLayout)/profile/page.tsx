@@ -442,62 +442,6 @@ export default function UserProfilePage() {
     </section>
   );
 }
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <div className="relative overflow-hidden rounded-[32px] border border-white/10 bg-white/[0.03] shadow-[0_0_80px_rgba(6,182,212,0.08)] backdrop-blur-xl">
-          {/* background glow */}
-          <div className="absolute inset-0">
-            <div className="absolute -left-24 top-0 h-72 w-72 rounded-full bg-cyan-500/10 blur-3xl" />
-            <div className="absolute right-0 top-10 h-72 w-72 rounded-full bg-sky-500/10 blur-3xl" />
-            <div className="absolute bottom-0 left-1/3 h-72 w-72 rounded-full bg-indigo-500/10 blur-3xl" />
-          </div>
-
-          {/* cover */}
-          <div className="relative h-56 w-full overflow-hidden border-b border-white/10 bg-gradient-to-r from-cyan-500/20 via-sky-500/10 to-indigo-500/20 sm:h-64">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.25),transparent_30%),radial-gradient(circle_at_top_right,rgba(59,130,246,0.22),transparent_30%),radial-gradient(circle_at_bottom,rgba(99,102,241,0.15),transparent_35%)]" />
-            <button className="absolute right-5 top-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-slate-950/50 px-4 py-2 text-sm font-medium text-slate-200 backdrop-blur-md transition hover:border-cyan-400/40 hover:text-cyan-200">
-              <Camera className="h-4 w-4" />
-              Change Cover
-            </button>
-          </div>
-
-          <div className="relative px-5 pb-6 sm:px-8 lg:px-10">
-            {/* top section */}
-            <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-              <div className="-mt-16 flex flex-col gap-5 sm:-mt-20 sm:flex-row sm:items-end">
-                <div className="relative h-32 w-32 overflow-hidden rounded-3xl border-4 border-[#020617] bg-slate-900 shadow-2xl sm:h-40 sm:w-40">
-                  <Image
-                    src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=600&auto=format&fit=crop"
-                    alt="Profile"
-                    fill
-                    className="object-cover"
-                  />
-                  <button className="absolute bottom-3 right-3 rounded-full border border-white/10 bg-slate-950/70 p-2 text-slate-200 backdrop-blur-md transition hover:border-cyan-400/40 hover:text-cyan-300">
-                    <Camera className="h-4 w-4" />
-                  </button>
-                </div>
-
-                <div className="space-y-3">
-                  <div className="flex flex-wrap items-center gap-3">
-                    <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                      Hujaifa Rahman
-                    </h1>
-
-                    <span className="inline-flex items-center gap-1 rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-200">
-                      <BadgeCheck className="h-3.5 w-3.5" />
-                      Verified
-                    </span>
-                  </div>
-
-                  <p className="max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">
-                    Full Stack Developer focused on building modern, scalable,
-                    and premium digital products. Passionate about SaaS,
-                    AI-powered applications, and industry-level UI systems.
-                  </p>
-
-                  <div className="flex flex-wrap items-center gap-3 text-sm text-slate-400">
-                    <span className="inline-flex items-center gap-2">
-                      <Briefcase className="h-4 w-4 text-cyan-300" />
-                      Software Engineer
                     </span>
                     <span className="inline-flex items-center gap-2">
                       <MapPin className="h-4 w-4 text-cyan-300" />
