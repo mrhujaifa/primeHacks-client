@@ -1,686 +1,571 @@
 "use client";
 
-import Image from "next/image";
+import Link from "next/link";
+import type { CSSProperties, ElementType } from "react";
+import { useCurrentUser } from "@/hooks/useSession";
 import {
   BadgeCheck,
-  Briefcase,
   CalendarDays,
-  Camera,
-  Edit3,
-  Globe,
+  ChevronRight,
+  CircleUser,
+  CreditCard,
+  Crown,
+  Hash,
+  KeyRound,
+  LayoutDashboard,
+  Loader2,
   Mail,
-  MapPin,
   ShieldCheck,
   Sparkles,
-  Trophy,
-  Twitter,
-  Github,
-  Linkedin,
-  User2,
-  Loader,
+  UserRound,
 } from "lucide-react";
-import { useCurrentUser } from "@/hooks/useSession";
-import { useEffect, useState } from "react";
 
-export default function UserProfilePage() {
-  const { data: user, isLoading, error } = useCurrentUser();
-  const [isDark, setIsDark] = useState(true);
+type ProfileUser = {
+  id?: string | null;
+  name?: string | null;
+  email?: string | null;
+  emailVerified?: boolean | null;
+  image?: string | null;
+  role?: string | null;
+  status?: string | null;
+  isPremium?: boolean | null;
+  premiumPlan?: string | null;
+  premiumExpiresAt?: string | null;
+  createdAt?: string | null;
+  needPasswordChange?: boolean | null;
+};
 
-  useEffect(() => {
-    const isDarkMode =
-      document.documentElement.classList.contains("dark") ||
-      window.matchMedia("(prefers-color-scheme: dark)").matches;
-    setIsDark(isDarkMode);
+const heroGlowStyle: CSSProperties = {
+  background: `
+    radial-gradient(circle at 12% 18%, rgb(var(--hero-glow-primary) / 0.32), transparent 24%),
+    radial-gradient(circle at 82% 12%, rgb(var(--hero-glow-secondary) / 0.26), transparent 22%),
+    radial-gradient(circle at 86% 76%, rgb(var(--hero-glow-tertiary) / 0.18), transparent 18%),
+    linear-gradient(
+      135deg,
+      rgb(var(--background-elevated)) 0%,
+      rgb(var(--card-strong)) 50%,
+      rgb(var(--background)) 100%
+    )
+  `,
+};
 
-    const observer = new MutationObserver(() => {
-      const darkMode = document.documentElement.classList.contains("dark");
-      setIsDark(darkMode);
-    });
+const coverMeshStyle: CSSProperties = {
+  backgroundImage:
+    "linear-gradient(rgb(var(--grid) / 0.12) 1px, transparent 1px), linear-gradient(90deg, rgb(var(--grid) / 0.12) 1px, transparent 1px)",
+  backgroundSize: "28px 28px",
+};
 
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["class"],
-    });
+const formatLabel = (value?: string | null) => {
+  if (!value) return "N/A";
 
-    return () => observer.disconnect();
-  }, []);
+  return value
+    .toLowerCase()
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};
 
-  const bgClass = isDark
-    ? "bg-slate-950"
-    : "bg-gradient-to-br from-slate-50 via-white to-blue-50";
-  const textClass = isDark ? "text-white" : "text-slate-900";
-  const secondaryText = isDark ? "text-slate-300" : "text-slate-600";
-  const cardClass = isDark
-    ? "border-white/10 bg-white/[0.03]"
-    : "border-slate-200 bg-white shadow-sm";
-  const buttonPrimaryClass = isDark
-    ? "border-cyan-400/30 bg-cyan-400/10 text-cyan-200 hover:bg-cyan-400/15"
-    : "border-blue-400/30 bg-blue-400/10 text-blue-600 hover:bg-blue-400/15";
-  const buttonSecondaryClass = isDark
-    ? "border-white/10 bg-white/[0.04] text-slate-200 hover:border-white/20 hover:bg-white/[0.06]"
-    : "border-slate-300 bg-slate-50 text-slate-700 hover:border-slate-400 hover:bg-slate-100";
+const formatDate = (value?: string | null) => {
+  if (!value) return "N/A";
 
-  if (isLoading) {
-    return (
-      <section className={`min-h-screen ${bgClass} text-white`}>
-        <div className="flex items-center justify-center pt-20">
-          <div className="flex flex-col items-center gap-4">
-            <Loader className="h-8 w-8 animate-spin text-cyan-400" />
-            <p className={textClass}>Loading profile...</p>
-          </div>
-        </div>
-      </section>
-    );
-  }
+  const date = new Date(value);
 
-  if (error) {
-    return (
-      <section className={`min-h-screen ${bgClass} text-white`}>
-        <div className="flex items-center justify-center pt-20">
-          <div className="text-center">
-            <p className={`text-red-400`}>Failed to load profile</p>
-          </div>
-        </div>
-      </section>
-    );
-  }
+  if (Number.isNaN(date.getTime())) return "N/A";
 
-  const displayName = user?.name || "User Profile";
-  const displayEmail = user?.email || "user@example.com";
-  const displayBio =
-    user?.bio ||
-    "Full Stack Developer focused on building modern, scalable digital products.";
-  const displayRole = user?.role || "Developer";
-  const displayLocation = user?.location || "Earth";
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+};
+
+const getMemberDuration = (value?: string | null) => {
+  if (!value) return "N/A";
+
+  const createdAt = new Date(value).getTime();
+
+  if (Number.isNaN(createdAt)) return "N/A";
+
+  const ms = Date.now() - createdAt;
+  const years = Math.floor(ms / (1000 * 60 * 60 * 24 * 365));
+  const months = Math.floor(
+    (ms % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30),
+  );
+
+  if (years > 0) return `${years} yr${years > 1 ? "s" : ""}`;
+  if (months > 0) return `${months} mo`;
+
+  return "New";
+};
+
+const getInitials = (name?: string | null) => {
+  if (!name) return "U";
+
+  return name
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase() ?? "")
+    .join("");
+};
+
+function StatItem({
+  value,
+  label,
+  tone = "neutral",
+}: {
+  value: string;
+  label: string;
+  tone?: "primary" | "success" | "warning" | "neutral";
+}) {
+  const toneClasses = {
+    primary:
+      "border-primary/18 bg-primary/10 text-primary shadow-[0_18px_40px_rgb(var(--primary)/0.08)]",
+    success:
+      "border-emerald-400/18 bg-emerald-400/10 text-emerald-600 shadow-[0_18px_40px_rgba(34,197,94,0.08)] dark:text-emerald-300",
+    warning:
+      "border-amber-400/18 bg-amber-400/10 text-amber-600 shadow-[0_18px_40px_rgba(245,158,11,0.08)] dark:text-amber-300",
+    neutral: "border-border/70 bg-background/55 text-foreground shadow-inset",
+  };
 
   return (
-    <section className={`min-h-screen ${bgClass} transition-colors duration-300`}>
-      <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-        <div
-          className={`relative overflow-hidden rounded-2xl sm:rounded-3xl border ${cardClass} shadow-lg sm:shadow-2xl backdrop-blur-xl transition-colors duration-300`}
-        >
-          {/* background glow */}
-          <div className="absolute inset-0">
-            <div className={`absolute -left-24 top-0 h-72 w-72 rounded-full ${isDark ? "bg-cyan-500/10" : "bg-blue-400/5"} blur-3xl`} />
-            <div className={`absolute right-0 top-10 h-72 w-72 rounded-full ${isDark ? "bg-sky-500/10" : "bg-purple-300/5"} blur-3xl`} />
-            <div className={`absolute bottom-0 left-1/3 h-72 w-72 rounded-full ${isDark ? "bg-indigo-500/10" : "bg-pink-300/5"} blur-3xl`} />
-          </div>
-
-          {/* cover */}
-          <div
-            className={`relative h-40 w-full overflow-hidden border-b ${isDark ? "border-white/10 bg-gradient-to-r from-cyan-500/20 via-sky-500/10 to-indigo-500/20" : "border-slate-200 bg-gradient-to-r from-blue-100 via-purple-50 to-pink-100"} sm:h-56 lg:h-64`}
-          >
-            <div
-              className={`absolute inset-0 ${isDark ? "bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.25),transparent_30%),radial-gradient(circle_at_top_right,rgba(59,130,246,0.22),transparent_30%),radial-gradient(circle_at_bottom,rgba(99,102,241,0.15),transparent_35%)]" : "bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.1),transparent_30%)]"}`}
-            />
-            <button
-              className={`absolute right-3 top-3 sm:right-5 sm:top-5 inline-flex items-center gap-2 rounded-full border px-3 py-2 text-xs sm:text-sm font-medium backdrop-blur-md transition ${buttonSecondaryClass}`}
-            >
-              <Camera className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-              <span className="hidden sm:inline">Change Cover</span>
-            </button>
-          </div>
-
-          <div className="relative px-4 pb-6 sm:px-6 lg:px-8 lg:pb-8">
-            {/* top section */}
-            <div className="flex flex-col gap-4 sm:gap-6 lg:flex-row lg:items-end lg:justify-between">
-              <div className="-mt-12 flex flex-col gap-4 sm:-mt-16 sm:flex-row sm:items-end lg:-mt-20">
-                <div
-                  className={`relative h-24 w-24 overflow-hidden rounded-2xl border-4 ${isDark ? "border-slate-950" : "border-white"} shadow-xl sm:h-32 sm:w-32 lg:h-40 lg:w-40`}
-                >
-                  <Image
-                    src={
-                      user?.profileImage ||
-                      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=600&auto=format&fit=crop"
-                    }
-                    alt={displayName}
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                  <button
-                    className={`absolute bottom-2 right-2 rounded-full border p-1.5 backdrop-blur-md transition sm:bottom-3 sm:right-3 ${isDark ? "border-white/10 bg-slate-950/70 text-slate-200 hover:border-cyan-400/40 hover:text-cyan-300" : "border-slate-300 bg-white/70 text-slate-700 hover:border-blue-400/40 hover:text-blue-600"}`}
-                  >
-                    <Camera className="h-3 w-3 sm:h-4 sm:w-4" />
-                  </button>
-                </div>
-
-                <div className="space-y-2 sm:space-y-3">
-                  <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-                    <h1
-                      className={`text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl ${textClass}`}
-                    >
-                      {displayName}
-                    </h1>
-                    {user?.isVerified && (
-                      <span
-                        className={`inline-flex items-center gap-1 rounded-full border px-2 py-1 text-xs font-semibold uppercase tracking-wider ${isDark ? "border-cyan-400/20 bg-cyan-400/10 text-cyan-200" : "border-blue-400/20 bg-blue-400/10 text-blue-600"}`}
-                      >
-                        <BadgeCheck className="h-3 w-3" />
-                        <span className="hidden sm:inline">Verified</span>
-                      </span>
-                    )}
-                  </div>
-
-                  <p
-                    className={`max-w-2xl text-xs leading-5 sm:text-sm sm:leading-6 lg:text-base lg:leading-7 ${secondaryText}`}
-                  >
-                    {displayBio}
-                  </p>
-
-                  <div className="flex flex-wrap items-center gap-2 text-xs text-slate-400 sm:gap-3 sm:text-sm">
-                    <span className="inline-flex items-center gap-1">
-                      <Briefcase
-                        className={`h-3 w-3 sm:h-4 sm:w-4 ${isDark ? "text-cyan-300" : "text-blue-600"}`}
-                      />
-                      {displayRole}
-                    </span>
-                    <span className="inline-flex items-center gap-1">
-                      <MapPin
-                        className={`h-3 w-3 sm:h-4 sm:w-4 ${isDark ? "text-cyan-300" : "text-blue-600"}`}
-                      />
-                      {displayLocation}
-                    </span>
-                    {user?.createdAt && (
-                      <span className="inline-flex items-center gap-1">
-                        <CalendarDays
-                          className={`h-3 w-3 sm:h-4 sm:w-4 ${isDark ? "text-cyan-300" : "text-blue-600"}`}
-                        />
-                        Joined{" "}
-                        {new Date(user.createdAt).toLocaleDateString(
-                          "en-US",
-                          {
-                            year: "numeric",
-                            month: "short",
-                          },
-                        )}
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-2 xs:flex-row sm:gap-3">
-                <button
-                  className={`inline-flex items-center justify-center gap-2 rounded-xl border px-4 py-2 text-sm font-semibold transition duration-200 sm:rounded-2xl sm:px-5 sm:py-3 ${buttonPrimaryClass}`}
-                >
-                  <Edit3 className="h-4 w-4" />
-                  <span className="hidden sm:inline">Edit Profile</span>
-                  <span className="sm:hidden">Edit</span>
-                </button>
-
-                <button
-                  className={`inline-flex items-center justify-center gap-2 rounded-xl border px-4 py-2 text-sm font-semibold transition duration-200 sm:rounded-2xl sm:px-5 sm:py-3 ${buttonSecondaryClass}`}
-                >
-                  <ShieldCheck className="h-4 w-4" />
-                  <span className="hidden sm:inline">Account Settings</span>
-                  <span className="sm:hidden">Settings</span>
-                </button>
-              </div>
-            </div>
-
-            {/* stats */}
-            <div className="mt-6 grid grid-cols-2 gap-3 sm:mt-8 sm:gap-4 lg:grid-cols-4">
-              {[
-                { title: "Projects", value: "24", icon: <Sparkles className="h-4 w-4 sm:h-5 sm:w-5" /> },
-                { title: "Hackathons", value: "12", icon: <Trophy className="h-4 w-4 sm:h-5 sm:w-5" /> },
-                { title: "Followers", value: "1.8K", icon: <User2 className="h-4 w-4 sm:h-5 sm:w-5" /> },
-                { title: "Reputation", value: "94%", icon: <ShieldCheck className="h-4 w-4 sm:h-5 sm:w-5" /> },
-              ].map((item, idx) => (
-                <div
-                  key={idx}
-                  className={`rounded-xl border p-3 backdrop-blur-xl transition-colors duration-300 sm:rounded-2xl sm:p-4 lg:rounded-3xl lg:p-5 ${cardClass}`}
-                >
-                  <div
-                    className={`mb-2 inline-flex rounded-lg border p-2 sm:mb-3 sm:rounded-xl sm:p-2.5 ${isDark ? "border-cyan-400/20 bg-cyan-400/10 text-cyan-200" : "border-blue-400/20 bg-blue-400/10 text-blue-600"}`}
-                  >
-                    {item.icon}
-                  </div>
-                  <h3 className={`text-lg font-bold sm:text-2xl ${textClass}`}>
-                    {item.value}
-                  </h3>
-                  <p className={`mt-1 text-xs text-slate-400 sm:text-sm`}>
-                    {item.title}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            {/* content */}
-            <div className="mt-6 grid gap-4 sm:mt-8 sm:gap-6 lg:grid-cols-[1.15fr_0.85fr]">
-              {/* left */}
-              <div className="space-y-4 sm:space-y-6">
-                <div className={`rounded-xl border p-4 sm:rounded-2xl sm:p-6 ${cardClass}`}>
-                  <h2 className={`text-lg font-semibold sm:text-xl ${textClass}`}>
-                    About
-                  </h2>
-                  <p
-                    className={`mt-3 text-xs leading-5 sm:mt-4 sm:text-sm sm:leading-6 lg:text-base lg:leading-7 ${secondaryText}`}
-                  >
-                    {displayBio}
-                  </p>
-                </div>
-
-                <div className={`rounded-xl border p-4 sm:rounded-2xl sm:p-6 ${cardClass}`}>
-                  <h2 className={`text-lg font-semibold sm:text-xl ${textClass}`}>
-                    Skills
-                  </h2>
-                  <div className="mt-3 flex flex-wrap gap-2 sm:mt-4 sm:gap-3">
-                    {[
-                      "Next.js",
-                      "React",
-                      "TypeScript",
-                      "Node.js",
-                      "Express.js",
-                      "Prisma",
-                      "PostgreSQL",
-                      "Tailwind",
-                      "TanStack",
-                      "Zod",
-                    ].map((skill) => (
-                      <span
-                        key={skill}
-                        className={`rounded-full border px-3 py-1 text-xs font-medium sm:px-4 sm:py-2 sm:text-sm transition-colors duration-300 ${isDark ? "border-cyan-400/20 bg-cyan-400/10 text-cyan-100" : "border-blue-400/20 bg-blue-400/10 text-blue-700"}`}
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className={`rounded-xl border p-4 sm:rounded-2xl sm:p-6 ${cardClass}`}>
-                  <h2 className={`text-lg font-semibold sm:text-xl ${textClass}`}>
-                    Recent Activity
-                  </h2>
-
-                  <div className="mt-3 space-y-3 sm:mt-4 sm:space-y-4">
-                    {[
-                      {
-                        title: "Created a new hackathon dashboard UI",
-                        time: "2 hours ago",
-                      },
-                      {
-                        title: "Updated profile information",
-                        time: "Yesterday",
-                      },
-                      {
-                        title: "Published a new product case study",
-                        time: "3 days ago",
-                      },
-                    ].map((item, idx) => (
-                      <div
-                        key={idx}
-                        className={`flex items-start gap-3 rounded-lg border p-3 sm:rounded-xl sm:p-4 ${isDark ? "border-white/8 bg-slate-950/40" : "border-slate-200 bg-slate-50/50"}`}
-                      >
-                        <div
-                          className={`mt-1 h-2 w-2 rounded-full flex-shrink-0 ${isDark ? "bg-cyan-400" : "bg-blue-500"}`}
-                        />
-                        <div className="flex-1 min-w-0">
-                          <p className={`text-xs font-medium sm:text-sm ${textClass}`}>
-                            {item.title}
-                          </p>
-                          <p className="mt-0.5 text-xs text-slate-400 sm:mt-1">
-                            {item.time}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* right */}
-              <div className="space-y-4 sm:space-y-6">
-                <div className={`rounded-xl border p-4 sm:rounded-2xl sm:p-6 ${cardClass}`}>
-                  <h2 className={`text-lg font-semibold sm:text-xl ${textClass}`}>
-                    Contact
-                  </h2>
-
-                  <div className="mt-3 space-y-3 sm:mt-4 sm:space-y-4">
-                    <div className={`flex items-center gap-3 text-xs sm:text-sm ${secondaryText}`}>
-                      <Mail
-                        className={`h-4 w-4 flex-shrink-0 ${isDark ? "text-cyan-300" : "text-blue-600"}`}
-                      />
-                      <span className="break-all">{displayEmail}</span>
-                    </div>
-                    <div className={`flex items-center gap-3 text-xs sm:text-sm ${secondaryText}`}>
-                      <Globe
-                        className={`h-4 w-4 flex-shrink-0 ${isDark ? "text-cyan-300" : "text-blue-600"}`}
-                      />
-                      www.portfolio.dev
-                    </div>
-                    <div className={`flex items-center gap-3 text-xs sm:text-sm ${secondaryText}`}>
-                      <MapPin
-                        className={`h-4 w-4 flex-shrink-0 ${isDark ? "text-cyan-300" : "text-blue-600"}`}
-                      />
-                      {displayLocation}
-                    </div>
-                  </div>
-                </div>
-
-                <div className={`rounded-xl border p-4 sm:rounded-2xl sm:p-6 ${cardClass}`}>
-                  <h2 className={`text-lg font-semibold sm:text-xl ${textClass}`}>
-                    Social Links
-                  </h2>
-
-                  <div className="mt-3 grid gap-2 sm:mt-4 sm:gap-3">
-                    {[
-                      {
-                        icon: <Github className="h-4 w-4" />,
-                        label: "GitHub",
-                        value: "@hujaifa-dev",
-                      },
-                      {
-                        icon: <Linkedin className="h-4 w-4" />,
-                        label: "LinkedIn",
-                        value: "linkedin.com/in/hujaifa",
-                      },
-                      {
-                        icon: <Twitter className="h-4 w-4" />,
-                        label: "Twitter",
-                        value: "@hujaifa_ui",
-                      },
-                    ].map((item, idx) => (
-                      <div
-                        key={idx}
-                        className={`flex items-center justify-between rounded-lg border p-3 sm:rounded-xl sm:p-3.5 ${isDark ? "border-white/8 bg-slate-950/40" : "border-slate-200 bg-slate-50/50"}`}
-                      >
-                        <div className={`flex items-center gap-2 sm:gap-3 ${isDark ? "text-slate-200" : "text-slate-700"}`}>
-                          <span
-                            className={isDark ? "text-cyan-300" : "text-blue-600"}
-                          >
-                            {item.icon}
-                          </span>
-                          <span className="text-xs font-medium sm:text-sm">
-                            {item.label}
-                          </span>
-                        </div>
-                        <span className="text-xs text-slate-400 sm:text-sm">
-                          {item.value}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className={`rounded-xl border p-4 sm:rounded-2xl sm:p-6 ${cardClass}`}>
-                  <h2 className={`text-lg font-semibold sm:text-xl ${textClass}`}>
-                    Professional
-                  </h2>
-
-                  <div className="mt-3 space-y-3 text-xs sm:mt-4 sm:space-y-4 sm:text-sm">
-                    <div
-                      className={`flex items-center justify-between border-b pb-3 ${isDark ? "border-white/5" : "border-slate-200"} ${secondaryText}`}
-                    >
-                      <span className="text-slate-400">Role</span>
-                      <span className={textClass}>Senior Frontend Engineer</span>
-                    </div>
-                    <div
-                      className={`flex items-center justify-between border-b pb-3 ${isDark ? "border-white/5" : "border-slate-200"} ${secondaryText}`}
-                    >
-                      <span className="text-slate-400">Experience</span>
-                      <span className={textClass}>4+ Years</span>
-                    </div>
-                    <div
-                      className={`flex items-center justify-between border-b pb-3 ${isDark ? "border-white/5" : "border-slate-200"} ${secondaryText}`}
-                    >
-                      <span className="text-slate-400">Specialization</span>
-                      <span className={textClass}>Full Stack</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-slate-400">Availability</span>
-                      <span className="text-emerald-400 font-medium">Open</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {/* end content */}
-          </div>
-        </div>
+    <div className="rounded-[1.5rem] border border-border/70 bg-background/52 p-4 backdrop-blur-xl">
+      <div
+        className={`inline-flex rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] ${toneClasses[tone]}`}
+      >
+        {label}
       </div>
-    </section>
+      <p className="mt-4 font-display text-2xl font-semibold tracking-[-0.04em] text-foreground">
+        {value}
+      </p>
+    </div>
   );
 }
-                    </span>
-                    <span className="inline-flex items-center gap-2">
-                      <MapPin className="h-4 w-4 text-cyan-300" />
-                      Dhaka, Bangladesh
-                    </span>
-                    <span className="inline-flex items-center gap-2">
-                      <CalendarDays className="h-4 w-4 text-cyan-300" />
-                      Joined March 2026
-                    </span>
+
+function InfoRow({
+  icon: Icon,
+  label,
+  value,
+  iconClassName = "text-primary",
+  mono = false,
+}: {
+  icon: ElementType;
+  label: string;
+  value: string;
+  iconClassName?: string;
+  mono?: boolean;
+}) {
+  return (
+    <div className="flex items-center justify-between gap-4">
+      <div className="flex min-w-0 items-center gap-3">
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-border/70 bg-card/75 shadow-inset">
+          <Icon className={`h-4 w-4 ${iconClassName}`} />
+        </span>
+
+        <div className="min-w-0">
+          <p className="text-xs font-medium uppercase tracking-[0.22em] text-muted">
+            {label}
+          </p>
+          <p
+            className={`mt-1 truncate text-sm font-medium text-foreground ${mono ? "font-mono text-[13px] text-muted" : ""}`}
+          >
+            {value}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function QuickLink({
+  href,
+  icon: Icon,
+  title,
+  description,
+  iconClassName,
+  iconSurfaceClassName,
+}: {
+  href: string;
+  icon: ElementType;
+  title: string;
+  description: string;
+  iconClassName: string;
+  iconSurfaceClassName: string;
+}) {
+  return (
+    <Link
+      href={href}
+      className="group flex items-center gap-3 rounded-[1.4rem] border border-transparent px-3 py-3 transition duration-200 hover:border-border/70 hover:bg-accent/80"
+    >
+      <span
+        className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border ${iconSurfaceClassName}`}
+      >
+        <Icon className={`h-4 w-4 ${iconClassName}`} />
+      </span>
+
+      <div className="min-w-0 flex-1">
+        <p className="text-sm font-semibold text-foreground">{title}</p>
+        <p className="mt-1 text-xs leading-5 text-muted">{description}</p>
+      </div>
+
+      <ChevronRight className="h-4 w-4 text-muted transition group-hover:text-foreground" />
+    </Link>
+  );
+}
+
+function LoadingScreen() {
+  return (
+    <div className="flex min-h-screen items-center justify-center px-4">
+      <div className="card-theme w-full max-w-sm rounded-[2rem] p-8 text-center">
+        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-primary/18 bg-primary/10 shadow-glow-soft">
+          <Loader2 className="h-7 w-7 animate-spin text-primary" />
+        </div>
+        <p className="mt-5 text-sm font-medium uppercase tracking-[0.22em] text-muted">
+          Loading profile
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function ErrorScreen() {
+  return (
+    <div className="flex min-h-screen items-center justify-center px-4">
+      <div className="card-theme w-full max-w-md rounded-[2rem] p-8 text-center">
+        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-destructive/18 bg-destructive/10">
+          <ShieldCheck className="h-7 w-7 text-destructive" />
+        </div>
+
+        <h2 className="mt-6 font-display text-3xl font-semibold tracking-[-0.04em] text-foreground">
+          Profile unavailable
+        </h2>
+        <p className="mt-3 text-sm leading-7 text-muted">
+          We couldn&apos;t load your account details right now. Please sign in
+          again and try once more.
+        </p>
+
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
+          <Link href="/login" className="btn-theme">
+            Sign In
+          </Link>
+          <Link href="/dashboard" className="btn-theme-outline">
+            Dashboard
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function UserProfilePage() {
+  const { data, isLoading, error } = useCurrentUser();
+
+  if (isLoading) return <LoadingScreen />;
+  if (error || !data) return <ErrorScreen />;
+
+  const user = data as ProfileUser;
+  const shortId = user.id?.slice(-6) ?? "------";
+  const planLabel = user.isPremium ? formatLabel(user.premiumPlan) : "Free Plan";
+  const premiumUntil = user.isPremium
+    ? formatDate(user.premiumExpiresAt)
+    : "Upgrade anytime";
+  const needsPasswordChange = Boolean(user.needPasswordChange);
+
+  return (
+    <main className="relative mt-20 min-h-screen px-4 py-10 sm:px-6 lg:py-14">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-80 bg-[radial-gradient(circle_at_top,rgba(178,122,255,0.16),transparent_54%)]" />
+
+      <div className="relative mx-auto max-w-6xl space-y-5">
+        <section className="section-shell overflow-hidden">
+          <div className="absolute inset-0 opacity-95" style={heroGlowStyle} />
+          <div className="absolute inset-0 opacity-40" style={coverMeshStyle} />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_24%)] dark:bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.06),transparent_24%)]" />
+
+          <div className="relative px-5 py-6 sm:px-8 sm:py-8 lg:px-10">
+            <div className="badge-theme">
+              <CircleUser className="h-3.5 w-3.5" />
+              Profile overview
+            </div>
+
+            <div className="mt-7 flex flex-col gap-6 xl:flex-row xl:items-end xl:justify-between">
+              <div className="flex flex-col gap-5 sm:flex-row sm:items-end">
+                <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-[2rem] border border-white/15 bg-[linear-gradient(135deg,rgba(120,78,255,0.92),rgba(86,186,255,0.7))] shadow-[0_22px_60px_rgba(72,89,255,0.22)]">
+                  {user.image ? (
+                    <img
+                      src={user.image}
+                      alt={user.name ?? "User"}
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center font-display text-3xl font-semibold text-white">
+                      {getInitials(user.name)}
+                    </div>
+                  )}
+
+                  <span className="absolute bottom-2 right-2 h-3.5 w-3.5 rounded-full border-2 border-white/80 bg-emerald-400 dark:border-[rgb(var(--card-strong))]" />
+                </div>
+
+                <div className="space-y-3">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <h1 className="font-display text-3xl font-semibold tracking-[-0.05em] text-foreground sm:text-4xl">
+                      {user.name ?? "User"}
+                    </h1>
+
+                    {user.emailVerified ? (
+                      <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/18 bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-600 dark:text-emerald-300">
+                        <BadgeCheck className="h-3.5 w-3.5" />
+                        Verified
+                      </span>
+                    ) : null}
+
+                    {user.isPremium ? (
+                      <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-400/18 bg-amber-400/10 px-3 py-1 text-xs font-semibold text-amber-600 dark:text-amber-300">
+                        <Crown className="h-3.5 w-3.5" />
+                        Premium
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1.5 rounded-full border border-border/70 bg-card/70 px-3 py-1 text-xs font-semibold text-muted">
+                        <Sparkles className="h-3.5 w-3.5" />
+                        Free member
+                      </span>
+                    )}
                   </div>
+
+                  <p className="flex flex-wrap items-center gap-2 text-sm text-muted">
+                    <Mail className="h-4 w-4 text-primary" />
+                    <span>{user.email ?? "No email provided"}</span>
+                  </p>
+
+                  <p className="max-w-2xl text-sm leading-7 text-muted sm:text-base">
+                    Account summary, plan details, and quick actions all in one
+                    theme-aware view that now matches the rest of PrimeHacks.
+                  </p>
                 </div>
               </div>
 
               <div className="flex flex-wrap gap-3">
-                <button className="inline-flex items-center gap-2 rounded-2xl border border-cyan-400/30 bg-cyan-400/10 px-5 py-3 text-sm font-semibold text-cyan-200 transition hover:bg-cyan-400/15">
-                  <Edit3 className="h-4 w-4" />
-                  Edit Profile
-                </button>
-
-                <button className="inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-semibold text-slate-200 transition hover:border-white/20 hover:bg-white/[0.06]">
-                  <ShieldCheck className="h-4 w-4" />
-                  Account Settings
-                </button>
+                <Link href="/dashboard" className="btn-theme">
+                  <LayoutDashboard className="h-4 w-4" />
+                  Dashboard
+                </Link>
+                <Link href="/change-password" className="btn-theme-outline">
+                  <KeyRound className="h-4 w-4" />
+                  Security
+                </Link>
               </div>
             </div>
 
-            {/* stats */}
-            <div className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
-              {[
-                {
-                  title: "Projects",
-                  value: "24",
-                  icon: <Sparkles className="h-5 w-5" />,
-                },
-                {
-                  title: "Hackathons",
-                  value: "12",
-                  icon: <Trophy className="h-5 w-5" />,
-                },
-                {
-                  title: "Followers",
-                  value: "1.8K",
-                  icon: <User2 className="h-5 w-5" />,
-                },
-                {
-                  title: "Reputation",
-                  value: "94%",
-                  icon: <ShieldCheck className="h-5 w-5" />,
-                },
-              ].map((item, idx) => (
-                <div
-                  key={idx}
-                  className="rounded-3xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-xl"
-                >
-                  <div className="mb-4 inline-flex rounded-2xl border border-cyan-400/20 bg-cyan-400/10 p-3 text-cyan-200">
-                    {item.icon}
-                  </div>
-                  <h3 className="text-2xl font-bold text-white">
-                    {item.value}
-                  </h3>
-                  <p className="mt-1 text-sm text-slate-400">{item.title}</p>
-                </div>
-              ))}
+            <div className="mt-8 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+              <StatItem
+                value={getMemberDuration(user.createdAt)}
+                label="Member"
+                tone="primary"
+              />
+              <StatItem value={planLabel} label="Plan" tone="warning" />
+              <StatItem
+                value={formatLabel(user.status)}
+                label="Status"
+                tone="success"
+              />
+              <StatItem
+                value={formatLabel(user.role)}
+                label="Role"
+                tone="neutral"
+              />
             </div>
+          </div>
+        </section>
 
-            {/* content */}
-            <div className="mt-8 grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
-              {/* left */}
-              <div className="space-y-6">
-                <div className="rounded-[28px] border border-white/10 bg-white/[0.03] p-6">
-                  <h2 className="text-xl font-semibold text-white">About</h2>
-                  <p className="mt-4 text-sm leading-7 text-slate-300 sm:text-[15px]">
-                    I specialize in crafting clean and high-performing web
-                    applications with strong attention to architecture, user
-                    experience, and maintainability. I enjoy working on
-                    hackathon platforms, AI products, dashboards, and modern
-                    frontend systems with polished UI.
-                  </p>
-                </div>
-
-                <div className="rounded-[28px] border border-white/10 bg-white/[0.03] p-6">
-                  <h2 className="text-xl font-semibold text-white">Skills</h2>
-                  <div className="mt-4 flex flex-wrap gap-3">
-                    {[
-                      "Next.js",
-                      "React",
-                      "TypeScript",
-                      "Node.js",
-                      "Express.js",
-                      "Prisma",
-                      "PostgreSQL",
-                      "Tailwind CSS",
-                      "TanStack Query",
-                      "Zod",
-                      "AI Integration",
-                      "UI/UX Design",
-                    ].map((skill) => (
-                      <span
-                        key={skill}
-                        className="rounded-full border border-cyan-400/20 bg-cyan-400/10 px-4 py-2 text-sm font-medium text-cyan-100"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="rounded-[28px] border border-white/10 bg-white/[0.03] p-6">
-                  <h2 className="text-xl font-semibold text-white">
-                    Recent Activity
-                  </h2>
-
-                  <div className="mt-5 space-y-4">
-                    {[
-                      {
-                        title: "Created a new hackathon dashboard UI",
-                        time: "2 hours ago",
-                      },
-                      {
-                        title:
-                          "Updated profile information and portfolio links",
-                        time: "Yesterday",
-                      },
-                      {
-                        title: "Published a new AI product case study",
-                        time: "3 days ago",
-                      },
-                    ].map((item, idx) => (
-                      <div
-                        key={idx}
-                        className="flex items-start gap-4 rounded-2xl border border-white/8 bg-slate-950/40 p-4"
-                      >
-                        <div className="mt-1 h-2.5 w-2.5 rounded-full bg-cyan-400" />
-                        <div className="flex-1">
-                          <p className="text-sm font-medium text-slate-100">
-                            {item.title}
-                          </p>
-                          <p className="mt-1 text-xs text-slate-400">
-                            {item.time}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+        <div className="grid gap-5 lg:grid-cols-[minmax(0,1.25fr)_minmax(300px,0.75fr)]">
+          <section className="card-theme rounded-[2rem] p-5 sm:p-6">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.26em] text-muted">
+                  Personal details
+                </p>
+                <h2 className="mt-2 font-display text-2xl font-semibold tracking-[-0.04em] text-foreground">
+                  Account information
+                </h2>
               </div>
 
-              {/* right */}
-              <div className="space-y-6">
-                <div className="rounded-[28px] border border-white/10 bg-white/[0.03] p-6">
-                  <h2 className="text-xl font-semibold text-white">
-                    Contact Info
-                  </h2>
+              <span className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-card/70 px-4 py-2 text-xs font-medium uppercase tracking-[0.22em] text-muted">
+                <Hash className="h-3.5 w-3.5" />
+                usr_{shortId}
+              </span>
+            </div>
 
-                  <div className="mt-5 space-y-4">
-                    <div className="flex items-center gap-3 text-sm text-slate-300">
-                      <Mail className="h-4 w-4 text-cyan-300" />
-                      hujaifa@example.com
-                    </div>
-                    <div className="flex items-center gap-3 text-sm text-slate-300">
-                      <Globe className="h-4 w-4 text-cyan-300" />
-                      www.hujaifa.dev
-                    </div>
-                    <div className="flex items-center gap-3 text-sm text-slate-300">
-                      <MapPin className="h-4 w-4 text-cyan-300" />
-                      Bangladesh
-                    </div>
-                  </div>
-                </div>
+            <div className="mt-6 grid gap-4 sm:grid-cols-2">
+              <div className="rounded-[1.6rem] border border-border/70 bg-background/50 p-4">
+                <InfoRow
+                  icon={UserRound}
+                  label="Role"
+                  value={formatLabel(user.role)}
+                  iconClassName="text-primary"
+                />
+              </div>
 
-                <div className="rounded-[28px] border border-white/10 bg-white/[0.03] p-6">
-                  <h2 className="text-xl font-semibold text-white">Social</h2>
+              <div className="rounded-[1.6rem] border border-border/70 bg-background/50 p-4">
+                <InfoRow
+                  icon={ShieldCheck}
+                  label="Status"
+                  value={formatLabel(user.status)}
+                  iconClassName="text-emerald-600 dark:text-emerald-300"
+                />
+              </div>
 
-                  <div className="mt-5 grid grid-cols-1 gap-3">
-                    {[
-                      {
-                        icon: <Github className="h-4 w-4" />,
-                        label: "GitHub",
-                        value: "@hujaifa-dev",
-                      },
-                      {
-                        icon: <Linkedin className="h-4 w-4" />,
-                        label: "LinkedIn",
-                        value: "linkedin.com/in/hujaifa",
-                      },
-                      {
-                        icon: <Twitter className="h-4 w-4" />,
-                        label: "Twitter",
-                        value: "@hujaifa_ui",
-                      },
-                    ].map((item, idx) => (
-                      <div
-                        key={idx}
-                        className="flex items-center justify-between rounded-2xl border border-white/8 bg-slate-950/40 px-4 py-3"
-                      >
-                        <div className="flex items-center gap-3 text-slate-200">
-                          <span className="text-cyan-300">{item.icon}</span>
-                          <span className="text-sm font-medium">
-                            {item.label}
-                          </span>
-                        </div>
-                        <span className="text-sm text-slate-400">
-                          {item.value}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+              <div className="rounded-[1.6rem] border border-border/70 bg-background/50 p-4">
+                <InfoRow
+                  icon={CalendarDays}
+                  label="Member since"
+                  value={formatDate(user.createdAt)}
+                  iconClassName="text-violet-600 dark:text-violet-300"
+                />
+              </div>
 
-                <div className="rounded-[28px] border border-white/10 bg-white/[0.03] p-6">
-                  <h2 className="text-xl font-semibold text-white">
-                    Professional Details
-                  </h2>
+              <div className="rounded-[1.6rem] border border-border/70 bg-background/50 p-4">
+                <InfoRow
+                  icon={CreditCard}
+                  label="Plan"
+                  value={planLabel}
+                  iconClassName="text-amber-600 dark:text-amber-300"
+                />
+              </div>
 
-                  <div className="mt-5 space-y-4 text-sm text-slate-300">
-                    <div className="flex items-center justify-between border-b border-white/5 pb-3">
-                      <span className="text-slate-400">Role</span>
-                      <span>Senior Frontend Engineer</span>
-                    </div>
-                    <div className="flex items-center justify-between border-b border-white/5 pb-3">
-                      <span className="text-slate-400">Experience</span>
-                      <span>4+ Years</span>
-                    </div>
-                    <div className="flex items-center justify-between border-b border-white/5 pb-3">
-                      <span className="text-slate-400">Specialization</span>
-                      <span>Full Stack & UI Systems</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-slate-400">Availability</span>
-                      <span className="text-emerald-400">Open to Projects</span>
-                    </div>
-                  </div>
-                </div>
+              <div className="rounded-[1.6rem] border border-border/70 bg-background/50 p-4">
+                <InfoRow
+                  icon={Crown}
+                  label="Premium until"
+                  value={premiumUntil}
+                  iconClassName="text-primary"
+                />
+              </div>
+
+              <div className="rounded-[1.6rem] border border-border/70 bg-background/50 p-4">
+                <InfoRow
+                  icon={Hash}
+                  label="User ID"
+                  value={`usr_${shortId}`}
+                  mono
+                />
               </div>
             </div>
-            {/* end content */}
+
+            {needsPasswordChange ? (
+              <div className="mt-5 rounded-[1.6rem] border border-destructive/18 bg-destructive/10 px-4 py-4">
+                <p className="text-sm font-semibold text-destructive">
+                  Password update recommended
+                </p>
+                <p className="mt-1 text-sm leading-6 text-destructive/80">
+                  Your account is asking for a password refresh. Use the
+                  security action to update it and keep your session protected.
+                </p>
+              </div>
+            ) : (
+              <div className="mt-5 rounded-[1.6rem] border border-emerald-400/18 bg-emerald-400/10 px-4 py-4">
+                <p className="text-sm font-semibold text-emerald-600 dark:text-emerald-300">
+                  Security looks healthy
+                </p>
+                <p className="mt-1 text-sm leading-6 text-emerald-700/90 dark:text-emerald-200/80">
+                  Your profile is active and there are no immediate account
+                  security reminders.
+                </p>
+              </div>
+            )}
+          </section>
+
+          <div className="space-y-5">
+            <section className="card-theme rounded-[2rem] p-5 sm:p-6">
+              <p className="text-xs font-semibold uppercase tracking-[0.26em] text-muted">
+                Quick actions
+              </p>
+              <h2 className="mt-2 font-display text-2xl font-semibold tracking-[-0.04em] text-foreground">
+                Jump back in
+              </h2>
+
+              <div className="mt-5 space-y-1">
+                <QuickLink
+                  href="/dashboard"
+                  icon={LayoutDashboard}
+                  title="Dashboard"
+                  description="Open your workspace and keep building."
+                  iconClassName="text-primary"
+                  iconSurfaceClassName="border-primary/16 bg-primary/10"
+                />
+                <QuickLink
+                  href="/change-password"
+                  icon={KeyRound}
+                  title="Security"
+                  description={
+                    needsPasswordChange
+                      ? "A password update is recommended right now."
+                      : "Review password and account access settings."
+                  }
+                  iconClassName="text-violet-600 dark:text-violet-300"
+                  iconSurfaceClassName="border-violet-400/16 bg-violet-400/10"
+                />
+                <QuickLink
+                  href="/premium"
+                  icon={Crown}
+                  title="Subscription"
+                  description="Manage plan details and billing access."
+                  iconClassName="text-amber-600 dark:text-amber-300"
+                  iconSurfaceClassName="border-amber-400/16 bg-amber-400/10"
+                />
+                <QuickLink
+                  href="/hackathons"
+                  icon={Sparkles}
+                  title="Explore hackathons"
+                  description="Browse current events and discover new challenges."
+                  iconClassName="text-cyan-600 dark:text-cyan-300"
+                  iconSurfaceClassName="border-cyan-400/16 bg-cyan-400/10"
+                />
+              </div>
+            </section>
+
+            <section className="card-theme overflow-hidden rounded-[2rem] p-5 sm:p-6">
+              <div className="absolute inset-x-6 top-0 h-28 rounded-b-[2rem] bg-[radial-gradient(circle_at_top,rgba(178,122,255,0.16),transparent_64%)]" />
+
+              <div className="relative">
+                <p className="text-xs font-semibold uppercase tracking-[0.26em] text-muted">
+                  Plan status
+                </p>
+                <h2 className="mt-2 font-display text-2xl font-semibold tracking-[-0.04em] text-foreground">
+                  {planLabel}
+                </h2>
+                <p className="mt-3 text-sm leading-7 text-muted">
+                  {user.isPremium
+                    ? `Your premium access is active through ${premiumUntil}.`
+                    : "Upgrade anytime to unlock more organizer power, premium workflows, and additional event capacity."}
+                </p>
+
+                <div className="mt-5 rounded-[1.6rem] border border-border/70 bg-background/50 p-4">
+                  <div className="flex items-center justify-between gap-4">
+                    <div>
+                      <p className="text-xs font-medium uppercase tracking-[0.22em] text-muted">
+                        Current tier
+                      </p>
+                      <p className="mt-2 text-lg font-semibold text-foreground">
+                        {planLabel}
+                      </p>
+                    </div>
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-primary/16 bg-primary/10">
+                      {user.isPremium ? (
+                        <Crown className="h-5 w-5 text-primary" />
+                      ) : (
+                        <Sparkles className="h-5 w-5 text-primary" />
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                <Link href="/premium" className="btn-theme mt-5 w-full">
+                  {user.isPremium ? "Manage plan" : "Upgrade to premium"}
+                </Link>
+              </div>
+            </section>
           </div>
         </div>
       </div>
-    </section>
+    </main>
   );
 }
