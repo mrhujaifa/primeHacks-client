@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { loginAction } from "@/app/(commonLayout)/(Auth-Routes)/login/_action";
@@ -8,11 +9,13 @@ import { ArrowRight, Eye, EyeOff, LockKeyhole, Mail } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const inputClassName = "input-theme h-13 pl-11 pr-4";
 
 export default function LoginCredentialsForm() {
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: async (payload: ILoginPayload) => {
@@ -39,7 +42,10 @@ export default function LoginCredentialsForm() {
           return;
         }
 
-        toast.success(result?.message || "Login successful");
+        if (result?.success) {
+          toast.success(result.message);
+          router.push("/");
+        }
       } catch (error: any) {
         toast.error(error?.message || "Something went wrong");
       }

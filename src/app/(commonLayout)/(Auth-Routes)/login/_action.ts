@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
 import { ILoginResponse } from "@/interface/auth.interface";
@@ -5,6 +6,7 @@ import { ILoginPayload, loginZodSchema } from "@/Zod/auth.validation";
 import { httpClient } from "@/lib/Axios/axios";
 import { setTokenInCookies } from "@/lib/utils/tokenUtils";
 import axios from "axios";
+import { redirect } from "next/navigation";
 
 export type LoginActionResult =
   | {
@@ -45,7 +47,7 @@ export const loginAction = async (
 
     return {
       success: true,
-      message: "Login successful",
+      message: "Login successful. Welcome back to PrimeHacks!",
       user: response.data.user,
     };
   } catch (error: any) {

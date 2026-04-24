@@ -2,14 +2,11 @@ import { ApiResponse } from "@/interface/api.interface";
 import axios from "axios";
 
 const SERVER_API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL as string;
-const CLIENT_API_BASE_URL = "/api/v1";
+// const CLIENT_API_BASE_URL = "/api/v1";
 
 const getApiBaseUrl = () => {
   // Keep browser requests on the Next.js origin so the rewrite proxy can
   // forward the app's cookies to the backend.
-  if (typeof window !== "undefined") {
-    return CLIENT_API_BASE_URL;
-  }
 
   if (!SERVER_API_BASE_URL) {
     throw new Error(

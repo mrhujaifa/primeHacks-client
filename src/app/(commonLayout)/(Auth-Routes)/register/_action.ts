@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
 import { IResigterResponse } from "@/interface/auth.interface";
@@ -30,7 +31,9 @@ export const registerAction = async (payload: ILoginPayload) => {
     await setTokenInCookies("refreshToken", refreshToken);
     await setTokenInCookies("better-auth.session_token", token);
 
-    redirect("/login");
+    redirect(
+      `/verify-email?email=${encodeURIComponent(parsedPayload.data.email)}`,
+    );
   } catch (error: any) {
     if (
       error &&
