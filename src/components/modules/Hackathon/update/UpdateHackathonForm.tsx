@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { updateHackathonMutationFn } from "@/hooks/hackathon/hackathon.mutations";
@@ -12,7 +13,6 @@ import {
 import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 export default function UpdateHackathonFormUI({
@@ -24,28 +24,6 @@ export default function UpdateHackathonFormUI({
   hackathon: BackendHackathon;
   categories: IHackathonCategory[];
 }) {
-  const [isDark, setIsDark] = useState(true);
-
-  useEffect(() => {
-    // Check initial theme
-    const isDarkMode =
-      document.documentElement.classList.contains("dark") ||
-      window.matchMedia("(prefers-color-scheme: dark)").matches;
-    setIsDark(isDarkMode);
-
-    // Listen for theme changes
-    const observer = new MutationObserver(() => {
-      const darkMode = document.documentElement.classList.contains("dark");
-      setIsDark(darkMode);
-    });
-
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["class"],
-    });
-
-    return () => observer.disconnect();
-  }, []);
   const { mutateAsync, isPending } = useMutation({
     mutationFn: async (payload: TUpdateHackathonPayload) => {
       return await updateHackathonMutationFn({ id: hackathonId, payload });
@@ -182,25 +160,14 @@ export default function UpdateHackathonFormUI({
     "ENDED",
     "UPCOMING",
   ] as const;
+  const inputClass =
+    "h-12 w-full rounded-2xl border border-white/10 bg-slate-950/50 px-4 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-400/40 focus:bg-slate-950/70";
 
-  const inputClass = isDark
-    ? "h-12 w-full rounded-2xl border border-white/10 bg-slate-950/50 px-4 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-400/40 focus:bg-slate-950/70"
-    : "h-12 w-full rounded-2xl border border-slate-300 bg-white px-4 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-400/40 focus:bg-slate-50";
+  const textareaClass =
+    "min-h-[140px] w-full rounded-2xl border border-white/10 bg-slate-950/50 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-400/40 focus:bg-slate-950/70";
 
-  const textareaClass = isDark
-    ? "min-h-[140px] w-full rounded-2xl border border-white/10 bg-slate-950/50 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-400/40 focus:bg-slate-950/70"
-    : "min-h-[140px] w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-400/40 focus:bg-slate-50";
-
-  const sectionClass = isDark
-    ? "rounded-[32px] border border-white/10 bg-[linear-gradient(180deg,rgba(10,18,30,0.92),rgba(7,15,24,0.88))] p-5 shadow-[0_20px_80px_rgba(0,0,0,0.35)] backdrop-blur-2xl sm:p-6"
-    : "rounded-[32px] border border-slate-200 bg-gradient-to-b from-white to-slate-50 p-5 shadow-[0_20px_80px_rgba(0,0,0,0.08)] backdrop-blur-2xl sm:p-6";
-
-  const labelClass = isDark ? "text-slate-200" : "text-slate-700";
-  const descriptionClass = isDark ? "text-slate-400" : "text-slate-500";
-  const headingClass = isDark ? "text-white" : "text-slate-900";
-  const bgGradient = isDark
-    ? "bg-[radial-gradient(circle_at_top,rgba(34,211,238,0.12),transparent_20%),radial-gradient(circle_at_80%_10%,rgba(59,130,246,0.14),transparent_18%),linear-gradient(180deg,#06131c_0%,#081520_38%,#0b1220_100%)]"
-    : "bg-gradient-to-br from-blue-50 via-white to-slate-100";
+  const sectionClass =
+    "rounded-[32px] border border-white/10 bg-[linear-gradient(180deg,rgba(10,18,30,0.92),rgba(7,15,24,0.88))] p-5 shadow-[0_20px_80px_rgba(0,0,0,0.35)] backdrop-blur-2xl sm:p-6";
 
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top,rgba(34,211,238,0.12),transparent_20%),radial-gradient(circle_at_80%_10%,rgba(59,130,246,0.14),transparent_18%),linear-gradient(180deg,#06131c_0%,#081520_38%,#0b1220_100%)] px-4 py-8 sm:px-6 lg:px-8">

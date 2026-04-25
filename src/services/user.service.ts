@@ -34,3 +34,15 @@ export const verifyEmailOtp = async (
 
   return res;
 };
+
+export const googleLogin = async (accessToken: string) => {
+  const res = await httpClient.post("/auth/google-login", {
+    accessToken,
+  });
+
+  if (!res.success) {
+    throw new Error(res.message || "Failed to login with Google");
+  }
+
+  return res.data;
+};

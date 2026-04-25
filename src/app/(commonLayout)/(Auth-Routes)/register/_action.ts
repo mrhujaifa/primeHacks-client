@@ -4,7 +4,10 @@
 import { IResigterResponse } from "@/interface/auth.interface";
 import { ILoginPayload, registerZodSchema } from "@/Zod/auth.validation";
 import { httpClient } from "@/lib/Axios/axios";
-import { setTokenInCookies } from "@/lib/utils/tokenUtils";
+import {
+  setPendingVerificationCookie,
+  setTokenInCookies,
+} from "@/lib/utils/tokenUtils";
 import axios from "axios";
 import { redirect } from "next/navigation";
 
@@ -31,6 +34,11 @@ export const registerAction = async (payload: ILoginPayload) => {
     await setTokenInCookies("refreshToken", refreshToken);
     await setTokenInCookies("better-auth.session_token", token);
 
+    await setPendingVerificationCookie(
+      "pending_email_verification",
+      parsedPayload.data.email,
+    );
+
     redirect(
       `/verify-email?email=${encodeURIComponent(parsedPayload.data.email)}`,
     );
@@ -46,13 +54,23 @@ export const registerAction = async (payload: ILoginPayload) => {
     }
 
     if (axios.isAxiosError(error)) {
+      const statusCode = error.response?.status;
+      const serverMessage = error.response?.data?.message;
+
+      if (statusCode === 409) {
+        return {
+          success: false,
+          message: "This email is already registered. Please login instead.",
+          statusCode,
+        };
+      }
+
       return {
         success: false,
-        message: error.response?.data?.message,
-        statusCode: error.response?.status,
+        message: serverMessage || "Registration failed. Please try again.",
+        statusCode,
       };
     }
-
     return {
       success: false,
       message: "Something went wrong. Please try again.",

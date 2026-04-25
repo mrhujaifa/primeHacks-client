@@ -18,6 +18,21 @@ export const setCookie = async (
   });
 };
 
+export const setPendingVerificationCookiee = async (
+  name: string,
+  value: string,
+  maxAgeInSeconds: number,
+) => {
+  const cookieStore = await cookies();
+
+  cookieStore.set(name, value, {
+    httpOnly: true,
+    sameSite: "lax",
+    path: "/",
+    maxAge: maxAgeInSeconds,
+  });
+};
+
 export const getCookie = async (name: string) => {
   const cookieStore = await cookies();
   return cookieStore.get(name)?.value;

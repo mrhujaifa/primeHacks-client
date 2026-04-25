@@ -10,13 +10,6 @@ export default function LeftPanel() {
 
       <div className="relative z-10 flex w-full flex-col justify-between px-10 py-14 xl:px-14">
         <div>
-          <BrandMark
-            href="/"
-            size="lg"
-            tone="inverse"
-            subtitle="Workspace"
-            className="mb-6"
-          />
           <h1 className="max-w-3xl font-display text-5xl font-semibold leading-[1] tracking-[-0.05em] xl:text-6xl">
             <span className="ph-text-gradient">Operate hackathons</span>
             <br />

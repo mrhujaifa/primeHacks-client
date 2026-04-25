@@ -23,6 +23,7 @@ export async function getUserInfo() {
         "Content-Type": "application/json",
         Cookie: cookieHeader,
       },
+      credentials: "include",
     });
 
     if (!res.ok) {

@@ -6,7 +6,6 @@ import { ILoginPayload, loginZodSchema } from "@/Zod/auth.validation";
 import { httpClient } from "@/lib/Axios/axios";
 import { setTokenInCookies } from "@/lib/utils/tokenUtils";
 import axios from "axios";
-import { redirect } from "next/navigation";
 
 export type LoginActionResult =
   | {
