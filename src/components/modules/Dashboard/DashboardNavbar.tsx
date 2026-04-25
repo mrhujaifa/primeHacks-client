@@ -4,7 +4,6 @@ import React from "react";
 import { Bell, ChevronDown, Menu, LogOut } from "lucide-react";
 import { useCurrentUser } from "@/hooks/useSession";
 import ThemeToggle from "@/components/ui/ThemeToggle";
-import BrandMark from "@/components/ui/BrandMark";
 import { logoutUser } from "@/services/user.service";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";

@@ -9,11 +9,13 @@ import {
   FileText,
   FolderOpenDot,
   Gift,
+  History,
   Home,
   Layers3,
   LayoutDashboard,
   PlusSquare,
   Settings,
+  ShieldCheck,
   Trophy,
   User,
   Users,
@@ -46,6 +48,7 @@ const iconMap: Record<string, LucideIcon> = {
   Clock3,
   Wallet,
   Settings,
+  ShieldCheck,
 };
 
 const DashboardSidebarContent = ({

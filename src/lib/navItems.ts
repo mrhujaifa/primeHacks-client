@@ -51,6 +51,11 @@ export const userNavItems = (): NavSection[] => [
         href: "/dashboard/subscription-status",
         icon: "BadgeCheck",
       },
+      {
+        title: "Organizer Application",
+        href: "/dashboard/organizer-application",
+        icon: "ShieldCheck",
+      },
     ],
   },
 ];
