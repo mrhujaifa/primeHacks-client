@@ -3,7 +3,7 @@
 
 import { loginAction } from "@/app/(commonLayout)/(Auth-Routes)/login/_action";
 import { ILoginPayload } from "@/Zod/auth.validation";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "@tanstack/react-form";
 import { ArrowRight, Eye, EyeOff, LockKeyhole, Mail } from "lucide-react";
 import Link from "next/link";
@@ -16,6 +16,7 @@ const inputClassName = "input-theme h-13 pl-11 pr-4";
 export default function LoginCredentialsForm() {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: async (payload: ILoginPayload) => {
@@ -44,6 +45,8 @@ export default function LoginCredentialsForm() {
 
         if (result?.success) {
           toast.success(result.message);
+          // Invalidate user cache to refresh navbar state
+          queryClient.invalidateQueries({ queryKey: ["current-user"] });
           router.push("/");
         }
       } catch (error: any) {
