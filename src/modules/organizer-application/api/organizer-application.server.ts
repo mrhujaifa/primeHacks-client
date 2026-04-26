@@ -4,6 +4,7 @@
 
 import { cookies } from "next/headers";
 import { httpClient } from "@/lib/Axios/axios";
+import { isDynamicServerUsageError } from "@/lib/utils/nextErrorUtils";
 
 export const getMyOrganizerApplication = async () => {
   try {
@@ -17,6 +18,10 @@ export const getMyOrganizerApplication = async () => {
 
     return res.data;
   } catch (error) {
+    if (isDynamicServerUsageError(error)) {
+      return null;
+    }
+
     console.error("Failed to fetch organizer application:", error);
     return null;
   }

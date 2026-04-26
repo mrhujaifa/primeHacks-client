@@ -1,12 +1,10 @@
 "use server";
 
+import { isDynamicServerUsageError } from "@/lib/utils/nextErrorUtils";
 import { cookies } from "next/headers";
+import { getServerApiBaseUrl } from "@/lib/config/api";
 
-const BASE_API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-
-if (!BASE_API_URL) {
-  throw new Error("NEXT_PUBLIC_API_BASE_URL is not defined");
-}
+const BASE_API_URL = getServerApiBaseUrl();
 
 export async function getUserInfo() {
   try {
@@ -35,6 +33,10 @@ export async function getUserInfo() {
 
     return data;
   } catch (error) {
+    if (isDynamicServerUsageError(error)) {
+      return null;
+    }
+
     console.error("Error fetching user info:", error);
     return null;
   }

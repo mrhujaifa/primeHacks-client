@@ -1,21 +1,6 @@
 import { ApiResponse } from "@/interface/api.interface";
+import { getApiBaseUrl } from "@/lib/config/api";
 import axios from "axios";
-
-const SERVER_API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL as string;
-// const CLIENT_API_BASE_URL = "/api/v1";
-
-const getApiBaseUrl = () => {
-  // Keep browser requests on the Next.js origin so the rewrite proxy can
-  // forward the app's cookies to the backend.
-
-  if (!SERVER_API_BASE_URL) {
-    throw new Error(
-      "NEXT_PUBLIC_API_BASE_URL is not defined in environment variables",
-    );
-  }
-
-  return SERVER_API_BASE_URL;
-};
 
 const axiosInstance = () => {
   const instance = axios.create({

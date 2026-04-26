@@ -1,7 +1,8 @@
 import { THackathonCardItem } from "@/services/hackathon.service";
+import { getServerApiBaseUrl } from "@/lib/config/api";
 import { BackendHackathon, IHackathonCategory } from "@/types/hackathon.types";
 
-const BASE_API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const BASE_API_URL = getServerApiBaseUrl();
 
 export const getOwnHackathonsServerQueryFn = async (
   cookieHeader: string,

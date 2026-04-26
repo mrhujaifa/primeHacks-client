@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { authClient } from "@/lib/auth-client";
+import { getAuthClient } from "@/lib/auth-client";
 import { Github, Google } from "@thesvg/react";
 import toast from "react-hot-toast";
 
@@ -14,7 +14,7 @@ export default function SocialLogins() {
     try {
       setLoadingProvider("google");
 
-      await authClient.signIn.social({
+      await getAuthClient().signIn.social({
         provider: "google",
         callbackURL: "/",
         errorCallbackURL: "/login",
